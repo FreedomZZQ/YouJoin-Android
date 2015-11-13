@@ -24,6 +24,7 @@ public class NetworkUtils {
      */
     public static final String USERNAME = "user_name";
     public static final String PASSWORD = "user_password";
+    public static final String EMAIL = "user_email";
 
 
     /**
@@ -64,17 +65,38 @@ public class NetworkUtils {
 
     /**
      * 登陆接口
-     * @param listener ResponseListener
      * @param username 登录用户名
      * @param password 登陆密码
+     * @param listener ResponseListener
      */
-    public static void postSignIn(ResponseListener listener,
-                                  String username, String password){
+    public static void postSignIn(String username, String password,
+                                  ResponseListener listener){
         Map<String, String> param = new HashMap<>();
         param.put(USERNAME, username);
         param.put(PASSWORD, password);
         Request request = new PostObjectRequest(
                 URL_SIGN_IN,
+                param,
+                new TypeToken<UserInfo>(){}.getType(),
+                listener);
+        NetworkUtils.getRequestQueue().add(request);
+    }
+
+    /**
+     * 注册接口
+     * @param username 注册用户名
+     * @param password 注册密码
+     * @param email 注册邮箱
+     * @param listener ResponseListener
+     */
+    public static void postSignUp(String username, String password, String email,
+                                  ResponseListener listener){
+        Map<String, String> param = new HashMap<>();
+        param.put(USERNAME, username);
+        param.put(PASSWORD, password);
+        param.put(EMAIL, email);
+        Request request = new PostObjectRequest(
+                URL_SIGN_UP,
                 param,
                 new TypeToken<UserInfo>(){}.getType(),
                 listener);
