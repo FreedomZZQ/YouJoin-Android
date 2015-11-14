@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.utils.Md5Utils;
 
 /**
  * YouJoin
@@ -25,16 +26,14 @@ public class NetworkUtils {
     public static final String USERNAME = "user_name";
     public static final String PASSWORD = "user_password";
     public static final String EMAIL = "user_email";
-
+    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 
     /**
      * 网络接口URL
      */
-    public static final String URL_SIGN_IN =
-            "http://192.168.0.102:8088/youjoin-server/Controllers/signin.php";
-    public static final String URL_SIGN_UP =
-            "http://192.168.0.102:8088/youjoin-server/Controllers/signup.php";
-
+    public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
+    public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
 
     private static RequestQueue mRequestQueue ;
 
@@ -73,9 +72,9 @@ public class NetworkUtils {
                                   ResponseListener listener){
         Map<String, String> param = new HashMap<>();
         param.put(USERNAME, username);
-        param.put(PASSWORD, password);
+        param.put(PASSWORD, Md5Utils.getMd5(password));
         Request request = new PostObjectRequest(
-                URL_SIGN_IN,
+                API_SIGN_IN,
                 param,
                 new TypeToken<UserInfo>(){}.getType(),
                 listener);
@@ -93,10 +92,10 @@ public class NetworkUtils {
                                   ResponseListener listener){
         Map<String, String> param = new HashMap<>();
         param.put(USERNAME, username);
-        param.put(PASSWORD, password);
+        param.put(PASSWORD, Md5Utils.getMd5(password));
         param.put(EMAIL, email);
         Request request = new PostObjectRequest(
-                URL_SIGN_UP,
+                API_SIGN_UP,
                 param,
                 new TypeToken<UserInfo>(){}.getType(),
                 listener);
