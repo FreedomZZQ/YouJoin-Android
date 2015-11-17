@@ -26,8 +26,8 @@ public class NetworkManager {
     public static final String USERNAME = "user_name";
     public static final String PASSWORD = "user_password";
     public static final String EMAIL = "user_email";
-    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
-//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 
     /**
      * 网络接口URL

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.MainActivity">
+    <group android:checkableBehavior="single">
+
+        <!-- android:icon="@drawable/ic_favorite"-->
+        <item
+            android:id="@+id/navigation_item_mine"
+            android:title="@string/navigation_mine" />
+        <item
+            android:id="@+id/navigation_item_friends"
+            android:title="@string/navigation_friends" />
+        <item
+            android:id="@+id/navigation_item_messages"
+            android:title="@string/navigation_msg" />
+        <item
+            android:id="@+id/navigation_item_tweets"
+            android:title="@string/navigation_tweets" />
+        <item
+            android:id="@+id/navigation_item_settings"
+            android:title="@string/navigation_setting" />
+        <item
+            android:id="@+id/navigation_item_about"
+            android:title="@string/navigation_about" />
+        <item
+            android:id="@+id/navigation_item_exit"
+            android:title="@string/navigation_exit" />
+    </group>
+
+</menu>

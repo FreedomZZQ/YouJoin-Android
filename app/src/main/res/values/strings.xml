@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">YouJoin</string>
 
+    <!-- Navigation View Items-->
+    <string name="navigation_mine">Mine</string>
+    <string name="navigation_friends">Friends</string>
+    <string name="navigation_msg">Messages</string>
+    <string name="navigation_tweets">Tweets</string>
+    <string name="navigation_setting">Settings</string>
+    <string name="navigation_about">About</string>
+    <string name="navigation_exit">Exit</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
     <!-- Strings related to login -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
@@ -21,4 +33,5 @@
     </string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_signup">Sign up</string>
+
 </resources>
