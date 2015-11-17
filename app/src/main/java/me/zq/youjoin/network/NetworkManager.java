@@ -18,7 +18,7 @@ import me.zq.youjoin.utils.Md5Utils;
  * YouJoin
  * Created by ZQ on 2015/11/12.
  */
-public class NetworkUtils {
+public class NetworkManager {
 
     /**
      * 网络接口相关常量
@@ -42,7 +42,7 @@ public class NetworkUtils {
      */
     public static synchronized void initialize(Context context){
         if (mRequestQueue == null){
-            synchronized (NetworkUtils.class){
+            synchronized (NetworkManager.class){
                 if (mRequestQueue == null){
                     mRequestQueue =
                             Volley.newRequestQueue(context, new OkHttpStack(new OkHttpClient()));
@@ -78,7 +78,7 @@ public class NetworkUtils {
                 param,
                 new TypeToken<UserInfo>(){}.getType(),
                 listener);
-        NetworkUtils.getRequestQueue().add(request);
+        NetworkManager.getRequestQueue().add(request);
     }
 
     /**
@@ -99,6 +99,6 @@ public class NetworkUtils {
                 param,
                 new TypeToken<UserInfo>(){}.getType(),
                 listener);
-        NetworkUtils.getRequestQueue().add(request);
+        NetworkManager.getRequestQueue().add(request);
     }
 }

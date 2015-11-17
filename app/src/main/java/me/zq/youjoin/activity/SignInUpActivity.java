@@ -27,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
 import me.zq.youjoin.model.UserInfo;
-import me.zq.youjoin.network.NetworkUtils;
+import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.network.ResponseListener;
 
 
@@ -176,7 +176,7 @@ public class SignInUpActivity extends BaseActivity {
 
     private void actionSign(String username, String password, String email){
         if(isSignIn){
-            NetworkUtils.postSignIn(username, password, new ResponseListener<UserInfo>() {
+            NetworkManager.postSignIn(username, password, new ResponseListener<UserInfo>() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     Log.d(TAG, "Signin error! " + volleyError.toString());
@@ -185,17 +185,17 @@ public class SignInUpActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(UserInfo userInfo) {
-                    if(userInfo.getResult().equals("success")){
+                    if (userInfo.getResult().equals("success")) {
                         Log.d(TAG, "Signin Success! username is : " + userInfo.getUsername());
                         signSuccess();
-                    }else{
+                    } else {
                         Log.d(TAG, "Signin Failure! username is : " + userInfo.getUsername());
                         signFailure(userInfo.getResult());
                     }
                 }
             });
         }else {
-            NetworkUtils.postSignUp(username, password, email, new ResponseListener<UserInfo>(){
+            NetworkManager.postSignUp(username, password, email, new ResponseListener<UserInfo>() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     Log.d(TAG, "Signup error!" + volleyError.toString());
@@ -204,10 +204,10 @@ public class SignInUpActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(UserInfo userInfo) {
-                    if(userInfo.getResult().equals("success")){
+                    if (userInfo.getResult().equals("success")) {
                         Log.d(TAG, "Signup Success! username is : " + userInfo.getUsername());
                         signSuccess();
-                    }else{
+                    } else {
                         Log.d(TAG, "Signup Failure! username is : " + userInfo.getUsername());
                         signFailure(userInfo.getResult());
                     }
@@ -300,7 +300,7 @@ public class SignInUpActivity extends BaseActivity {
         protected Boolean doInBackground(Void... params) {
 
             if(isSignIn){
-                NetworkUtils.postSignIn(username, password, new ResponseListener<UserInfo>() {
+                NetworkManager.postSignIn(username, password, new ResponseListener<UserInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Log.d(TAG, "Signin error! " + volleyError.toString());
@@ -308,16 +308,16 @@ public class SignInUpActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(UserInfo userInfo) {
-                        if(userInfo.getResult().equals("success")){
+                        if (userInfo.getResult().equals("success")) {
                             Log.d(TAG, "Signin Success! username is : " + userInfo.getUsername());
-                        }else{
+                        } else {
                             Log.d(TAG, "Signin Failure! username is : " + userInfo.getUsername());
 
                         }
                     }
                 });
             }else {
-                NetworkUtils.postSignUp(username, password, email, new ResponseListener<UserInfo>(){
+                NetworkManager.postSignUp(username, password, email, new ResponseListener<UserInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Log.d(TAG, "Signup error!" + volleyError.toString());
