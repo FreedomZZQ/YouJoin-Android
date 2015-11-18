@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.yj_activity_main);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                EditTweetActivity.actionStart(MainActivity.this);
+                PublishActivity.actionStart(MainActivity.this);
             }
         });
 

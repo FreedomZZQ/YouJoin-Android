@@ -32,4 +32,5 @@ dependencies {
     compile files('libs/httpcore-4.4.3.jar')
     compile files('libs/okio-1.6.0.jar')
     compile files('libs/butterknife-7.0.1.jar')
+    compile project(':multi-image-selector')
 }

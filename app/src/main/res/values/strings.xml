@@ -13,6 +13,9 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+    <!-- Strings related to publish-->
+    <string name="hint_publish">分享新鲜事</string>
+
     <!-- Strings related to login -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>

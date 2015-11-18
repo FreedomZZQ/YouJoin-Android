@@ -25,7 +25,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_main" />
+        <include layout="@layout/yj_content_main" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@android:drawable/ic_dialog_email" />
+            android:src="@android:drawable/ic_input_add" />
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/navigation_header"
+        app:headerLayout="@layout/yj_navigation_header"
         app:menu="@menu/navigation_menu"/>
 
 
