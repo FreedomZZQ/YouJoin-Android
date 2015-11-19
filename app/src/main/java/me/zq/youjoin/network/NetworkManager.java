@@ -26,40 +26,31 @@ public class NetworkManager {
     public static final String USERNAME = "user_name";
     public static final String PASSWORD = "user_password";
     public static final String EMAIL = "user_email";
-//    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
-    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 
     /**
      * 网络接口URL
      */
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
+    public static final String API_UPDATE_USERINFO = BASE_API_URL + "update_userinfo.php";
+    public static final String API_UPLOAD_PIC = BASE_API_URL + "upload_pic.php";
+    public static final String API_SEND_TWEET = BASE_API_URL + "send_tweet.php";
 
     private static RequestQueue mRequestQueue ;
 
-    /**初始化Volley 使用OkHttpStack
-     * @param context 用作初始化Volley RequestQueue
-     */
-    public static synchronized void initialize(Context context){
-        if (mRequestQueue == null){
-            synchronized (NetworkManager.class){
-                if (mRequestQueue == null){
-                    mRequestQueue =
-                            Volley.newRequestQueue(context, new OkHttpStack(new OkHttpClient()));
-                }
-            }
-        }
-        mRequestQueue.start();
+
+    public static void postSendTweet(ResponseListener listener){
+
     }
 
+    public static void postUploadPic(ResponseListener listener){
 
-    /**获取RequestQueue实例
-     * @return 返回RequestQueue实例
-     */
-    public static RequestQueue getRequestQueue(){
-        if (mRequestQueue == null)
-            throw new RuntimeException("请先初始化mRequestQueue") ;
-        return mRequestQueue ;
+    }
+
+    public static void postUpdateUserInfo(UserInfo userInfo, ResponseListener listener){
+
     }
 
     /**
@@ -100,5 +91,30 @@ public class NetworkManager {
                 new TypeToken<UserInfo>(){}.getType(),
                 listener);
         NetworkManager.getRequestQueue().add(request);
+    }
+
+    /**初始化Volley 使用OkHttpStack
+     * @param context 用作初始化Volley RequestQueue
+     */
+    public static synchronized void initialize(Context context){
+        if (mRequestQueue == null){
+            synchronized (NetworkManager.class){
+                if (mRequestQueue == null){
+                    mRequestQueue =
+                            Volley.newRequestQueue(context, new OkHttpStack(new OkHttpClient()));
+                }
+            }
+        }
+        mRequestQueue.start();
+    }
+
+
+    /**获取RequestQueue实例
+     * @return 返回RequestQueue实例
+     */
+    public static RequestQueue getRequestQueue(){
+        if (mRequestQueue == null)
+            throw new RuntimeException("请先初始化mRequestQueue") ;
+        return mRequestQueue ;
     }
 }

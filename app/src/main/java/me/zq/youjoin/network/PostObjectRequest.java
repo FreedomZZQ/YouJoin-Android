@@ -12,6 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+import me.zq.youjoin.utils.StringUtils;
+
 /**
  * Created by ZQ on 2015/11/12.
  */
@@ -37,7 +39,8 @@ public class PostObjectRequest<T> extends Request<T> {
             T result;
             String jsonString =
                     new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            result = gson.fromJson(jsonString, clazz);
+            //LogUtils.d(jsonString);
+            result = gson.fromJson(StringUtils.FixJsonString(jsonString), clazz);
             return Response.success(result,
                     HttpHeaderParser.parseCacheHeaders(response));
         }catch (UnsupportedEncodingException e) {
