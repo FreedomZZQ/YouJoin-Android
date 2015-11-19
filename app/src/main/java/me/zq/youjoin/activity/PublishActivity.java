@@ -69,8 +69,11 @@ public class PublishActivity extends BaseActivity {
                     ImageView img = (ImageView) itemView.findViewById(R.id.img);
                     itemView.setTag(p);
 
-                    //OOM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    Picasso.with(PublishActivity.this).load(new File(p)).into(img);
+                    Picasso.with(PublishActivity.this)
+                            .load(new File(p))
+                            .resize(200, 200)
+                            .centerCrop()
+                            .into(img);
                     if (layPhotoContainer != null) {
                         layPhotoContainer.addView(itemView,
                                 new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,

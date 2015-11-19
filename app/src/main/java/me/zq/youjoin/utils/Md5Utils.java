@@ -34,5 +34,5 @@ public class Md5Utils {
         return stringBuilder.toString();
     }
 
-
+    private Md5Utils(){}
 }
