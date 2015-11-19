@@ -1,8 +1,12 @@
 package me.zq.youjoin.model;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
+
+import me.zq.youjoin.utils.FileUtils;
+import me.zq.youjoin.utils.MimeUtils;
 
 /**
  * YouJoin
@@ -18,11 +22,17 @@ public class ImageInfo {
     private String mime ;
     //需要上传的图片资源，因为这里测试为了方便起见，直接把 bitmap 传进来
     //真正在项目中一般不会这般做，而是把图片的路径传过来，在这里对图片进行二进制转换
-    private Bitmap bitmap;
+    //private Bitmap bitmap;
     private String imagePath;
 
-    public ImageInfo(Bitmap bitmap) {
-        this.bitmap = bitmap;
+//    public ImageInfo(Bitmap bitmap) {
+//        this.bitmap = bitmap;
+//    }
+
+    public ImageInfo(String filePath){
+        this.imagePath = filePath;
+        this.fileName = FileUtils.getFileName(filePath);
+        this.mime = MimeUtils.guessMimeTypeFromExtension(FileUtils.getFileExtension(filePath));
     }
 
 //    public String getName() {
@@ -33,6 +43,7 @@ public class ImageInfo {
 
     //对图片进行二进制转换
     public byte[] getValue() {
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos) ;
         return bos.toByteArray();
@@ -61,23 +72,4 @@ public class ImageInfo {
         return imagePath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
-
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-
-    public void setMime(String mime) {
-        this.mime = mime;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 }

@@ -20,16 +20,6 @@ public class StringUtils {
         return jsonString.substring(startIndex, endIndex + 1);
     }
 
-    /**
-     * 获取文件扩展名
-     * @param fileName 文件名
-     * @return 该文件的扩展名
-     */
-    public static String getExtension(String fileName){
-        int startIndex = fileName.lastIndexOf('.');
-
-        return fileName.substring(startIndex);
-    }
 
 
     private StringUtils(){}

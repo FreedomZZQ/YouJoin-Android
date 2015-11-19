@@ -1,8 +1,6 @@
 package me.zq.youjoin.network;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,9 +8,12 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.OkHttpClient;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.utils.Md5Utils;
 
@@ -28,8 +29,8 @@ public class NetworkManager {
     public static final String USERNAME = "user_name";
     public static final String PASSWORD = "user_password";
     public static final String EMAIL = "user_email";
-//    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
-    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 
     /**
      * 网络接口URL
@@ -47,13 +48,20 @@ public class NetworkManager {
 
     }
 
-    public static void postUploadPic(String picPath, ResponseListener listener){
-        Bitmap bitmap = BitmapFactory.decodeFile(picPath);
+    public static void postUpdateUserInfo(UserInfo userInfo, ResponseListener listener){
 
     }
 
-    public static void postUpdateUserInfo(UserInfo userInfo, ResponseListener listener){
-
+    /**
+     * 图片上传接口
+     * @param picPath 图片的本地路径
+     * @param listener ResponseListener
+     */
+    public static void postUploadPic(String picPath, ResponseListener listener){
+        List<ImageInfo> imageList = new ArrayList<>();
+        imageList.add(new ImageInfo(picPath));
+        Request request = new PostUploadRequest(API_UPLOAD_PIC, imageList, listener);
+        NetworkManager.getRequestQueue().add(request);
     }
 
     /**

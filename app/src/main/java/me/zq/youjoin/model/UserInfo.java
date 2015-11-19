@@ -15,6 +15,11 @@ public class UserInfo {
     private String username;
     private String email;
     private String result;
+    private String work;
+    private String sex;
+    private String birth;
+    private String location;
+    private String avatarUrl;
 
     public void setId(String id) {
         this.id = id;
@@ -48,4 +53,43 @@ public class UserInfo {
         return result;
     }
 
+    public String getWork() {
+        return work;
+    }
+
+    public void setWork(String work) {
+        this.work = work;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 }

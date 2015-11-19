@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.network.ResponseListener;
@@ -187,7 +188,7 @@ public class SignInUpActivity extends BaseActivity {
                 public void onResponse(UserInfo userInfo) {
                     if (userInfo.getResult().equals("success")) {
                         Log.d(TAG, "Signin Success! username is : " + userInfo.getUsername());
-                        signSuccess();
+                        signSuccess(userInfo);
                     } else {
                         Log.d(TAG, "Signin Failure! username is : " + userInfo.getUsername());
                         signFailure(userInfo.getResult());
@@ -206,7 +207,7 @@ public class SignInUpActivity extends BaseActivity {
                 public void onResponse(UserInfo userInfo) {
                     if (userInfo.getResult().equals("success")) {
                         Log.d(TAG, "Signup Success! username is : " + userInfo.getUsername());
-                        signSuccess();
+                        signSuccess(userInfo);
                     } else {
                         Log.d(TAG, "Signup Failure! username is : " + userInfo.getUsername());
                         signFailure(userInfo.getResult());
@@ -216,8 +217,10 @@ public class SignInUpActivity extends BaseActivity {
         }
     }
 
-    private void signSuccess(){
+    private void signSuccess(UserInfo userInfo){
         showProgress(false);
+
+        YouJoinApplication.setCurrUser(userInfo);
 
         MainActivity.actionStart(SignInUpActivity.this);
         SignInUpActivity.this.finish();

@@ -3,6 +3,7 @@ package me.zq.youjoin;
 import android.app.Application;
 import android.content.Context;
 
+import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 
 /**
@@ -10,6 +11,8 @@ import me.zq.youjoin.network.NetworkManager;
  */
 public class YouJoinApplication extends Application {
     private static Context context;
+
+    private static UserInfo currUser;
 
     @Override
     public void onCreate(){
@@ -22,6 +25,11 @@ public class YouJoinApplication extends Application {
         return context;
     }
 
+    public static UserInfo getCurrUser() {
+        return currUser;
+    }
 
-
+    public static void setCurrUser(UserInfo currUser) {
+        YouJoinApplication.currUser = currUser;
+    }
 }
