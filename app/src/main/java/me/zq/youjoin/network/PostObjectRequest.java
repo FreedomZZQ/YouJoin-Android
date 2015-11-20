@@ -53,6 +53,7 @@ public class PostObjectRequest<T> extends Request<T> {
         listener.onResponse(response);
     }
 
+    @Override
     protected Map<String, String> getParams() throws AuthFailureError{
         return params;
     }

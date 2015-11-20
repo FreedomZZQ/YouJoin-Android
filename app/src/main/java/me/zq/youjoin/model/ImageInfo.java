@@ -43,6 +43,9 @@ public class ImageInfo {
 
     //对图片进行二进制转换
     public byte[] getValue() {
+        if(imagePath == null){
+            return new ByteArrayOutputStream().toByteArray();
+        }
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos) ;

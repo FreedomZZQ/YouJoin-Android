@@ -1,7 +1,5 @@
 package me.zq.youjoin.network;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -9,19 +7,23 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import me.zq.youjoin.model.ImageInfo;
+import me.zq.youjoin.utils.StringUtils;
 
 /**
  * YouJoin
  * Created by ZQ on 2015/11/12.
  */
-public class PostUploadRequest extends Request<String> {
+public class PostUploadRequest<T> extends Request<T> {
 
     /**
      * 正确数据的时候回掉用
@@ -35,9 +37,18 @@ public class PostUploadRequest extends Request<String> {
     private static final String TAG = "hehe_upload_request";
     private static final String PARAM = "uploadedfile";
 
-    public PostUploadRequest(String url, List<ImageInfo> listItem, ResponseListener listener) {
+    private Map<String, String> params;
+    private Gson gson;
+    private Type clazz;
+
+    public PostUploadRequest(String url, List<ImageInfo> listItem,
+                             Map<String, String> params,
+                             Type type, ResponseListener listener) {
         super(Method.POST, url, listener);
         this.mListener = listener ;
+        this.params = params;
+        this.gson = new Gson();
+        this.clazz = type;
         setShouldCache(false);
         mListItem = listItem ;
         //设置请求的响应事件，因为文件上传需要较长的时间，所以在这里加大了，设为5秒
@@ -50,13 +61,13 @@ public class PostUploadRequest extends Request<String> {
      * @return
      */
     @Override
-    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+    protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String mString =
                     new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            Log.v(TAG, "mString = " + mString);
-
-            return Response.success(mString,
+            //Log.v(TAG, "mString = " + mString);
+            T result = gson.fromJson(StringUtils.FixJsonString(mString), clazz);
+            return Response.success(result,
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
@@ -68,7 +79,8 @@ public class PostUploadRequest extends Request<String> {
      * @param response The parsed response returned by
      */
     @Override
-    protected void deliverResponse(String response) {
+    protected void deliverResponse(T response) {
+
         mListener.onResponse(response);
     }
 
@@ -78,6 +90,37 @@ public class PostUploadRequest extends Request<String> {
             return super.getBody() ;
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
+
+        if(!params.isEmpty()) {
+            StringBuilder sbParams = new StringBuilder();
+
+            for (Map.Entry<String, String> o : params.entrySet()) {
+                Map.Entry entry = (Map.Entry) o;
+
+                /*第一行*/
+                //`"--" + BOUNDARY + "\r\n"`
+                sbParams.append("--" + BOUNDARY);
+                sbParams.append("\r\n");
+                /*第二行*/
+                //Content-Disposition: form-data; name="参数的名称"; + 参数 + "\r\n"
+                sbParams.append("Content-Disposition: form-data;");
+                sbParams.append(" name=\"");
+                sbParams.append((String) entry.getKey());
+                sbParams.append("\"");
+                sbParams.append("\r\n");
+                sbParams.append("\r\n");
+                sbParams.append((String) entry.getValue());
+                sbParams.append("\r\n");
+            }
+            try {
+                bos.write(sbParams.toString().getBytes("utf-8"));
+//                bos.write("\r\n".getBytes("utf-8"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
         int N = mListItem.size() ;
         ImageInfo imageInfo ;
         for (int i = 0; i < N ;i++){
@@ -124,7 +167,7 @@ public class PostUploadRequest extends Request<String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //Log.v(TAG,"imageInfo =\n"+bos.toString()) ;
+       // Log.v(TAG,"imageInfo =\n"+bos.toString()) ;
         return bos.toByteArray();
     }
     //Content-Type: multipart/form-data; boundary=----------8888888888888
@@ -132,4 +175,9 @@ public class PostUploadRequest extends Request<String> {
     public String getBodyContentType() {
         return MULTIPART_FORM_DATA+"; boundary="+BOUNDARY;
     }
+
+//    @Override
+//    protected Map<String, String> getParams() throws AuthFailureError{
+//        return params;
+//    }
 }

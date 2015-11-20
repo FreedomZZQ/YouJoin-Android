@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.zq.youjoin.model.ImageInfo;
+import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.utils.Md5Utils;
 
@@ -38,7 +39,6 @@ public class NetworkManager {
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
     public static final String API_UPDATE_USERINFO = BASE_API_URL + "update_userinfo.php";
-    public static final String API_UPLOAD_PIC = BASE_API_URL + "upload_pic.php";
     public static final String API_SEND_TWEET = BASE_API_URL + "send_tweet.php";
 
     private static RequestQueue mRequestQueue ;
@@ -48,19 +48,25 @@ public class NetworkManager {
 
     }
 
-    public static void postUpdateUserInfo(UserInfo userInfo, ResponseListener listener){
-
-    }
-
     /**
-     * 图片上传接口
-     * @param picPath 图片的本地路径
+     * 个人资料更新接口
+     * @param userInfo 用户实体类
+     * @param picPath 头像的本地路径
      * @param listener ResponseListener
      */
-    public static void postUploadPic(String picPath, ResponseListener listener){
+    public static void postUpdateUserInfo(UserInfo userInfo, String picPath, ResponseListener listener){
+        if(userInfo.getId() == null) return;
+
         List<ImageInfo> imageList = new ArrayList<>();
         imageList.add(new ImageInfo(picPath));
-        Request request = new PostUploadRequest(API_UPLOAD_PIC, imageList, listener);
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userInfo.getId());
+        params.put("user_work", userInfo.getWork());
+        params.put("user_location", userInfo.getLocation());
+        params.put("user_sex", userInfo.getSex());
+        params.put("user_birth", userInfo.getBirth());
+        Request request = new PostUploadRequest(API_UPDATE_USERINFO, imageList, params,
+                new TypeToken<ResultInfo>(){}.getType(), listener);
         NetworkManager.getRequestQueue().add(request);
     }
 

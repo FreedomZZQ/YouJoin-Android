@@ -15,5 +15,11 @@ public class ImageInfoTest extends AndroidTestCase {
         assertEquals(info.getFileName(), "123.jpg");
         assertEquals(info.getImagePath(), path);
         assertEquals(info.getMime(), "image/jpeg");
+
+        path = "/storage/emulated/0/Images/234.png";
+        info = new ImageInfo(path);
+        assertEquals(info.getFileName(), "234.png");
+        assertEquals(info.getImagePath(), path);
+        assertEquals(info.getMime(), "image/png");
     }
 }
