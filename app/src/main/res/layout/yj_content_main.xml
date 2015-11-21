@@ -12,9 +12,11 @@
     tools:context="me.zq.youjoin.activity.MainActivity"
     tools:showIn="@layout/yj_activity_main">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_list"
+    <FrameLayout
+        android:id="@+id/frame_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </RelativeLayout>

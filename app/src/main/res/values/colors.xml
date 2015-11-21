@@ -7,4 +7,7 @@
     <!-- 基本颜色 -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+
+    <!-- 透明色-->
+    <color name="trans_white">#88FFFFFF</color>
 </resources>

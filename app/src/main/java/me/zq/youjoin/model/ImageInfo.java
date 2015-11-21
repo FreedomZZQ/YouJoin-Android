@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import java.io.ByteArrayOutputStream;
 
 import me.zq.youjoin.utils.FileUtils;
+import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.MimeUtils;
 
 /**
@@ -34,6 +35,10 @@ public class ImageInfo {
         }
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
+        if(bitmap == null){
+            LogUtils.e(imagePath);
+            return null;
+        }
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos) ;
         return bos.toByteArray();
     }

@@ -1,5 +1,7 @@
 package me.zq.youjoin.network;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -65,7 +67,7 @@ public class PostUploadRequest<T> extends Request<T> {
         try {
             String mString =
                     new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            //Log.v(TAG, "mString = " + mString);
+            Log.v(TAG, "mString = " + mString);
             T result = gson.fromJson(StringUtils.FixJsonString(mString), clazz);
             return Response.success(result,
                     HttpHeaderParser.parseCacheHeaders(response));

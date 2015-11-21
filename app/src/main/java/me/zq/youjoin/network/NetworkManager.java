@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.zq.youjoin.model.ImageInfo;
-import me.zq.youjoin.model.ResultInfo;
+import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.utils.Md5Utils;
 
@@ -30,7 +30,7 @@ public class NetworkManager {
     public static final String USERNAME = "user_name";
     public static final String PASSWORD = "user_password";
     public static final String EMAIL = "user_email";
-    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
 //    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 
     /**
@@ -66,7 +66,7 @@ public class NetworkManager {
         params.put("user_sex", userInfo.getSex());
         params.put("user_birth", userInfo.getBirth());
         Request request = new PostUploadRequest(API_UPDATE_USERINFO, imageList, params,
-                new TypeToken<ResultInfo>(){}.getType(), listener);
+                new TypeToken<UpdateUserInfoResult>(){}.getType(), listener);
         NetworkManager.getRequestQueue().add(request);
     }
 

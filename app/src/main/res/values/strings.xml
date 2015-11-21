@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">YouJoin</string>
 
+    <!-- 切换Fragment时的标题-->
+    <string name="title_tweets">新鲜事</string>
+    <string name="title_mine">我的</string>
+
     <!-- Navigation View Items-->
     <string name="navigation_mine">Mine</string>
     <string name="navigation_friends">Friends</string>
@@ -12,6 +16,12 @@
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
+    <!-- Strings related to personal center-->
+    <string name="hint_work">职业</string>
+    <string name="hint_location">现居地</string>
+    <string name="hint_birth">生日</string>
+    <string name="hint_sex">性别</string>
 
     <!-- Strings related to publish-->
     <string name="hint_publish">分享新鲜事</string>
@@ -36,5 +46,8 @@
     </string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_signup">Sign up</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
