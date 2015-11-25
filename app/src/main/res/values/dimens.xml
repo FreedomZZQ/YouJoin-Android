@@ -6,4 +6,7 @@
 
     <!-- publish btns size-->
     <dimen name="publish_btns_size">30dp</dimen>
+
+    <!-- Navigation Drawer User Photo Size-->
+    <dimen name="navigation_user_photo_size">64dp</dimen>
 </resources>

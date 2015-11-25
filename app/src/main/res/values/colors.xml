@@ -10,4 +10,5 @@
 
     <!-- 透明色-->
     <color name="trans_white">#88FFFFFF</color>
+    <color name="trans_black">#88000000</color>
 </resources>
