@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -43,10 +42,14 @@ public class UserInfoActivity extends BaseActivity {
     EditText yjPersonalBirth;
     @Bind(R.id.yj_personal_commit)
     Button yjPersonalCommit;
-    @Bind(R.id.yj_personal_photo_container)
-    LinearLayout yjPersonalPhotoContainer;
+//    @Bind(R.id.yj_personal_photo_container)
+//    LinearLayout yjPersonalPhotoContainer;
     @Bind(R.id.yj_personal_choose_photo)
     Button yjPersonalChoosePhoto;
+    @Bind(R.id.yj_personal_sign)
+    EditText yjPersonalSign;
+    @Bind(R.id.yj_personal_userphoto)
+    ImageView yjPersonalUserphoto;
 
     private UserInfo userInfo;
     private String picPath;
@@ -69,6 +72,13 @@ public class UserInfoActivity extends BaseActivity {
         yjPersonalSex.setText(userInfo.getSex());
         yjPersonalWork.setText(userInfo.getWork());
         yjPersonalLocation.setText(userInfo.getLocation());
+        yjPersonalSign.setText(userInfo.getUsersign());
+
+        Picasso.with(UserInfoActivity.this)
+                .load(userInfo.getAvatarUrl())
+                .resize(200, 200)
+                .centerCrop()
+                .into(yjPersonalUserphoto);
 
         yjPersonalCommit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +101,7 @@ public class UserInfoActivity extends BaseActivity {
         userInfo.setWork(yjPersonalWork.getText().toString());
         userInfo.setLocation(yjPersonalLocation.getText().toString());
         userInfo.setBirth(yjPersonalBirth.getText().toString());
+        userInfo.setUsersign(yjPersonalSign.getText().toString());
 
         NetworkManager.postUpdateUserInfo(userInfo, picPath, new ResponseListener<UpdateUserInfoResult>() {
             @Override
@@ -101,6 +112,7 @@ public class UserInfoActivity extends BaseActivity {
             @Override
             public void onResponse(UpdateUserInfoResult result) {
                 LogUtils.d("hehe", "photo url is : " + result.getImg_url());
+                userInfo.setAvatarUrl(result.getImg_url());
             }
         });
     }
@@ -113,25 +125,25 @@ public class UserInfoActivity extends BaseActivity {
                 ArrayList<String> mSelectPath =
                         data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
 
-                yjPersonalPhotoContainer.removeAllViews();
+//                yjPersonalPhotoContainer.removeAllViews();
                 for (String p : mSelectPath) {
                     StringBuilder sb = new StringBuilder();
                     sb.append(p);
-
-                    View itemView = View.inflate(UserInfoActivity.this, R.layout.yj_item_publish_photo, null);
-                    ImageView img = (ImageView) itemView.findViewById(R.id.img);
-                    itemView.setTag(p);
+//
+//                    View itemView = View.inflate(UserInfoActivity.this, R.layout.yj_item_publish_photo, null);
+//                    ImageView img = (ImageView) itemView.findViewById(R.id.img);
+//                    itemView.setTag(p);
 
                     Picasso.with(UserInfoActivity.this)
                             .load(new File(p))
                             .resize(200, 200)
                             .centerCrop()
-                            .into(img);
-                    if (yjPersonalPhotoContainer != null) {
-                        yjPersonalPhotoContainer.addView(itemView,
-                                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                                        LinearLayout.LayoutParams.WRAP_CONTENT));
-                    }
+                            .into(yjPersonalUserphoto);
+//                    if (yjPersonalPhotoContainer != null) {
+//                        yjPersonalPhotoContainer.addView(itemView,
+//                                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+//                                        LinearLayout.LayoutParams.WRAP_CONTENT));
+//                    }
                     picPath = sb.toString();
                 }
             }

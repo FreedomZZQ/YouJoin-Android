@@ -4,12 +4,6 @@ package me.zq.youjoin.model;
  * Created by ZQ on 2015/11/12.
  */
 public class UserInfo {
-    /**
-     * id : 1
-     * username : zzq
-     * email : ksudzhan@vip.qq.com
-     * result : success
-     */
 
     private String id;
     private String username;
@@ -20,6 +14,7 @@ public class UserInfo {
     private String birth;
     private String location;
     private String avatarUrl;
+    private String usersign;
 
     public void setId(String id) {
         this.id = id;
@@ -91,5 +86,13 @@ public class UserInfo {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public void setUsersign(String usersign) {
+        this.usersign = usersign;
+    }
+
+    public String getUsersign() {
+        return usersign;
     }
 }

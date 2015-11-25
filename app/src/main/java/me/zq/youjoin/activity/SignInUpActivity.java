@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 
@@ -218,13 +219,31 @@ public class SignInUpActivity extends BaseActivity {
     }
 
     private void signSuccess(UserInfo userInfo){
-        showProgress(false);
-
         YouJoinApplication.setCurrUser(userInfo);
+        NetworkManager.postRequestUserInfo(new ResponseListener<UserInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(YouJoinApplication.getAppContext()
+                        , "Request User Info Error!", Toast.LENGTH_SHORT).show();
+            }
 
-        MainActivity.actionStart(SignInUpActivity.this);
-        SignInUpActivity.this.finish();
-        welcomeActivity.finish();
+            @Override
+            public void onResponse(UserInfo info) {
+                if(info.getResult().equals("success")){
+                    YouJoinApplication.setCurrUser(info);
+                    Toast.makeText(YouJoinApplication.getAppContext(), info.getLocation()
+                    , Toast.LENGTH_SHORT).show();
+
+                    showProgress(false);
+
+                    MainActivity.actionStart(SignInUpActivity.this);
+                    SignInUpActivity.this.finish();
+                    welcomeActivity.finish();
+                }
+
+            }
+        });
+
 
     }
 
