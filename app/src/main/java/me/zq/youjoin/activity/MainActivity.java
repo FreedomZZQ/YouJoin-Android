@@ -80,6 +80,13 @@ public class MainActivity extends BaseActivity  {
         tvUserName.setText(userInfo.getUsername());
         tvUserEmail.setText(userInfo.getEmail());
 
+        ivUserPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoActivity.actionStart(MainActivity.this);
+            }
+        });
+
     }
 
 
@@ -89,13 +96,17 @@ public class MainActivity extends BaseActivity  {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
+                            case R.id.navigation_item_friends:
 
-                            case R.id.navigation_item_mine:
-                                UserInfoActivity.actionStart(MainActivity.this);
                                 break;
+                            case R.id.navigation_item_messages:
 
+                                break;
                             case R.id.navigation_item_tweets:
                                 switchToTweets();
+                                break;
+                            case R.id.navigation_item_settings:
+
                                 break;
                             case R.id.navigation_item_exit:
                                 ActivityManager.finishAll();

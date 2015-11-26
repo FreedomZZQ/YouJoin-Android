@@ -5,9 +5,9 @@
     <group android:checkableBehavior="single">
 
         <!-- android:icon="@drawable/ic_favorite"-->
-        <item
-            android:id="@+id/navigation_item_mine"
-            android:title="@string/navigation_mine" />
+        <!--<item-->
+            <!--android:id="@+id/navigation_item_mine"-->
+            <!--android:title="@string/navigation_mine" />-->
         <item
             android:id="@+id/navigation_item_friends"
             android:title="@string/navigation_friends" />

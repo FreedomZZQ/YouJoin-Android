@@ -6,13 +6,13 @@
     <string name="title_mine">我的</string>
 
     <!-- Navigation View Items-->
-    <string name="navigation_mine">Mine</string>
-    <string name="navigation_friends">Friends</string>
-    <string name="navigation_msg">Messages</string>
-    <string name="navigation_tweets">Tweets</string>
-    <string name="navigation_setting">Settings</string>
-    <string name="navigation_about">About</string>
-    <string name="navigation_exit">Exit</string>
+    <!--<string name="navigation_mine">Mine</string>-->
+    <string name="navigation_friends">朋友</string>
+    <string name="navigation_msg">消息</string>
+    <string name="navigation_tweets">动态</string>
+    <string name="navigation_setting">设置</string>
+    <string name="navigation_about">关于</string>
+    <string name="navigation_exit">退出</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
