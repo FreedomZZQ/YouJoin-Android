@@ -123,25 +123,15 @@ public class UserInfoActivity extends BaseActivity {
                 ArrayList<String> mSelectPath =
                         data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
 
-//                yjPersonalPhotoContainer.removeAllViews();
                 for (String p : mSelectPath) {
                     StringBuilder sb = new StringBuilder();
                     sb.append(p);
-//
-//                    View itemView = View.inflate(UserInfoActivity.this, R.layout.yj_item_publish_photo, null);
-//                    ImageView img = (ImageView) itemView.findViewById(R.id.img);
-//                    itemView.setTag(p);
 
                     Picasso.with(UserInfoActivity.this)
                             .load(new File(p))
                             .resize(200, 200)
                             .centerCrop()
                             .into(yjPersonalUserphoto);
-//                    if (yjPersonalPhotoContainer != null) {
-//                        yjPersonalPhotoContainer.addView(itemView,
-//                                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-//                                        LinearLayout.LayoutParams.WRAP_CONTENT));
-//                    }
                     picPath = sb.toString();
                 }
             }
