@@ -42,8 +42,6 @@ public class UserInfoActivity extends BaseActivity {
     EditText yjPersonalBirth;
     @Bind(R.id.yj_personal_commit)
     Button yjPersonalCommit;
-//    @Bind(R.id.yj_personal_photo_container)
-//    LinearLayout yjPersonalPhotoContainer;
     @Bind(R.id.yj_personal_choose_photo)
     Button yjPersonalChoosePhoto;
     @Bind(R.id.yj_personal_sign)

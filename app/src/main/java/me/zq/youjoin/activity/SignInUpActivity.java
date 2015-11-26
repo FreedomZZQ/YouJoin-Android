@@ -220,7 +220,8 @@ public class SignInUpActivity extends BaseActivity {
 
     private void signSuccess(UserInfo userInfo){
         YouJoinApplication.setCurrUser(userInfo);
-        NetworkManager.postRequestUserInfo(new ResponseListener<UserInfo>() {
+        NetworkManager.postRequestUserInfo(YouJoinApplication.getCurrUser().getId(),
+                new ResponseListener<UserInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(YouJoinApplication.getAppContext()
