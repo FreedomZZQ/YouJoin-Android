@@ -9,11 +9,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.fragment.TweetsFragment;
+import me.zq.youjoin.model.UserInfo;
 
 public class MainActivity extends BaseActivity  {
 
@@ -24,6 +28,9 @@ public class MainActivity extends BaseActivity  {
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+    ImageView ivUserPhoto;
+    TextView tvUserName;
+    TextView tvUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +39,14 @@ public class MainActivity extends BaseActivity  {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        initDrawer();
+        initView();
 
         switchToTweets();
     }
 
 
 
-    private void initDrawer(){
+    private void initView(){
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar,
                 R.string.drawer_open, R.string.drawer_close){
@@ -57,6 +64,22 @@ public class MainActivity extends BaseActivity  {
         actionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         setupNavigationAction(navigationView);
+
+        View navigationHeadView = navigationView.getHeaderView(0);
+        if(navigationView == null) return;
+
+        ivUserPhoto = (ImageView) navigationHeadView.findViewById(R.id.navigation_avatar);
+        tvUserName = (TextView) navigationHeadView.findViewById(R.id.navigation_username);
+        tvUserEmail = (TextView) navigationHeadView.findViewById(R.id.navigation_email);
+
+        UserInfo userInfo = YouJoinApplication.getCurrUser();
+//        Picasso.with(MainActivity.this)
+//                .load(userInfo.getAvatarUrl())
+//                .centerCrop()
+//                .into(ivUserPhoto);
+        tvUserName.setText(userInfo.getUsername());
+        tvUserEmail.setText(userInfo.getEmail());
+
     }
 
 

@@ -10,82 +10,100 @@
     tools:context="me.zq.youjoin.activity.UserInfoActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/yj_personal_email"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ksudzhan@vip.qq.com"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/yj_personal_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="YouJoin"/>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
-
-        <EditText
-            android:id="@+id/yj_personal_sex"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_sex"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/yj_personal_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ksudzhan@vip.qq.com"/>
 
-    </android.support.design.widget.TextInputLayout>
+            <TextView
+                android:id="@+id/yj_personal_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="YouJoin"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
 
-        <EditText
-            android:id="@+id/yj_personal_work"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_work"/>
+                <EditText
+                    android:id="@+id/yj_personal_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_sex"/>
 
-    </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
 
-        <EditText
-            android:id="@+id/yj_personal_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_location"/>
+                <EditText
+                    android:id="@+id/yj_personal_work"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_work"/>
 
-    </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
 
-        <EditText
-            android:id="@+id/yj_personal_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_birth"/>
+                <EditText
+                    android:id="@+id/yj_personal_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_location"/>
 
-    </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
 
-        <EditText
-            android:id="@+id/yj_personal_sign"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_sign"/>
+                <EditText
+                    android:id="@+id/yj_personal_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_birth"/>
 
-    </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <EditText
+                    android:id="@+id/yj_personal_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_sign"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
     <ImageView
         android:id="@+id/yj_personal_userphoto"
@@ -105,6 +123,5 @@
         android:layout_height="wrap_content"
         android:text="Commit"
         />
-
 
 </LinearLayout>

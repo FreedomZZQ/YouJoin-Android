@@ -3,11 +3,11 @@ package me.zq.youjoin.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
@@ -78,23 +79,33 @@ public class UserInfoActivity extends BaseActivity {
                 .centerCrop()
                 .into(yjPersonalUserphoto);
 
-        yjPersonalCommit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateInfo();
-            }
-        });
 
-        yjPersonalChoosePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MultiImageSelectorActivity.startSelect(UserInfoActivity.this, 2, 1,
-                        MultiImageSelectorActivity.MODE_SINGLE);
-            }
-        });
+
+
+//        yjPersonalCommit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateInfo();
+//            }
+//        });
+//
+//        yjPersonalChoosePhoto.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MultiImageSelectorActivity.startSelect(UserInfoActivity.this, 2, 1,
+//                        MultiImageSelectorActivity.MODE_SINGLE);
+//            }
+//        });
     }
 
-    private void updateInfo() {
+    @OnClick(R.id.yj_personal_choose_photo)
+    protected void onCommit(){
+        MultiImageSelectorActivity.startSelect(UserInfoActivity.this, 2, 1,
+                MultiImageSelectorActivity.MODE_SINGLE);
+    }
+
+    @OnClick(R.id.yj_personal_commit)
+    protected void updateInfo() {
         userInfo.setSex(yjPersonalSex.getText().toString());
         userInfo.setWork(yjPersonalWork.getText().toString());
         userInfo.setLocation(yjPersonalLocation.getText().toString());
@@ -104,13 +115,22 @@ public class UserInfoActivity extends BaseActivity {
         NetworkManager.postUpdateUserInfo(userInfo, picPath, new ResponseListener<UpdateUserInfoResult>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                Toast.makeText(UserInfoActivity.this, "UserInfo Update Fail with Network Error!"
+                        , Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(UpdateUserInfoResult result) {
-                LogUtils.d("hehe", "photo url is : " + result.getImg_url());
-                userInfo.setAvatarUrl(result.getImg_url());
+                if (result.getResult().equals("success")) {
+                    LogUtils.d("hehe", "photo url is : " + result.getImg_url());
+                    userInfo.setAvatarUrl(result.getImg_url());
+                    Toast.makeText(UserInfoActivity.this, "UserInfo Update Successfully!"
+                            , Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(UserInfoActivity.this, "UserInfo Update Fail!"
+                            , Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
