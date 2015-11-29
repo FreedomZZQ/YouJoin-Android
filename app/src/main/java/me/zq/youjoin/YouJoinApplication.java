@@ -10,6 +10,8 @@ import me.zq.youjoin.network.NetworkManager;
  * Created by ZQ on 2015/11/12.
  */
 public class YouJoinApplication extends Application {
+    public static float sScale;
+
     private static Context context;
 
     private static UserInfo currUser;
@@ -19,6 +21,8 @@ public class YouJoinApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         NetworkManager.initialize(context);
+
+        sScale = getResources().getDisplayMetrics().density;
     }
 
     public static Context getAppContext(){

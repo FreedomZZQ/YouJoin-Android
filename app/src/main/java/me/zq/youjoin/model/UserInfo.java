@@ -1,5 +1,7 @@
 package me.zq.youjoin.model;
 
+import me.zq.youjoin.utils.StringUtils;
+
 /**
  * Created by ZQ on 2015/11/12.
  */
@@ -15,6 +17,14 @@ public class UserInfo {
     private String location;
     private String avatarUrl;
     private String usersign;
+
+    public String getFirstLetter() {
+        String letter = StringUtils.getFirstLetters(username).toUpperCase().substring(0, 1);
+        if(0 <= letter.compareTo("A") && letter.compareTo("Z") <= 0){
+            return letter;
+        }
+        return "#";
+    }
 
     public void setId(String id) {
         this.id = id;

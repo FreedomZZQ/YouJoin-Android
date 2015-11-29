@@ -11,4 +11,8 @@
     <!-- 透明色-->
     <color name="trans_white">#88FFFFFF</color>
     <color name="trans_black">#88000000</color>
+
+    <color name="divide">#ffeeeeee</color>
+    <color name="divide_line">#ffdddddd</color>
+    <color name="font_black_9">#999999</color>
 </resources>

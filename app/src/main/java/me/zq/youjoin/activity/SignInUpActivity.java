@@ -232,8 +232,8 @@ public class SignInUpActivity extends BaseActivity {
             public void onResponse(UserInfo info) {
                 if(info.getResult().equals("success")){
                     YouJoinApplication.setCurrUser(info);
-                    Toast.makeText(YouJoinApplication.getAppContext(), info.getLocation()
-                    , Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(YouJoinApplication.getAppContext(), info.getLocation()
+//                    , Toast.LENGTH_SHORT).show();
 
                     showProgress(false);
 

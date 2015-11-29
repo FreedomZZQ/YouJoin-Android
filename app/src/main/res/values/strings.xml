@@ -4,6 +4,7 @@
     <!-- 切换Fragment时的标题-->
     <string name="title_tweets">新鲜事</string>
     <string name="title_mine">我的</string>
+    <string name="title_friends">我关注的人</string>
 
     <!-- Navigation View Items-->
     <!--<string name="navigation_mine">Mine</string>-->
