@@ -149,10 +149,10 @@ public class FriendFragment extends Fragment {
             }
 
             holder.name.setText(data.getUsername());
-            //iconfromNetwork(holder.icon, data.getAvatarUrl());
+            //iconfromNetwork(holder.icon, data.getImg_url());
             holder.icon.setImageResource(R.mipmap.ic_account_circle_white_48dp);
 //            Picasso.with(getActivity())
-//                    .load(data.getAvatarUrl())
+//                    .load(data.getImg_url())
 //                    .centerCrop()
 //                    .into(holder.icon);
 

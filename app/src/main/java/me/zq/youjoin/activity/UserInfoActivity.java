@@ -74,7 +74,7 @@ public class UserInfoActivity extends BaseActivity {
         yjPersonalSign.setText(userInfo.getUsersign());
 
         Picasso.with(UserInfoActivity.this)
-                .load(userInfo.getAvatarUrl())
+                .load(userInfo.getImg_url())
                 .resize(200, 200)
                 .centerCrop()
                 .into(yjPersonalUserphoto);
@@ -123,7 +123,7 @@ public class UserInfoActivity extends BaseActivity {
             public void onResponse(UpdateUserInfoResult result) {
                 if (result.getResult().equals("success")) {
                     LogUtils.d("hehe", "photo url is : " + result.getImg_url());
-                    userInfo.setAvatarUrl(result.getImg_url());
+                    userInfo.setImg_url(result.getImg_url());
                     Toast.makeText(UserInfoActivity.this, "UserInfo Update Successfully!"
                             , Toast.LENGTH_SHORT).show();
                 } else {

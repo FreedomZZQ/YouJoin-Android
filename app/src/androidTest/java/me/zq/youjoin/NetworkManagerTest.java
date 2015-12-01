@@ -84,11 +84,13 @@ public class NetworkManagerTest extends AndroidTestCase {
 
         for(int i = 0; i < 26; i++){
 
-            UserInfo info = new UserInfo();
-            char [] name = {(char)('A' + i), (char)('A' + i) };
-            info.setUsername(new String(name));
-            info.setEmail(new String(name) + "@test.com");
-            mData.add(info);
+            for(int j = 0; j < 6; j++){
+                UserInfo info = new UserInfo();
+                char [] name = {(char)('A' + i), (char)('A' + i), (char)('1' + j)};
+                info.setUsername(new String(name));
+                info.setEmail(new String(name) + "@test.com");
+                mData.add(info);
+            }
 
         }
 

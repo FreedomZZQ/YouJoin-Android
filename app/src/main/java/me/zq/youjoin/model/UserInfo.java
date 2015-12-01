@@ -15,7 +15,7 @@ public class UserInfo {
     private String sex;
     private String birth;
     private String location;
-    private String avatarUrl;
+    private String img_url;
     private String usersign;
 
     public String getFirstLetter() {
@@ -90,12 +90,12 @@ public class UserInfo {
         this.location = location;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getImg_url() {
+        return img_url;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
     }
 
     public void setUsersign(String usersign) {

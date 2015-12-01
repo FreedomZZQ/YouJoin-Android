@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity  {
 
         UserInfo userInfo = YouJoinApplication.getCurrUser();
 //        Picasso.with(MainActivity.this)
-//                .load(userInfo.getAvatarUrl())
+//                .load(userInfo.getImg_url())
 //                .centerCrop()
 //                .into(ivUserPhoto);
         tvUserName.setText(userInfo.getUsername());
