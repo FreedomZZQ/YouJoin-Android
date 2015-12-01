@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -27,10 +25,12 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 public class FriendFragment extends Fragment {
 
     ArrayList<UserInfo> mData = new ArrayList<>();
-    ArrayList<UserInfo> mSearchData = new ArrayList<>();
+    //ArrayList<UserInfo> mSearchData = new ArrayList<>();
 
     @Bind(R.id.userlist)
     IndexableListView userlist;
+
+    UserAdapter adapter = new UserAdapter();
 
     public FriendFragment() {
         // Required empty public constructor
@@ -44,10 +44,29 @@ public class FriendFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
         ButterKnife.bind(this, view);
 
-        userlist.setFastScrollEnabled(true);
-        userlist.setFastScrollAlwaysVisible(true);
+        initUserList();
 
         return view;
+    }
+
+    private void initUserList(){
+
+        adapter.initSection();
+
+        userlist.setFastScrollEnabled(true);
+        userlist.setFastScrollAlwaysVisible(true);
+        userlist.setAdapter(adapter);
+
+        for(int i = 0; i < 26; i++){
+            for(int j = 0; j < 10; j++){
+                UserInfo info = new UserInfo();
+                char [] name = {(char)('A' + i), (char)('A' + i) };
+                info.setUsername(new String(name));
+                mData.add(info);
+            }
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -89,12 +108,12 @@ public class FriendFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return mSearchData.size();
+            return mData.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return mSearchData.get(position);
+            return mData.get(position);
         }
 
         @Override
@@ -120,7 +139,7 @@ public class FriendFragment extends Fragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            final UserInfo data = mSearchData.get(position);
+            final UserInfo data = mData.get(position);
 
             if (isSection(position)) {
                 holder.divideTitle.setVisibility(View.VISIBLE);
@@ -131,10 +150,11 @@ public class FriendFragment extends Fragment {
 
             holder.name.setText(data.getUsername());
             //iconfromNetwork(holder.icon, data.getAvatarUrl());
-            Picasso.with(getActivity())
-                    .load(data.getAvatarUrl())
-                    .centerCrop()
-                    .into(holder.icon);
+            holder.icon.setImageResource(R.mipmap.ic_account_circle_white_48dp);
+//            Picasso.with(getActivity())
+//                    .load(data.getAvatarUrl())
+//                    .centerCrop()
+//                    .into(holder.icon);
 
 //            if (!hideFollowButton) {
 //                int drawableId = data.follow ? R.drawable.checkbox_fans : R.drawable.checkbox_follow;
