@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/emojiKeyboardLayout"
+    android:visibility="visible"
+    android:focusable="true"
+    android:clickable="true"
+    tools:showIn="@layout/common_enter_emoji">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="7.5dp"
+        android:orientation="vertical">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="120dp" />
+
+        <LinearLayout
+            android:layout_marginTop="7.5dp"
+            android:id="@+id/emojiKeyboardIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="14.5dp"
+            android:orientation="horizontal"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/emoji_line" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/emoji_switch_button_width"
+            android:layout_height="match_parent"
+            android:id="@+id/selectEmoji"
+            android:gravity="center"
+            android:src="@drawable/ic_emoji_small"
+            android:scaleType="centerInside" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/emoji_line" />
+
+        <!--<ImageView-->
+            <!--android:layout_width="@dimen/emoji_switch_button_width"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/selectMonkey"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:src="@drawable/ic_emoji_monkey"-->
+            <!--android:scaleType="centerInside" />-->
+
+        <!--<View-->
+            <!--android:id="@+id/selectMonkeyDivideLine"-->
+            <!--android:layout_width="0.5dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/emoji_line" />-->
+
+        <!--<ImageView-->
+            <!--android:layout_width="@dimen/emoji_switch_button_width"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/selectZhongqiu"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:src="@drawable/ic_emoji_zhongqiu"-->
+            <!--android:scaleType="centerInside" />-->
+
+        <!--<View-->
+            <!--android:id="@+id/selectMonkeyDivideLine1"-->
+            <!--android:layout_width="0.5dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/emoji_line" />-->
+
+    </RadioGroup>
+
+</LinearLayout>

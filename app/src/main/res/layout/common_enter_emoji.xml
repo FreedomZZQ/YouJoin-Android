@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/commonEnterRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="-200dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/mInputBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:minHeight="48dp"
+            android:orientation="horizontal">
+
+
+            <!--<CheckBox-->
+                <!--android:id="@+id/popVoice"-->
+                <!--android:layout_width="32dp"-->
+                <!--android:layout_height="32dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_marginLeft="13dp"-->
+                <!--android:layout_marginRight="8dp"-->
+                <!--android:background="@drawable/checkbox_pop_voice"-->
+                <!--android:button="@null"-->
+                <!--android:visibility="gone" />-->
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:id="@+id/arrowLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_select_transparent"
+                    android:visibility="gone">
+
+                    <CheckBox
+                        android:id="@+id/arrow"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/checkbox_pop_arrow"
+                        android:button="@null" />
+
+                    <Button
+                        android:id="@+id/btn_emoji"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/pop_emoji" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/mInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/edit_select"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/comment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:maxLines="4"
+                        android:textColor="@color/black" />
+
+                    <CheckBox
+                        android:id="@+id/popEmoji"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="0dp"
+                        android:background="@null"
+                        android:button="@drawable/checkbox_pop_emoji"
+                        android:checked="false" />
+                </LinearLayout>
+            </FrameLayout>
+
+
+            <RelativeLayout
+                android:layout_width="54dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="2dp">
+
+                <ImageButton
+                    android:id="@+id/send"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/message_button_add"
+
+                    android:padding="5dp" />
+
+
+                <TextView
+                    android:id="@+id/sendText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/edit_send_green"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="发送"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/emoji_line" />
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/mPanelLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="48dp">
+
+        <!--<com.skyfishjy.library.RippleBackground-->
+            <!--android:id="@+id/voiceLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="195dp"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:orientation="vertical"-->
+            <!--android:visibility="visible"-->
+            <!--app:rb_color="#0082AD"-->
+            <!--app:rb_duration="1500"-->
+            <!--app:rb_radius="16dp"-->
+            <!--app:rb_rippleAmount="3"-->
+            <!--app:rb_scale="4">-->
+
+            <!--<ImageButton-->
+                <!--android:id="@+id/voiceRecordButton"-->
+                <!--android:layout_width="110dp"-->
+                <!--android:layout_height="110dp"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:layout_marginBottom="16dp"-->
+                <!--android:layout_marginTop="16dp"-->
+                <!--android:background="@drawable/anim_voice_record" />-->
+
+            <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_above="@+id/voiceRecordButton"-->
+                <!--android:layout_centerHorizontal="true">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tips_hold_to_talk"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:text="@string/hold_to_talk"-->
+                    <!--android:textColor="@color/font_black_9"-->
+                    <!--android:textSize="16sp" />-->
+                <!--&lt;!&ndash;显示录音时间&ndash;&gt;-->
+                <!--<FrameLayout-->
+                    <!--android:id="@+id/soundWaveLayout"-->
+                    <!--android:layout_width="120dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:visibility="gone">-->
+
+                    <!--<net.coding.program.common.widget.SoundWaveView-->
+                        <!--android:id="@+id/soundWaveLeft"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentLeft="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_gravity="center_vertical|left"-->
+                        <!--app:soundOriginOrientation="right" />-->
+                    <!--&lt;!&ndash;不知道为什么这里的TextView就是不能再真机中文本居中，因此加了个2sp的marginBottom，让它看起来居中&ndash;&gt;-->
+                    <!--<TextView-->
+                        <!--android:id="@+id/recordTime"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_gravity="center_horizontal|bottom"-->
+                        <!--android:layout_marginBottom="2sp"-->
+                        <!--android:gravity="center"-->
+                        <!--android:textColor="#50aeea"-->
+                        <!--android:textSize="16sp" />-->
+
+                    <!--<net.coding.program.common.widget.SoundWaveView-->
+                        <!--android:id="@+id/soundWaveRight"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_gravity="center_vertical|right"-->
+                        <!--app:soundOriginOrientation="left" />-->
+                <!--</FrameLayout>-->
+            <!--</FrameLayout>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/voiceRecordButton"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:text="@string/sliding_upwards_and_cancel_sending"-->
+                <!--android:textColor="@color/font_black_9"-->
+                <!--android:textSize="12sp" />-->
+        <!--</com.skyfishjy.library.RippleBackground>-->
+
+        <include layout="@layout/emoji_keyboard_content" />
+
+    </FrameLayout>
+
+</FrameLayout>

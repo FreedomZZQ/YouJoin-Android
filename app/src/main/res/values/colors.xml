@@ -8,6 +8,8 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
+    <color name="grey">#777777</color>
+
     <!-- 透明色-->
     <color name="trans_white">#88FFFFFF</color>
     <color name="trans_black">#88000000</color>
@@ -15,4 +17,6 @@
     <color name="divide">#ffeeeeee</color>
     <color name="divide_line">#ffdddddd</color>
     <color name="font_black_9">#999999</color>
+
+    <color name="emoji_line">#ffcbc9ca</color>
 </resources>

@@ -1,46 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.PublishActivity"
     android:orientation="vertical">
-
-    <android.support.design.widget.TextInputLayout
+    
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="5dp">
+        android:layout_height="150dp"
+        android:id="@+id/inputLayout"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/yj_publish_edit"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/hint_publish"
-            android:gravity="start|top"/>
+            android:padding="5dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/hint_publish"
+                android:gravity="start|top"/>
 
-    <HorizontalScrollView
+        </android.support.design.widget.TextInputLayout>
+
+        <!--<EditText-->
+            <!--android:id="@+id/comment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@null"-->
+            <!--android:gravity="top|start"-->
+            <!--android:hint="@string/hint_publish"-->
+            <!--android:paddingBottom="14dp"-->
+            <!--android:paddingLeft="12dp"-->
+            <!--android:paddingRight="12dp"-->
+            <!--android:paddingTop="14dp"-->
+            <!--android:textSize="16sp" />-->
+
+        <RelativeLayout
+            android:layout_width="54dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="2dp"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/send"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/message_button_add"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/sendText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/edit_send_green"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="发送"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:id="@+id/scroll_photo_container"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/lay_photo_container"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+
+
+    <me.zq.youjoin.widget.enter.AutoHeightGridView
+        android:id="@+id/gridView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:id="@+id/scroll_photo_container"
-        >
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputLayout"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="10dp"
+        android:columnWidth="62dp"
+        android:gravity="center"
+        android:horizontalSpacing="8dp"
+        android:numColumns="4"
+        android:stretchMode="none"
+        android:verticalSpacing="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom_layout"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/lay_photo_container"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@color/colorPrimary"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="12dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="15dp"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/popEmoji"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@null"
+                    android:button="@drawable/checkbox_pop_emoji" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="15dp">
+
+                <ImageView
+                    android:id="@+id/popPhoto"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@mipmap/ic_insert_photo_white_48dp" />
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1">-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/popTopic"-->
+                    <!--android:layout_width="32dp"-->
+                    <!--android:layout_height="32dp"-->
+                    <!--android:background="@drawable/pop_topic" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1">-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/popAt"-->
+                    <!--android:layout_width="32dp"-->
+                    <!--android:layout_height="32dp"-->
+                    <!--android:background="@drawable/pop_at" />-->
+            <!--</LinearLayout>-->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </LinearLayout>
+
         </LinearLayout>
-    </HorizontalScrollView>
+        <!--<include-->
+            <!--layout="@layout/yj_publish_btns"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"/>-->
 
+        <include
+            layout="@layout/emoji_keyboard_content"
+            android:visibility="gone" />
+        
+    </LinearLayout>
+    
 
-    <include
-        layout="@layout/yj_publish_btns"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-
-        />
-
-</LinearLayout>
+</RelativeLayout>

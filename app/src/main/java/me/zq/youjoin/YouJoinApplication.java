@@ -11,6 +11,7 @@ import me.zq.youjoin.network.NetworkManager;
  */
 public class YouJoinApplication extends Application {
     public static float sScale;
+    public static int sHeightPix;
 
     private static Context context;
 
@@ -23,6 +24,7 @@ public class YouJoinApplication extends Application {
         NetworkManager.initialize(context);
 
         sScale = getResources().getDisplayMetrics().density;
+        sHeightPix = getResources().getDisplayMetrics().heightPixels;
     }
 
     public static Context getAppContext(){

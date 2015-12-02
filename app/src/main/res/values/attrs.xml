@@ -5,6 +5,8 @@
         <attr name="border_color" format="color" />
     </declare-styleable>
 
-
+    <declare-styleable name="EnterLayoutAnimSupportContainer">
+        <attr name="isAdjustResize" format="boolean"/>
+    </declare-styleable>
 
 </resources>
