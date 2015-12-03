@@ -67,19 +67,7 @@
                 android:visibility="gone" />
         </RelativeLayout>
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:id="@+id/scroll_photo_container"
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/lay_photo_container"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-            </LinearLayout>
-        </HorizontalScrollView>
+
 
     </LinearLayout>
 
@@ -106,6 +94,20 @@
         android:id="@+id/bottom_layout"
         android:orientation="vertical"
         android:layout_alignParentBottom="true">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:id="@+id/scroll_photo_container"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/lay_photo_container"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+            </LinearLayout>
+        </HorizontalScrollView>
 
 
         <LinearLayout
@@ -136,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="15dp">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/popPhoto"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -173,6 +175,19 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:id="@+id/btn_send"
+                    android:padding="4dp"
+                    android:background="@mipmap/ic_send_white_48dp"
+                    android:layout_marginEnd="10dp" />
             </LinearLayout>
 
         </LinearLayout>

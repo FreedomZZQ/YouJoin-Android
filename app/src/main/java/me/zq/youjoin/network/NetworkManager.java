@@ -30,15 +30,24 @@ public class NetworkManager {
     /**
      * 网络接口相关常量
      */
-    public static final String USERNAME = "user_name";
-    public static final String PASSWORD = "user_password";
-    public static final String EMAIL = "user_email";
+    public static final String USER_USERNAME = "user_name";
+    public static final String USER_PASSWORD = "user_password";
+    public static final String USER_EMAIL = "user_email";
+    public static final String USER_ID = "user_id";
+    public static final String USER_WORK = "user_work";
+    public static final String USER_BIRTH = "user_birth";
+    public static final String USER_SIGN = "user_sign";
+    public static final String USER_LOCATION = "user_location";
+    public static final String USER_SEX = "user_sex";
+
+    public static final String TWEETS_CONTNET = "tweets_content";
+
 
     /**
      * 服务器接口URL
      */
-//    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
-    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
     public static final String API_UPDATE_USERINFO = BASE_API_URL + "update_userinfo.php";
@@ -57,8 +66,14 @@ public class NetworkManager {
      * 发送动态接口
      * @param listener ResponseListener
      */
-    public static void postSendTweet(ResponseListener listener){
-
+    public static void postSendTweet(String content, List<ImageInfo> images,
+                                     ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, YouJoinApplication.getCurrUser().getId());
+        params.put(TWEETS_CONTNET, content);
+        Request request = new PostUploadRequest(API_SEND_TWEET, images, params,
+                new TypeToken<UpdateUserInfoResult>(){}.getType(), listener);
+        NetworkManager.getRequestQueue().add(request);
     }
 
     /**
@@ -132,12 +147,12 @@ public class NetworkManager {
         List<ImageInfo> imageList = new ArrayList<>();
         imageList.add(new ImageInfo(picPath));
         Map<String, String> params = new HashMap<>();
-        params.put("user_id", userInfo.getId());
-        params.put("user_work", userInfo.getWork());
-        params.put("user_location", userInfo.getLocation());
-        params.put("user_sex", userInfo.getSex());
-        params.put("user_birth", userInfo.getBirth());
-        params.put("user_sign", userInfo.getUsersign());
+        params.put(USER_ID, userInfo.getId());
+        params.put(USER_WORK, userInfo.getWork());
+        params.put(USER_LOCATION, userInfo.getLocation());
+        params.put(USER_SEX, userInfo.getSex());
+        params.put(USER_BIRTH, userInfo.getBirth());
+        params.put(USER_SIGN, userInfo.getUsersign());
         Request request = new PostUploadRequest(API_UPDATE_USERINFO, imageList, params,
                 new TypeToken<UpdateUserInfoResult>(){}.getType(), listener);
         NetworkManager.getRequestQueue().add(request);
@@ -152,8 +167,8 @@ public class NetworkManager {
     public static void postSignIn(String username, String password,
                                   ResponseListener listener){
         Map<String, String> param = new HashMap<>();
-        param.put(USERNAME, username);
-        param.put(PASSWORD, Md5Utils.getMd5(password));
+        param.put(USER_USERNAME, username);
+        param.put(USER_PASSWORD, Md5Utils.getMd5(password));
         Request request = new PostObjectRequest(
                 API_SIGN_IN,
                 param,
@@ -172,9 +187,9 @@ public class NetworkManager {
     public static void postSignUp(String username, String password, String email,
                                   ResponseListener listener){
         Map<String, String> param = new HashMap<>();
-        param.put(USERNAME, username);
-        param.put(PASSWORD, Md5Utils.getMd5(password));
-        param.put(EMAIL, email);
+        param.put(USER_USERNAME, username);
+        param.put(USER_PASSWORD, Md5Utils.getMd5(password));
+        param.put(USER_EMAIL, email);
         Request request = new PostObjectRequest(
                 API_SIGN_UP,
                 param,

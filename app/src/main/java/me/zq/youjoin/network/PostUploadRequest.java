@@ -136,7 +136,7 @@ public class PostUploadRequest<T> extends Request<T> {
             //Content-Disposition: form-data; name="参数的名称"; filename="上传的文件名" + "\r\n"
             sb.append("Content-Disposition: form-data;");
             sb.append(" name=\"");
-            sb.append(PARAM) ;
+            sb.append(PARAM + "[" + Integer.toString(i) + "]");
             sb.append("\"") ;
             sb.append("; filename=\"") ;
             sb.append(imageInfo.getFileName()) ;
