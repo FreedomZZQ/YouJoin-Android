@@ -3,7 +3,6 @@ package me.zq.youjoin.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,22 +24,16 @@ import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.network.ResponseListener;
+import me.zq.youjoin.utils.GlobalUtils;
 import me.zq.youjoin.utils.LogUtils;
-import me.zq.youjoin.widget.enter.AutoHeightGridView;
 import me.zq.youjoin.widget.enter.EmojiFragment;
 import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
 
 public class PublishActivity extends BaseActivity implements EmojiFragment.EnterEmojiLayout {
 
-    public static final int PHOTO_MAX_COUNT = 9;
-
-    @Bind(R.id.comment)
-    EditText yjPublishEdit;
     @Bind(R.id.lay_photo_container)
     LinearLayout layPhotoContainer;
-    @Bind(R.id.gridView)
-    AutoHeightGridView gridView;
     @Bind(R.id.popPhoto)
     ImageButton btnPopPhoto;
     @Bind(R.id.btn_send)
@@ -48,7 +41,6 @@ public class PublishActivity extends BaseActivity implements EmojiFragment.Enter
 
     ArrayList<String> mSelectPath;
     ArrayList<ImageInfo> mData = new ArrayList<>();
-    LayoutInflater mInflater;
     EnterEmojiLayout enterLayout;
     EditText msgEdit;
 
@@ -75,18 +67,27 @@ public class PublishActivity extends BaseActivity implements EmojiFragment.Enter
                         new ResponseListener<ResultInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        LogUtils.e("hehe", volleyError.toString());
+                        LogUtils.e(TAG, volleyError.toString());
+                        Toast.makeText(PublishActivity.this, "Network Error!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onResponse(ResultInfo result) {
-                        Toast.makeText(PublishActivity.this, result.getResult(), Toast.LENGTH_SHORT).show();
+                        LogUtils.d(TAG, result.getResult());
+                        onSendSuccess();
                     }
                 });
             }
         });
 
         initEnter();
+    }
+
+    private void onSendSuccess(){
+        msgEdit.setText("");
+        mData.clear();
+        layPhotoContainer.removeAllViews();
+        GlobalUtils.popSoftkeyboard(PublishActivity.this, msgEdit, false);
     }
 
     private void initEnter() {
