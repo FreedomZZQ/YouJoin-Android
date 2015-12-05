@@ -45,7 +45,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/search_result_list"
         android:layout_below="@id/container_edittext"
-        android:layout_above="@id/search_user_fab"
         android:padding="16dp"/>
 
 

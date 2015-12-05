@@ -138,6 +138,22 @@ public class NetworkManager {
      * @param param   获取用户资料的参数，收到后自动判断并填充type。type取值1表示id，2表示name，3表示email)
      * @param listener ResponseListener
      */
+//    public static void postRequestUserInfo(String param, ResponseListener listener){
+//        String type = StringUtils.getParamType(param);
+//        if(type.equals("invalid")) {
+//            LogUtils.e(TAG, "param invalid!");
+//            return;
+//        }
+//        Map<String, String> params = new HashMap<>();
+//        params.put(PARAM, param);
+//        params.put(PARAM_TYPE, type);
+//        Request request = new PostObjectRequest(
+//                API_REQUEST_USERINFO,
+//                params,new TypeToken<UserInfo>(){}.getType(),
+//                listener);
+//        NetworkManager.getRequestQueue().add(request);
+//    }
+
     public static void postRequestUserInfo(String param, ResponseListener listener){
         String type = StringUtils.getParamType(param);
         if(type.equals("invalid")) {
@@ -145,8 +161,7 @@ public class NetworkManager {
             return;
         }
         Map<String, String> params = new HashMap<>();
-        params.put(PARAM, param);
-        params.put(PARAM_TYPE, type);
+        params.put(USER_ID, param);
         Request request = new PostObjectRequest(
                 API_REQUEST_USERINFO,
                 params,new TypeToken<UserInfo>(){}.getType(),
