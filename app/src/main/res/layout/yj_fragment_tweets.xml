@@ -2,6 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
     tools:context="me.zq.youjoin.fragment.TweetsFragment">
 
     <android.support.v7.widget.RecyclerView

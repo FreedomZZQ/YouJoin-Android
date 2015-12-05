@@ -6,6 +6,11 @@
     <string name="title_mine">我的</string>
     <string name="title_friends">我关注的人</string>
 
+    <!-- Activity的标题-->
+    <string name="title_activity_main">YouJoin</string>
+    <string name="title_activity_search_friend">搜索用户</string>
+    <string name="title_activity_publish">发表动态</string>
+
     <!-- Navigation View Items-->
     <!--<string name="navigation_mine">Mine</string>-->
     <string name="navigation_friends">朋友</string>
@@ -28,6 +33,9 @@
     <!-- Strings related to publish-->
     <string name="hint_publish">分享新鲜事</string>
 
+    <!-- Strings related to search user-->
+    <string name="hint_search_content">输入用户名、邮箱或用户ID进行搜索</string>
+
     <!-- Strings related to login -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
@@ -46,10 +54,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_signup">Sign up</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

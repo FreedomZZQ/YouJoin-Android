@@ -73,20 +73,20 @@
 
 
 
-    <me.zq.youjoin.widget.enter.AutoHeightGridView
-        android:id="@+id/gridView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/inputLayout"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="10dp"
-        android:columnWidth="62dp"
-        android:gravity="center"
-        android:horizontalSpacing="8dp"
-        android:numColumns="4"
-        android:stretchMode="none"
-        android:verticalSpacing="8dp"/>
+    <!--<me.zq.youjoin.widget.enter.AutoHeightGridView-->
+        <!--android:id="@+id/gridView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/inputLayout"-->
+        <!--android:layout_marginStart="12dp"-->
+        <!--android:layout_marginEnd="12dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:columnWidth="62dp"-->
+        <!--android:gravity="center"-->
+        <!--android:horizontalSpacing="8dp"-->
+        <!--android:numColumns="4"-->
+        <!--android:stretchMode="none"-->
+        <!--android:verticalSpacing="8dp"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -15,4 +15,6 @@
     <dimen name="emoji_normal">24dp</dimen>
     <dimen name="point_width">5dp</dimen>
     <dimen name="point_margin">8dp</dimen>
+
+    <dimen name="tweets_list_item_button_size">32dp</dimen>
 </resources>

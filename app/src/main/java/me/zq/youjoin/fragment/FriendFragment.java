@@ -2,6 +2,7 @@ package me.zq.youjoin.fragment;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.activity.SearchUserActivity;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.widget.sidebar.IndexableListView;
 import me.zq.youjoin.widget.sidebar.StringMatcher;
@@ -31,6 +33,8 @@ public class FriendFragment extends Fragment {
     IndexableListView userlist;
 
     UserAdapter adapter = new UserAdapter();
+    @Bind(R.id.add_friend_fab)
+    FloatingActionButton addFriendFab;
 
     public FriendFragment() {
         // Required empty public constructor
@@ -44,12 +48,18 @@ public class FriendFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
         ButterKnife.bind(this, view);
 
+        addFriendFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchUserActivity.actionStart(getActivity());
+            }
+        });
         initUserList();
 
         return view;
     }
 
-    private void initUserList(){
+    private void initUserList() {
 
         adapter.initSection();
 
@@ -57,10 +67,10 @@ public class FriendFragment extends Fragment {
         userlist.setFastScrollAlwaysVisible(true);
         userlist.setAdapter(adapter);
 
-        for(int i = 0; i < 26; i++){
-            for(int j = 0; j < 10; j++){
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < 10; j++) {
                 UserInfo info = new UserInfo();
-                char [] name = {(char)('A' + i), (char)('A' + i) };
+                char[] name = {(char) ('A' + i), (char) ('A' + i)};
                 info.setUsername(new String(name));
                 mData.add(info);
             }

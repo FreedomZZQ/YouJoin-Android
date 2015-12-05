@@ -18,7 +18,9 @@ import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.Md5Utils;
+import me.zq.youjoin.utils.StringUtils;
 
 /**
  * YouJoin
@@ -42,6 +44,15 @@ public class NetworkManager {
 
     public static final String TWEETS_CONTNET = "tweets_content";
 
+    public static final String FRIEND_ID = "friend_id";
+
+    public static final String PARAM_TYPE = "type";
+    public static final String PARAM = "param";
+
+    public static final String SEND_USERID = "send_userid";
+    public static final String RECEIVE_USERID = "receive_userid";
+    public static final String MESSAGE_CONTENT = "message_content";
+
 
     /**
      * 服务器接口URL
@@ -60,6 +71,8 @@ public class NetworkManager {
     public static final String API_UPVOTE_TWEET = BASE_API_URL + "upvote_tweet.php";
 
     private static RequestQueue mRequestQueue ;
+
+    public static final String TAG = "YouJoin_Network";
 
 
     /**
@@ -93,9 +106,9 @@ public class NetworkManager {
     public static void postSendMessage(String receiveUserId, String content,
                                        ResponseListener listener){
         Map<String, String> params = new HashMap<>();
-        params.put("send_userid", YouJoinApplication.getCurrUser().getId());
-        params.put("receive_userid", receiveUserId);
-        params.put("message_content", content);
+        params.put(SEND_USERID, YouJoinApplication.getCurrUser().getId());
+        params.put(RECEIVE_USERID, receiveUserId);
+        params.put(MESSAGE_CONTENT, content);
         Request request = new PostObjectRequest(
                 API_SEND_MESSAGE,
                 params, new TypeToken<ResultInfo>(){}.getType(),
@@ -111,8 +124,8 @@ public class NetworkManager {
     public static void postAddFriend(String friendUserId,
                                      ResponseListener listener){
         Map<String, String> params = new HashMap<>();
-        params.put("user_id", YouJoinApplication.getCurrUser().getId());
-        params.put("friend_id", friendUserId);
+        params.put(USER_ID, YouJoinApplication.getCurrUser().getId());
+        params.put(FRIEND_ID, friendUserId);
         Request request = new PostObjectRequest(
                 API_ADD_FRIEND,
                 params, new TypeToken<ResultInfo>(){}.getType(),
@@ -122,12 +135,18 @@ public class NetworkManager {
 
     /**
      * 个人资料请求（下载）接口
-     * @param userId   要获取的用户id
+     * @param param   获取用户资料的参数，收到后自动判断并填充type。type取值1表示id，2表示name，3表示email)
      * @param listener ResponseListener
      */
-    public static void postRequestUserInfo(String userId, ResponseListener listener){
+    public static void postRequestUserInfo(String param, ResponseListener listener){
+        String type = StringUtils.getParamType(param);
+        if(type.equals("invalid")) {
+            LogUtils.e(TAG, "param invalid!");
+            return;
+        }
         Map<String, String> params = new HashMap<>();
-        params.put("user_id", userId);
+        params.put(PARAM, param);
+        params.put(PARAM_TYPE, type);
         Request request = new PostObjectRequest(
                 API_REQUEST_USERINFO,
                 params,new TypeToken<UserInfo>(){}.getType(),

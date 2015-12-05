@@ -31,6 +31,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.network.ResponseListener;
+import me.zq.youjoin.utils.StringUtils;
 
 
 /**
@@ -256,7 +257,7 @@ public class SignInUpActivity extends BaseActivity {
     }
 
     private boolean isUsernameValid(String username) {
-        return username.length() > 2;
+        return username.length() > 2 && StringUtils.isLetter(username.charAt(0));
     }
 
     private boolean isPasswordValid(String password) {
@@ -264,7 +265,7 @@ public class SignInUpActivity extends BaseActivity {
     }
 
     private boolean isEmailValid(String email){
-        return email.contains("@");
+        return StringUtils.isEmailAddress(email);
     }
 
     /**

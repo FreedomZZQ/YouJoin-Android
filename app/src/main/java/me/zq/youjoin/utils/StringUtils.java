@@ -12,6 +12,30 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  */
 public class StringUtils {
 
+    public static String getParamType(String param){
+        if(isEmailAddress(param)){
+            return "3";
+        } else if(isLetter(param.charAt(0))){
+            return "2";
+        } else if(isAllNumber(param)){
+            return "1";
+        }else{
+            return "invalid";
+        }
+    }
+
+    public static boolean isAllNumber(String s){
+        return s.matches("\\d+");
+    }
+
+    public static boolean isLetter(char a){
+        return (a >= 'A' && a <= 'Z') || (a >= 'a' && a <= 'z');
+    }
+
+    public static boolean isEmailAddress(String email){
+        return email.contains("@");
+    }
+
     /**
      * 对接收到的json字符串进行处理，去掉可能的垃圾头和垃圾尾，使其符合json格式
      * @param jsonString 接收到的json字符串

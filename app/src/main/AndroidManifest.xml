@@ -23,7 +23,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.BaseActivity" />
         <activity
             android:name=".activity.WelcomeActivity"
@@ -36,14 +36,21 @@
         </activity>
         <activity
             android:name=".activity.PublishActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
+            android:label="@string/title_activity_publish"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name="me.nereo.multi_image_selector.PreviewPicturesActivity"
             android:configChanges="orientation|screenSize" />
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".activity.UserInfoActivity"></activity>
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity
+            android:name=".activity.SearchUserActivity"
+            android:label="@string/title_activity_search_friend"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+        </activity>
     </application>
 
 </manifest>

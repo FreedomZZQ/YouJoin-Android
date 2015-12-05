@@ -53,13 +53,10 @@ public class MainActivity extends BaseActivity  {
                 R.string.drawer_open, R.string.drawer_close){
             public void onDrawerClosed(View view){
                 super.onDrawerClosed(view);
-
-                //fab.show();
             }
 
             public void onDrawerOpened(View view){
                 super.onDrawerOpened(view);
-                //fab.hide();
             }
         };
         actionBarDrawerToggle.syncState();
