@@ -20,6 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -63,7 +64,8 @@ public class PublishActivity extends BaseActivity implements EmojiFragment.Enter
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkManager.postSendTweet(msgEdit.getText().toString(), mData,
+                NetworkManager.postSendTweet(YouJoinApplication.getCurrUser().getId(),
+                        msgEdit.getText().toString(), mData,
                         new ResponseListener<ResultInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {

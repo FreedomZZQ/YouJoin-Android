@@ -7,6 +7,7 @@ import com.android.volley.VolleyError;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
@@ -22,20 +23,28 @@ import me.zq.youjoin.utils.LogUtils;
  */
 public class NetworkManagerTest extends AndroidTestCase {
 
+    public static final String testId = "16";
+    public static final String testId2 = "17";
+    public static final String testTweetId = "14";
+    public static final String picPath = "/storage/emulated/0/Download/lufei.jpg";
+    public static final String TAG = "YouJoinTest";
+    public static final String SUCCESS = "success";
 
     /**
      * 测试个人资料更新API工作是否正常
      */
     public void testPostUpdateUserInfo(){
         UserInfo info = new UserInfo();
-        info.setId("1");
+        info.setId(testId);
         info.setBirth("950313");
         info.setLocation("qd");
-        info.setWork("student");
+        info.setWork("学生");
         info.setSex("1");
+        info.setUsersign("mzz");
+        info.setNickname("吃桔子的攻城狮");
 
         //正常情况
-        NetworkManager.postUpdateUserInfo(info, "/storage/emulated/0/Download/lufei.jpg",
+        NetworkManager.postUpdateUserInfo(info, picPath,
                 new ResponseListener<UpdateUserInfoResult>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
@@ -49,18 +58,18 @@ public class NetworkManagerTest extends AndroidTestCase {
                 });
 
         //无头像情况
-        NetworkManager.postUpdateUserInfo(info, "",
-                new ResponseListener<UpdateUserInfoResult>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        assertEquals(true, false);
-                    }
-
-                    @Override
-                    public void onResponse(UpdateUserInfoResult info) {
-                        assertEquals(info.getResult(), "success");
-                    }
-                });
+//        NetworkManager.postUpdateUserInfo(info, "",
+//                new ResponseListener<UpdateUserInfoResult>() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError volleyError) {
+//                        assertEquals(true, false);
+//                    }
+//
+//                    @Override
+//                    public void onResponse(UpdateUserInfoResult info) {
+//                        assertEquals(info.getResult(), "success");
+//                    }
+//                });
 
         //无用户信息情况
 //        NetworkManager.postUpdateUserInfo(new UserInfo(), "storage/emulated/0/Download/lufei.jpg",
@@ -109,65 +118,61 @@ public class NetworkManagerTest extends AndroidTestCase {
                     , new ResponseListener<UserInfo>() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    LogUtils.d("Signup error!" + volleyError.toString());
+                    LogUtils.d(TAG, "Signup error!" + volleyError.toString());
                 }
 
                 @Override
                 public void onResponse(UserInfo userInfo) {
-                    if (userInfo.getResult().equals("success")) {
-                        LogUtils.d("Signup Success! username is : " + userInfo.getUsername());
-                    } else {
-                        LogUtils.d("Signup Failure! username is : " + userInfo.getUsername());
-                    }
+                    assertEquals(userInfo.getResult(), SUCCESS);
                 }
             });
         }
 
     }
 
-
     public void testRequestUserInfo(){
-        NetworkManager.postRequestUserInfo("3", new ResponseListener<UserInfo>() {
+        NetworkManager.postRequestUserInfo(testId, new ResponseListener<UserInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                LogUtils.e("YouJoin", volleyError.toString());
+                LogUtils.e(TAG, volleyError.toString());
                 assertEquals(true, false);
             }
 
             @Override
             public void onResponse(UserInfo info) {
-                LogUtils.d("YouJoin", info.getUsername());
+                LogUtils.d(TAG, info.getUsername() + info.getNickname());
                 assertEquals(info.getUsername(), "zzq");
             }
         });
     }
 
-    public void testSendPrimsg(){
-        NetworkManager.postSendMessage("4", "first msg", new ResponseListener() {
+    public void testSendPrivateMsg(){
+        NetworkManager.postSendMessage(testId, testId2, "first msg", new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
             }
 
             @Override
-            public void onResponse(Object o) {
-
+            public void onResponse(ResultInfo info) {
+                assertEquals(info.getResult(), SUCCESS);
             }
         });
     }
 
-    public void testReceivePrimsg(){
-        NetworkManager.postRequestMessage("2015-12-5", "2015-12-6 15:25:00", new ResponseListener<PrimsgInfo>() {
+    public void testReceivePrivatemsg(){
+        NetworkManager.postRequestMessage(testId2, new ResponseListener<PrimsgInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                LogUtils.e(TAG, volleyError.toString());
             }
 
             @Override
             public void onResponse(PrimsgInfo info) {
+                assertEquals(info.getResult(), SUCCESS);
                 List<PrimsgInfo.MessegeEntity> infos = info.getMessege();
                 for( PrimsgInfo.MessegeEntity i : infos){
-                    LogUtils.d("YouJoin", i.getContent());
+                    LogUtils.d(TAG, i.getContent());
                 }
 
             }
@@ -175,31 +180,47 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testAddFriend(){
-        NetworkManager.postAddFriend("4", new ResponseListener<ResultInfo>() {
+        NetworkManager.postAddFriend(testId, testId2, new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                LogUtils.e(TAG, volleyError.toString());
             }
 
             @Override
             public void onResponse(ResultInfo info) {
-                LogUtils.d("YouJoin", info.getResult());
+                assertEquals(info.getResult(), SUCCESS);
+            }
+        });
+    }
+
+    public void testSendTweet(){
+        List<ImageInfo> images = new ArrayList<>();
+        images.add(new ImageInfo(picPath));
+        NetworkManager.postSendTweet(testId, "haha i love mzz!", images, new ResponseListener<ResultInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LogUtils.e(TAG, volleyError.toString());
+            }
+
+            @Override
+            public void onResponse(ResultInfo info) {
+                assertEquals(info.getResult(), SUCCESS);
             }
         });
     }
 
     public void testRequestTweets(){
-        NetworkManager.postRequestTweets("4", "17", new ResponseListener<TweetInfo>() {
+        NetworkManager.postRequestTweets(testId2, testTweetId, "1", new ResponseListener<TweetInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                LogUtils.e(TAG, volleyError.toString());
             }
 
             @Override
             public void onResponse(TweetInfo info) {
                 List<TweetInfo.TweetsEntity> infos = info.getTweets();
                 for(TweetInfo.TweetsEntity i : infos){
-                    LogUtils.d("YouJoin", i.getTweets_img());
+                    LogUtils.d(TAG, i.getTweets_img());
                 }
 
             }
@@ -207,29 +228,29 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testUpvoteTweet(){
-        NetworkManager.postUpvoteTweet("4", "17", new ResponseListener<ResultInfo>() {
+        NetworkManager.postUpvoteTweet(testId2, testTweetId, new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                LogUtils.e(TAG, volleyError.toString());
             }
 
             @Override
             public void onResponse(ResultInfo info) {
-                LogUtils.d("YouJoin", info.getResult());
+                LogUtils.d(TAG, info.getResult());
             }
         });
     }
 
     public void testCommentTweet(){
-        NetworkManager.postCommentTweet("4", "17", "nice!", new ResponseListener<ResultInfo>() {
+        NetworkManager.postCommentTweet(testId2, testTweetId, "nice!", new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                LogUtils.e(TAG, volleyError.toString());
             }
 
             @Override
             public void onResponse(ResultInfo info) {
-                LogUtils.d("YouJoin", info.getResult());
+                LogUtils.d(TAG, info.getResult());
             }
         });
     }

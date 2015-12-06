@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
@@ -43,6 +42,7 @@ public class NetworkManager {
     public static final String USER_SIGN = "user_sign";
     public static final String USER_LOCATION = "user_location";
     public static final String USER_SEX = "user_sex";
+    public static final String USER_NICKNAME = "user_nickname";
 
     public static final String TWEETS_CONTNET = "tweets_content";
     public static final String TWEET_ID = "tweet_id";
@@ -56,16 +56,17 @@ public class NetworkManager {
     public static final String SEND_USERID = "send_userid";
     public static final String RECEIVE_USERID = "receive_userid";
     public static final String MESSAGE_CONTENT = "message_content";
-    public static final String FROM_TIME = "from_time";
-    public static final String TO_TIME = "to_time";
+    public static final String TIME_OLD = "0";
+    public static final String TIME_NEW = "1";
+    public static final String TIME_TYPE = "time";
 
 
     /**
      * 服务器接口URL
      */
-//    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
 //    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
-    public static final String BASE_API_URL = "http://110.65.7.55:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://110.65.7.55:8088/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
     public static final String API_UPDATE_USERINFO = BASE_API_URL + "update_userinfo.php";
@@ -83,6 +84,13 @@ public class NetworkManager {
     public static final String TAG = "YouJoin_Network";
 
 
+    /**
+     * 动态评论接口
+     * @param userId 当前登录用户id
+     * @param tweetId 所评论的动态id
+     * @param commentContent 评论内容
+     * @param listener ResponseListener
+     */
     public static void postCommentTweet(String userId, String tweetId, String commentContent,
                                         ResponseListener listener){
         Map<String, String> params = new HashMap<>();
@@ -95,6 +103,12 @@ public class NetworkManager {
         NetworkManager.getRequestQueue().add(request);
     }
 
+    /**
+     * 动态点赞接口
+     * @param userId 当前登录用户id
+     * @param tweetId 所点赞的动态id
+     * @param listener ResponseListener
+     */
     public static void postUpvoteTweet(String userId, String tweetId, ResponseListener listener){
         Map<String, String> params = new HashMap<>();
         params.put(USER_ID, userId);
@@ -105,10 +119,19 @@ public class NetworkManager {
         NetworkManager.getRequestQueue().add(request);
     }
 
-    public static void postRequestTweets(String userId, String tweetId, ResponseListener listener){
+
+    /**
+     * 获取动态列表接口
+     * @param userId 当前登录用户id
+     * @param tweetId 基准动态id（以此条动态作为基准，向前或向后获取）
+     * @param listener ResponseListener
+     */
+    public static void postRequestTweets(String userId, String tweetId, String timeType,
+                                         ResponseListener listener){
         Map<String, String> params = new HashMap<>();
         params.put(TWEET_ID, tweetId);
         params.put(USER_ID, userId);
+        params.put(TIME_TYPE, timeType);
         Request request = new PostObjectRequest(API_REQUEST_TWEETS,
                 params, new TypeToken<TweetInfo>(){}.getType(),
                 listener);
@@ -120,10 +143,10 @@ public class NetworkManager {
      * 发送动态接口
      * @param listener ResponseListener
      */
-    public static void postSendTweet(String content, List<ImageInfo> images,
+    public static void postSendTweet(String userId, String content, List<ImageInfo> images,
                                      ResponseListener listener){
         Map<String, String> params = new HashMap<>();
-        params.put(USER_ID, YouJoinApplication.getCurrUser().getId());
+        params.put(USER_ID, userId);
         params.put(TWEETS_CONTNET, content);
         Request request = new PostUploadRequest(API_SEND_TWEET, images, params,
                 new TypeToken<ResultInfo>(){}.getType(), listener);
@@ -134,12 +157,12 @@ public class NetworkManager {
      * 获取私信接口
      * @param listener ResponseListener
      */
-    public static void postRequestMessage(String fromTime, String toTime, ResponseListener listener){
+    public static void postRequestMessage(String userId, ResponseListener listener){
         Map<String, String> params = new HashMap<>();
 //        params.put(USER_ID, YouJoinApplication.getCurrUser().getId());
-        params.put(USER_ID, "4"); //for test
-        params.put(FROM_TIME, fromTime);
-        params.put(TO_TIME, toTime);
+        params.put(USER_ID, userId);
+//        params.put(FROM_TIME, fromTime);
+//        params.put(TO_TIME, toTime);
         Request request = new PostObjectRequest(
                 API_RECEIVE_MESSAGE,
                 params, new TypeToken<PrimsgInfo>(){}.getType(),
@@ -153,11 +176,11 @@ public class NetworkManager {
      * @param content 私信内容
      * @param listener ResponseListener
      */
-    public static void postSendMessage(String receiveUserId, String content,
+    public static void postSendMessage(String userId, String receiveUserId, String content,
                                        ResponseListener listener){
         Map<String, String> params = new HashMap<>();
 //        params.put(SEND_USERID, YouJoinApplication.getCurrUser().getId());
-        params.put(SEND_USERID, "3"); //for test
+        params.put(SEND_USERID, userId);
         params.put(RECEIVE_USERID, receiveUserId);
         params.put(MESSAGE_CONTENT, content);
         Request request = new PostObjectRequest(
@@ -172,7 +195,7 @@ public class NetworkManager {
      * @param param 获取用户资料的参数，收到后自动判断并填充type。type取值1表示id，2表示name，3表示email)
      * @param listener ResponseListener
      */
-    public static void postAddFriend(String param,
+    public static void postAddFriend(String userId, String param,
                                      ResponseListener listener){
         String type = StringUtils.getParamType(param);
         if(type.equals("invalid")){
@@ -181,7 +204,7 @@ public class NetworkManager {
         }
         Map<String, String> params = new HashMap<>();
 //        params.put(USER_ID, YouJoinApplication.getCurrUser().getId());
-        params.put(USER_ID, "6"); //for test
+        params.put(USER_ID, userId);
         params.put(PARAM, param);
         params.put(PARAM_TYPE, type);
         Request request = new PostObjectRequest(
@@ -245,6 +268,7 @@ public class NetworkManager {
         params.put(USER_SEX, userInfo.getSex());
         params.put(USER_BIRTH, userInfo.getBirth());
         params.put(USER_SIGN, userInfo.getUsersign());
+        params.put(USER_NICKNAME, userInfo.getNickname());
         Request request = new PostUploadRequest(API_UPDATE_USERINFO, imageList, params,
                 new TypeToken<UpdateUserInfoResult>(){}.getType(), listener);
         NetworkManager.getRequestQueue().add(request);
