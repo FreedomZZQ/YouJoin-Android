@@ -9,15 +9,18 @@ import java.util.List;
 public class TweetInfo {
     /**
      * result : success
-     * tweets : [{"friend_id":"3","tweets_id":"18","tweets_content":"sadads:heart_eyes::heart_eyes::heart_eyes::heart_eyes::heart_eyes:","tweets_img":"http://110.65.7.55:8088/youjoin-server/upload/3/20151206090328_482f42c5fa484a8abe99ec527fb59b38.jpg;http://110.65.7.55:8088/youjoin-server/upload/3/20151206090328_lufei.jpg;http://110.65.7.55:8088/youjoin-server;"}]
+     * tweets : [{"friend_id":"16","tweets_id":"15","comment_num":"0","upvote_num":"0","upvote_status":"0","tweets_content":"haha i love mzz!","tweets_img":"http://192.168.0.103:8088/youjoin-server/upload/16/20151206033524_lufei.jpg;http://192.168.0.103:8088/youjoin-server;"}]
      */
 
     private String result;
     /**
-     * friend_id : 3
-     * tweets_id : 18
-     * tweets_content : sadads:heart_eyes::heart_eyes::heart_eyes::heart_eyes::heart_eyes:
-     * tweets_img : http://110.65.7.55:8088/youjoin-server/upload/3/20151206090328_482f42c5fa484a8abe99ec527fb59b38.jpg;http://110.65.7.55:8088/youjoin-server/upload/3/20151206090328_lufei.jpg;http://110.65.7.55:8088/youjoin-server;
+     * friend_id : 16
+     * tweets_id : 15
+     * comment_num : 0
+     * upvote_num : 0
+     * upvote_status : 0
+     * tweets_content : haha i love mzz!
+     * tweets_img : http://192.168.0.103:8088/youjoin-server/upload/16/20151206033524_lufei.jpg;http://192.168.0.103:8088/youjoin-server;
      */
 
     private List<TweetsEntity> tweets;
@@ -41,6 +44,9 @@ public class TweetInfo {
     public static class TweetsEntity {
         private String friend_id;
         private String tweets_id;
+        private String comment_num;
+        private String upvote_num;
+        private String upvote_status;
         private String tweets_content;
         private String tweets_img;
 
@@ -50,6 +56,18 @@ public class TweetInfo {
 
         public void setTweets_id(String tweets_id) {
             this.tweets_id = tweets_id;
+        }
+
+        public void setComment_num(String comment_num) {
+            this.comment_num = comment_num;
+        }
+
+        public void setUpvote_num(String upvote_num) {
+            this.upvote_num = upvote_num;
+        }
+
+        public void setUpvote_status(String upvote_status) {
+            this.upvote_status = upvote_status;
         }
 
         public void setTweets_content(String tweets_content) {
@@ -68,6 +86,18 @@ public class TweetInfo {
             return tweets_id;
         }
 
+        public String getComment_num() {
+            return comment_num;
+        }
+
+        public String getUpvote_num() {
+            return upvote_num;
+        }
+
+        public String getUpvote_status() {
+            return upvote_status;
+        }
+
         public String getTweets_content() {
             return tweets_content;
         }
@@ -76,43 +106,4 @@ public class TweetInfo {
             return tweets_img;
         }
     }
-//
-//    /**
-//     * tweets_id :
-//     * tweets_content :
-//     * tweets_img :
-//     * [
-//     *  {"tweets_id":" " , "tweets_content":"" , "tweets_img":"  "},
-//     *  {"tweets_id":" " , "tweets_content":"" , "tweets_img":"  "},
-//     *  {"tweets_id":" " , "tweets_content":"" , "tweets_img":"  "}
-//     * ]
-//     */
-//
-//    private String tweets_id;
-//    private String tweets_content;
-//    private String tweets_img;
-//
-//    public void setTweets_id(String tweets_id) {
-//        this.tweets_id = tweets_id;
-//    }
-//
-//    public void setTweets_content(String tweets_content) {
-//        this.tweets_content = tweets_content;
-//    }
-//
-//    public void setTweets_img(String tweets_img) {
-//        this.tweets_img = tweets_img;
-//    }
-//
-//    public String getTweets_id() {
-//        return tweets_id;
-//    }
-//
-//    public String getTweets_content() {
-//        return tweets_content;
-//    }
-//
-//    public String getTweets_img() {
-//        return tweets_img;
-//    }
 }
