@@ -18,6 +18,16 @@ public class UserInfo {
     private String img_url;
     private String usersign;
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    private String nickname;
+
     public String getFirstLetter() {
         String letter = StringUtils.getFirstLetters(username).toUpperCase().substring(0, 1);
         if(0 <= letter.compareTo("A") && letter.compareTo("Z") <= 0){

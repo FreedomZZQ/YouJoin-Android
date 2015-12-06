@@ -5,7 +5,10 @@ import android.test.AndroidTestCase;
 import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import me.zq.youjoin.model.PrimsgInfo;
+import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -119,5 +122,68 @@ public class NetworkManagerTest extends AndroidTestCase {
             });
         }
 
+    }
+
+
+    public void testSearchUser(){
+        NetworkManager.postRequestUserInfo("3", new ResponseListener<UserInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LogUtils.e("YouJoin", volleyError.toString());
+                assertEquals(true, false);
+            }
+
+            @Override
+            public void onResponse(UserInfo info) {
+                LogUtils.d("YouJoin", info.getUsername());
+                assertEquals(info.getUsername(), "zzq");
+            }
+        });
+    }
+
+    public void testSendPrimsg(){
+        NetworkManager.postSendMessage("4", "first msg", new ResponseListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(Object o) {
+
+            }
+        });
+    }
+
+    public void testReceivePrimsg(){
+        NetworkManager.postRequestMessage("2015-12-5", "2015-12-6 15:25:00", new ResponseListener<PrimsgInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(PrimsgInfo info) {
+                List<PrimsgInfo.MessegeEntity> infos = info.getMessege();
+                for( PrimsgInfo.MessegeEntity i : infos){
+                    LogUtils.d("YouJoin", i.getContent());
+                }
+
+            }
+        });
+    }
+
+    public void testAddFriend(){
+        NetworkManager.postAddFriend("4", new ResponseListener<ResultInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(ResultInfo info) {
+                LogUtils.d("YouJoin", info.getResult());
+            }
+        });
     }
 }
