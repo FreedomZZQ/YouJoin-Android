@@ -17,6 +17,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
+import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.utils.LogUtils;
@@ -44,6 +45,8 @@ public class NetworkManager {
     public static final String USER_SEX = "user_sex";
 
     public static final String TWEETS_CONTNET = "tweets_content";
+    public static final String TWEET_ID = "tweet_id";
+    public static final String TWEET_COMMENT = "comment_content";
 
     public static final String FRIEND_ID = "friend_id";
 
@@ -66,17 +69,51 @@ public class NetworkManager {
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
     public static final String API_UPDATE_USERINFO = BASE_API_URL + "update_userinfo.php";
-    public static final String API_SEND_TWEET = BASE_API_URL + "send_tweet.php";
     public static final String API_REQUEST_USERINFO = BASE_API_URL + "request_userinfo.php";
     public static final String API_ADD_FRIEND = BASE_API_URL + "add_friend.php";
     public static final String API_SEND_MESSAGE = BASE_API_URL + "send_message.php";
     public static final String API_RECEIVE_MESSAGE = BASE_API_URL + "receive_message.php";
+    public static final String API_SEND_TWEET = BASE_API_URL + "send_tweet.php";
+    public static final String API_REQUEST_TWEETS = BASE_API_URL + "get_tweets.php";
     public static final String API_COMMENT_TWEET = BASE_API_URL + "comment_tweet.php";
     public static final String API_UPVOTE_TWEET = BASE_API_URL + "upvote_tweet.php";
 
     private static RequestQueue mRequestQueue ;
 
     public static final String TAG = "YouJoin_Network";
+
+
+    public static void postCommentTweet(String userId, String tweetId, String commentContent,
+                                        ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        params.put(TWEET_ID, tweetId);
+        params.put(TWEET_COMMENT, commentContent);
+        Request request = new PostObjectRequest(API_COMMENT_TWEET,
+                params, new TypeToken<ResultInfo>(){}.getType(),
+                listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
+
+    public static void postUpvoteTweet(String userId, String tweetId, ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        params.put(TWEET_ID, tweetId);
+        Request request = new PostObjectRequest(API_UPVOTE_TWEET,
+                params, new TypeToken<ResultInfo>(){}.getType(),
+                listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
+
+    public static void postRequestTweets(String userId, String tweetId, ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(TWEET_ID, tweetId);
+        params.put(USER_ID, userId);
+        Request request = new PostObjectRequest(API_REQUEST_TWEETS,
+                params, new TypeToken<TweetInfo>(){}.getType(),
+                listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
 
 
     /**

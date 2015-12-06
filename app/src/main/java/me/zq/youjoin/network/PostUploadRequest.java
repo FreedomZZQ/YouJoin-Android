@@ -36,7 +36,7 @@ public class PostUploadRequest<T> extends Request<T> {
 
     private static final String BOUNDARY = "--------------520-13-14"; //数据分隔线
     private static final String MULTIPART_FORM_DATA = "multipart/form-data";
-    private static final String TAG = "hehe_upload_request";
+    private static final String TAG = "YouJoin_upload_request";
     private static final String PARAM = "uploadedfile";
 
     private Map<String, String> params;

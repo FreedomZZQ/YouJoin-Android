@@ -40,7 +40,7 @@ public class PostObjectRequest<T> extends Request<T> {
             T result;
             String jsonString =
                     new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            LogUtils.d("hehe", jsonString);
+            LogUtils.d("YouJoin", jsonString);
             result = gson.fromJson(StringUtils.FixJsonString(jsonString), clazz);
             return Response.success(result,
                     HttpHeaderParser.parseCacheHeaders(response));

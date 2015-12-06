@@ -9,6 +9,7 @@ import java.util.List;
 
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
+import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -125,7 +126,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
 
-    public void testSearchUser(){
+    public void testRequestUserInfo(){
         NetworkManager.postRequestUserInfo("3", new ResponseListener<UserInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -175,6 +176,52 @@ public class NetworkManagerTest extends AndroidTestCase {
 
     public void testAddFriend(){
         NetworkManager.postAddFriend("4", new ResponseListener<ResultInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(ResultInfo info) {
+                LogUtils.d("YouJoin", info.getResult());
+            }
+        });
+    }
+
+    public void testRequestTweets(){
+        NetworkManager.postRequestTweets("4", "17", new ResponseListener<TweetInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(TweetInfo info) {
+                List<TweetInfo.TweetsEntity> infos = info.getTweets();
+                for(TweetInfo.TweetsEntity i : infos){
+                    LogUtils.d("YouJoin", i.getTweets_img());
+                }
+
+            }
+        });
+    }
+
+    public void testUpvoteTweet(){
+        NetworkManager.postUpvoteTweet("4", "17", new ResponseListener<ResultInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(ResultInfo info) {
+                LogUtils.d("YouJoin", info.getResult());
+            }
+        });
+    }
+
+    public void testCommentTweet(){
+        NetworkManager.postCommentTweet("4", "17", "nice!", new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
