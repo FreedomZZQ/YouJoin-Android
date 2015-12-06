@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity  {
         ivUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfoActivity.actionStart(MainActivity.this);
+                EditUserInfoActivity.actionStart(MainActivity.this);
             }
         });
 
