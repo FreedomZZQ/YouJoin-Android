@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
@@ -334,8 +335,10 @@ public class NetworkManager {
      * @return 返回RequestQueue实例
      */
     public static RequestQueue getRequestQueue(){
-        if (mRequestQueue == null)
-            throw new RuntimeException("请先初始化mRequestQueue") ;
+        if (mRequestQueue == null){
+            initialize(YouJoinApplication.getAppContext());
+        }
+            //throw new RuntimeException("请先初始化mRequestQueue") ;
         return mRequestQueue ;
     }
 }

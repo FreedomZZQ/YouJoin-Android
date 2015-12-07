@@ -1,11 +1,14 @@
 package me.zq.youjoin.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import me.zq.youjoin.utils.StringUtils;
 
 /**
  * Created by ZQ on 2015/11/12.
  */
-public class UserInfo {
+public class UserInfo implements Parcelable {
 
     private String id;
     private String username;
@@ -115,4 +118,51 @@ public class UserInfo {
     public String getUsersign() {
         return usersign;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.username);
+        dest.writeString(this.email);
+        dest.writeString(this.result);
+        dest.writeString(this.work);
+        dest.writeString(this.sex);
+        dest.writeString(this.birth);
+        dest.writeString(this.location);
+        dest.writeString(this.img_url);
+        dest.writeString(this.usersign);
+        dest.writeString(this.nickname);
+    }
+
+    public UserInfo() {
+    }
+
+    protected UserInfo(Parcel in) {
+        this.id = in.readString();
+        this.username = in.readString();
+        this.email = in.readString();
+        this.result = in.readString();
+        this.work = in.readString();
+        this.sex = in.readString();
+        this.birth = in.readString();
+        this.location = in.readString();
+        this.img_url = in.readString();
+        this.usersign = in.readString();
+        this.nickname = in.readString();
+    }
+
+    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+        public UserInfo createFromParcel(Parcel source) {
+            return new UserInfo(source);
+        }
+
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 }

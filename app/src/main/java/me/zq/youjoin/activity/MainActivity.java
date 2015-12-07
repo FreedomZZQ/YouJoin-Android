@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
@@ -71,17 +73,19 @@ public class MainActivity extends BaseActivity  {
         tvUserEmail = (TextView) navigationHeadView.findViewById(R.id.navigation_email);
 
         UserInfo userInfo = YouJoinApplication.getCurrUser();
-//        Picasso.with(MainActivity.this)
-//                .load(userInfo.getImg_url())
-//                .centerCrop()
-//                .into(ivUserPhoto);
+        Picasso.with(MainActivity.this)
+                .load(userInfo.getImg_url())
+                .resize(200, 200)
+                .centerCrop()
+                .into(ivUserPhoto);
         tvUserName.setText(userInfo.getUsername());
         tvUserEmail.setText(userInfo.getEmail());
 
         ivUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditUserInfoActivity.actionStart(MainActivity.this);
+                UserInfoActivity.actionStart(MainActivity.this, UserInfoActivity.TYPE_CURR_USER,
+                        YouJoinApplication.getCurrUser());
             }
         });
 
