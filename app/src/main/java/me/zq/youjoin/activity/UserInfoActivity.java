@@ -66,6 +66,15 @@ public class UserInfoActivity extends BaseActivity {
         nickname.setText(info.getNickname());
         email.setText(info.getEmail());
         work.setText(info.getWork());
+        sign.setText(info.getUsersign());
+        birth.setText(info.getBirth());
+
+        if(info.getSex().equals("0")){
+            sex.setBackground(getResources().getDrawable(R.drawable.ic_sex_boy));
+        }else{
+            sex.setBackground(getResources().getDrawable(R.drawable.ic_sex_girl));
+        }
+
         location.setText(info.getLocation());
         Picasso.with(UserInfoActivity.this)
                 .load(info.getImg_url())
