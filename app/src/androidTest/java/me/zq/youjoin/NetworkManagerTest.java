@@ -181,7 +181,7 @@ public class NetworkManagerTest extends AndroidTestCase {
 
     public void testAddFriend(){
 
-        NetworkManager.postAddFriend(testId, testId2, new ResponseListener<ResultInfo>() {
+        NetworkManager.postAddFriend(testId2, testId, new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -193,31 +193,31 @@ public class NetworkManagerTest extends AndroidTestCase {
             }
         });
 
-        for(int i = 17; i < 150; i++){
-            try {
-                Thread.currentThread().sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            NetworkManager.postAddFriend(testId, Integer.toString(i), new ResponseListener<ResultInfo>() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    LogUtils.e(TAG, volleyError.toString());
-                }
-
-                @Override
-                public void onResponse(ResultInfo info) {
-//                    assertEquals(info.getResult(), SUCCESS);
-                }
-            });
-        }
+//        for(int i = 17; i < 150; i++){
+//            try {
+//                Thread.currentThread().sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            NetworkManager.postAddFriend(testId, Integer.toString(i), new ResponseListener<ResultInfo>() {
+//                @Override
+//                public void onErrorResponse(VolleyError volleyError) {
+//                    LogUtils.e(TAG, volleyError.toString());
+//                }
+//
+//                @Override
+//                public void onResponse(ResultInfo info) {
+////                    assertEquals(info.getResult(), SUCCESS);
+//                }
+//            });
+//        }
 
     }
 
     public void testSendTweet(){
         List<ImageInfo> images = new ArrayList<>();
         images.add(new ImageInfo(picPath));
-        NetworkManager.postSendTweet(testId, "haha i love mzz!", images, new ResponseListener<ResultInfo>() {
+        NetworkManager.postSendTweet(testId2, "haha i love mzz!", images, new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -231,7 +231,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testRequestTweets(){
-        NetworkManager.postRequestTweets(testId2, testTweetId, "1", new ResponseListener<TweetInfo>() {
+        NetworkManager.postRequestTweets(testId, testTweetId, "0", new ResponseListener<TweetInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());

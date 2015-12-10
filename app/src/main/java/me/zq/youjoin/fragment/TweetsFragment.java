@@ -36,6 +36,7 @@ public class TweetsFragment extends Fragment {
     FloatingActionButton addTweetsFab;
 
     List<TweetInfo.TweetsEntity> tweetsList = new ArrayList<>();
+    TweetsAdapter tweetsAdapter = new TweetsAdapter(tweetsList);
 
     public TweetsFragment() {
         // Required empty public constructor
@@ -67,7 +68,14 @@ public class TweetsFragment extends Fragment {
         tweetsRecyclerList.setLayoutManager(layoutManager);
         tweetsRecyclerList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
         tweetsRecyclerList.setItemAnimator(new DefaultItemAnimator());
+        tweetsRecyclerList.setAdapter(tweetsAdapter);
 
+        refreshData();
+
+        return view;
+    }
+
+    private void refreshData() {
         NetworkManager.postRequestTweets(YouJoinApplication.getCurrUser().getId(), "0",
                 NetworkManager.TIME_NEW, new ResponseListener<TweetInfo>() {
                     @Override
@@ -78,10 +86,10 @@ public class TweetsFragment extends Fragment {
                     @Override
                     public void onResponse(TweetInfo info) {
                         tweetsList = info.getTweets();
+                        tweetsAdapter.setDataList(tweetsList);
+                        tweetsAdapter.notifyDataSetChanged();
                     }
                 });
-
-        return view;
     }
 
     private RecyclerItemClickListener.OnItemClickListener onItemClickListener =
@@ -105,4 +113,5 @@ public class TweetsFragment extends Fragment {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
 }

@@ -20,6 +20,11 @@ import me.zq.youjoin.model.TweetInfo;
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
 
     public OnItemClickListener itemClickListener;
+
+    public void setDataList(List<TweetInfo.TweetsEntity> dataList) {
+        this.dataList = dataList;
+    }
+
     private List<TweetInfo.TweetsEntity> dataList;
 
     public TweetsAdapter(List<TweetInfo.TweetsEntity> data){
@@ -39,10 +44,19 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public ImageButton btnComments;
         public ImageButton btnMore;
         public TextView likeCount;
+        public TextView commentCount;
+        public TextView tweetContent;
         public CircleImageView avatar;
 
         public ViewHolder(View itemView){
             super(itemView);
+            likeCount = (TextView) itemView.findViewById(R.id.like_count);
+            commentCount = (TextView) itemView.findViewById(R.id.comment_count);
+            tweetContent = (TextView) itemView.findViewById(R.id.content);
+            avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
+            btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
+            btnComments = (ImageButton) itemView.findViewById(R.id.btnComments);
+            btnMore = (ImageButton) itemView.findViewById(R.id.btnMore);
 
         }
 
@@ -60,6 +74,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int i){
         //建立起ViewHolder中视图与数据的关联
         viewHolder.likeCount.setText(dataList.get(i).getUpvote_num());
+        viewHolder.commentCount.setText(dataList.get(i).getComment_num());
+        viewHolder.tweetContent.setText(dataList.get(i).getTweets_content());
     }
 
     @Override
