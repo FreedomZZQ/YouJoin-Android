@@ -10,18 +10,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.VolleyError;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.PublishActivity;
+import me.zq.youjoin.model.TweetInfo;
+import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.network.ResponseListener;
+import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.widget.recycler.RecyclerItemClickListener;
 
 public class TweetsFragment extends Fragment {
+
+    public static final String TAG = "YouJoin_Tweets_TweetsFragment";
 
     @Bind(R.id.tweets_recycler_list)
     RecyclerView tweetsRecyclerList;
     @Bind(R.id.add_tweets_fab)
     FloatingActionButton addTweetsFab;
+
+    List<TweetInfo.TweetsEntity> tweetsList = new ArrayList<>();
 
     public TweetsFragment() {
         // Required empty public constructor
@@ -54,17 +68,21 @@ public class TweetsFragment extends Fragment {
         tweetsRecyclerList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
         tweetsRecyclerList.setItemAnimator(new DefaultItemAnimator());
 
+        NetworkManager.postRequestTweets(YouJoinApplication.getCurrUser().getId(), "0",
+                NetworkManager.TIME_NEW, new ResponseListener<TweetInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        LogUtils.e(TAG, volleyError.toString());
+                    }
+
+                    @Override
+                    public void onResponse(TweetInfo info) {
+                        tweetsList = info.getTweets();
+                    }
+                });
+
         return view;
     }
-
-//    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
-//        private List<TweetInfo> mTweets = new ArrayList<>();
-//
-//
-//        public class ViewHolder extends RecyclerView.ViewHolder{
-//
-//        }
-//    }
 
     private RecyclerItemClickListener.OnItemClickListener onItemClickListener =
             new RecyclerItemClickListener.OnItemClickListener() {

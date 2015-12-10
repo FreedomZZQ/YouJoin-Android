@@ -21,6 +21,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.fragment.FriendFragment;
 import me.zq.youjoin.fragment.TweetsFragment;
 import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.utils.StringUtils;
 
 public class MainActivity extends BaseActivity  {
 
@@ -73,8 +74,9 @@ public class MainActivity extends BaseActivity  {
         tvUserEmail = (TextView) navigationHeadView.findViewById(R.id.navigation_email);
 
         UserInfo userInfo = YouJoinApplication.getCurrUser();
+
         Picasso.with(MainActivity.this)
-                .load(userInfo.getImg_url())
+                .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
                 .resize(200, 200)
                 .centerCrop()
                 .into(ivUserPhoto);

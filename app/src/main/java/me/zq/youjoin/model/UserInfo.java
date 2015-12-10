@@ -20,6 +20,8 @@ public class UserInfo implements Parcelable {
     private String location;
     private String img_url;
     private String usersign;
+    private String follow_num;
+    private String focus_num;
 
     public String getNickname() {
         return nickname;
@@ -32,7 +34,7 @@ public class UserInfo implements Parcelable {
     private String nickname;
 
     public String getFirstLetter() {
-        String letter = StringUtils.getFirstLetters(username).toUpperCase().substring(0, 1);
+        String letter = StringUtils.getFirstLetters(nickname).toUpperCase().substring(0, 1);
         if(0 <= letter.compareTo("A") && letter.compareTo("Z") <= 0){
             return letter;
         }
@@ -156,7 +158,7 @@ public class UserInfo implements Parcelable {
         this.nickname = in.readString();
     }
 
-    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+    public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
         public UserInfo createFromParcel(Parcel source) {
             return new UserInfo(source);
         }
@@ -165,4 +167,20 @@ public class UserInfo implements Parcelable {
             return new UserInfo[size];
         }
     };
+
+    public void setFollow_num(String follow_num) {
+        this.follow_num = follow_num;
+    }
+
+    public void setFocus_num(String focus_num) {
+        this.focus_num = focus_num;
+    }
+
+    public String getFollow_num() {
+        return follow_num;
+    }
+
+    public String getFocus_num() {
+        return focus_num;
+    }
 }

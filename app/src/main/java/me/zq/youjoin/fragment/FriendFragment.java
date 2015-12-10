@@ -7,18 +7,29 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.SearchUserActivity;
+import me.zq.youjoin.activity.UserInfoActivity;
+import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.network.ResponseListener;
+import me.zq.youjoin.utils.StringUtils;
 import me.zq.youjoin.widget.sidebar.IndexableListView;
 import me.zq.youjoin.widget.sidebar.StringMatcher;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -26,7 +37,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 public class FriendFragment extends Fragment {
 
-    ArrayList<UserInfo> mData = new ArrayList<>();
+    List<FriendsInfo.FriendsEntity> mData = new ArrayList<>();
     //ArrayList<UserInfo> mSearchData = new ArrayList<>();
 
     @Bind(R.id.userlist)
@@ -45,7 +56,7 @@ public class FriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_friend, container, false);
+                View view = inflater.inflate(R.layout.fragment_friend, container, false);
         ButterKnife.bind(this, view);
 
         addFriendFab.setOnClickListener(new View.OnClickListener() {
@@ -66,17 +77,53 @@ public class FriendFragment extends Fragment {
         userlist.setFastScrollEnabled(true);
         userlist.setFastScrollAlwaysVisible(true);
         userlist.setAdapter(adapter);
+        userlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String friendId = mData.get(position).getId();
+                NetworkManager.postRequestUserInfo(friendId, new ResponseListener<UserInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
 
-        for (int i = 0; i < 26; i++) {
-            for (int j = 0; j < 10; j++) {
-                UserInfo info = new UserInfo();
-                char[] name = {(char) ('A' + i), (char) ('A' + i)};
-                info.setUsername(new String(name));
-                mData.add(info);
+                    }
+
+                    @Override
+                    public void onResponse(UserInfo info) {
+                        if(info.getResult().equals(NetworkManager.SUCCESS)){
+                            UserInfoActivity.actionStart(getActivity(),
+                                    UserInfoActivity.TYPE_OTHER_USER, info);
+                        }
+                    }
+                });
             }
-        }
+        });
 
-        adapter.notifyDataSetChanged();
+        refreshData();
+
+//        for (int i = 0; i < 26; i++) {
+//            for (int j = 0; j < 10; j++) {
+//                UserInfo info = new UserInfo();
+//                char[] name = {(char) ('A' + i), (char) ('A' + i)};
+//                info.setUsername(new String(name));
+//                mData.add(info);
+//            }
+//        }
+    }
+
+    private void refreshData() {
+        NetworkManager.postRequestFriendList(YouJoinApplication.getCurrUser().getId(),
+                new ResponseListener<FriendsInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+
+                    @Override
+                    public void onResponse(FriendsInfo info) {
+                        mData = info.getFriends();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @Override
@@ -106,7 +153,7 @@ public class FriendFragment extends Fragment {
                 String lastLetter = "";
 
                 for (int i = 0; i < mData.size(); ++i) {
-                    UserInfo item = mData.get(i);
+                    FriendsInfo.FriendsEntity item = mData.get(i);
                     if (!item.getFirstLetter().equals(lastLetter)) {
                         lastLetter = item.getFirstLetter();
                         mSectionTitle.add(item.getFirstLetter());
@@ -149,7 +196,7 @@ public class FriendFragment extends Fragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            final UserInfo data = mData.get(position);
+            final FriendsInfo.FriendsEntity data = mData.get(position);
 
             if (isSection(position)) {
                 holder.divideTitle.setVisibility(View.VISIBLE);
@@ -158,13 +205,15 @@ public class FriendFragment extends Fragment {
                 holder.divideTitle.setVisibility(View.GONE);
             }
 
-            holder.name.setText(data.getUsername());
+            holder.name.setText(data.getNickname());
             //iconfromNetwork(holder.icon, data.getImg_url());
             holder.icon.setImageResource(R.mipmap.ic_account_circle_white_48dp);
-//            Picasso.with(getActivity())
-//                    .load(data.getImg_url())
-//                    .centerCrop()
-//                    .into(holder.icon);
+
+            Picasso.with(getActivity())
+                    .load(StringUtils.getPicUrlList(data.getImg_url()).get(0))
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(holder.icon);
 
 //            if (!hideFollowButton) {
 //                int drawableId = data.follow ? R.drawable.checkbox_fans : R.drawable.checkbox_follow;

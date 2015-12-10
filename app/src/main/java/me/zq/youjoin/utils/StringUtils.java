@@ -6,11 +6,25 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * YouJoin-Android
  * Created by ZQ on 2015/11/19.
  */
 public class StringUtils {
+
+    public static List<String> getPicUrlList(String pics){
+        List<String> picUrlList = new ArrayList<>();
+
+        String[] picArray = pics.split(";");
+
+        Collections.addAll(picUrlList, picArray);
+
+        return picUrlList;
+    }
 
     public static String getParamType(String param){
         if(isEmailAddress(param)){

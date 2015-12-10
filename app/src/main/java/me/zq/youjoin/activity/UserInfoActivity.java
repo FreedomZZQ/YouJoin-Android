@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.R;
 import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.utils.StringUtils;
 
 public class UserInfoActivity extends BaseActivity {
 
@@ -77,7 +78,7 @@ public class UserInfoActivity extends BaseActivity {
 
         location.setText(info.getLocation());
         Picasso.with(UserInfoActivity.this)
-                .load(info.getImg_url())
+                .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
                 .resize(200, 200)
                 .centerCrop()
                 .into(avatar);

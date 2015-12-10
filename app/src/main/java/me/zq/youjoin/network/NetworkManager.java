@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
@@ -61,6 +62,9 @@ public class NetworkManager {
     public static final String TIME_NEW = "1";
     public static final String TIME_TYPE = "time";
 
+    public static final String SUCCESS = "success";
+    public static final String FAILURE = "failure";
+    public static final String FAILURE_SERVER_BUSY = "";
 
     /**
      * 服务器接口URL
@@ -79,11 +83,25 @@ public class NetworkManager {
     public static final String API_REQUEST_TWEETS = BASE_API_URL + "get_tweets.php";
     public static final String API_COMMENT_TWEET = BASE_API_URL + "comment_tweet.php";
     public static final String API_UPVOTE_TWEET = BASE_API_URL + "upvote_tweet.php";
+    public static final String API_REQUEST_FRIEND_LIST = BASE_API_URL + "get_friendlist.php";
 
     private static RequestQueue mRequestQueue ;
 
     public static final String TAG = "YouJoin_Network";
 
+
+    /**
+     * @param userId 当前登录用户id
+     * @param listener ResponseListener
+     */
+    public static void postRequestFriendList(String userId, ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        Request request = new PostObjectRequest(API_REQUEST_FRIEND_LIST,
+                params, new TypeToken<FriendsInfo>(){}.getType(),
+                listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
 
     /**
      * 动态评论接口
