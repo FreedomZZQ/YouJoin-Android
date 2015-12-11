@@ -16,37 +16,7 @@
             android:paddingLeft="15dp"
             android:text="" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="66dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp">
-
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/icon"
-                android:layout_width="47dp"
-                android:layout_height="47dp" />
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <!--<CheckBox-->
-                <!--android:id="@+id/followMutual"-->
-                <!--android:layout_width="73.5dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:background="@null"-->
-                <!--android:button="@drawable/checkbox_follow"-->
-                <!--android:focusable="false" />-->
-
-        </LinearLayout>
+        <include layout="@layout/userlist_item_content" />
 
         <View
             android:id="@+id/divide_line"

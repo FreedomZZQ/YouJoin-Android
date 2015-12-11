@@ -69,9 +69,9 @@ public class NetworkManager {
     /**
      * 服务器接口URL
      */
-    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
 //    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
-//    public static final String BASE_API_URL = "http://110.65.7.55:8088/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://110.65.6.65:8088/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
     public static final String API_UPDATE_USERINFO = BASE_API_URL + "update_userinfo.php";
@@ -211,6 +211,7 @@ public class NetworkManager {
 
     /**
      * 添加好友接口
+     * @param userId 当前用户id
      * @param param 获取用户资料的参数，收到后自动判断并填充type。type取值1表示id，2表示name，3表示email)
      * @param listener ResponseListener
      */

@@ -4,6 +4,7 @@ package me.zq.youjoin.fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.network.ResponseListener;
+import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.StringUtils;
 import me.zq.youjoin.widget.sidebar.IndexableListView;
 import me.zq.youjoin.widget.sidebar.StringMatcher;
@@ -37,6 +39,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 public class FriendFragment extends Fragment {
 
+    public static final String TAG = "YouJoinFriendFragment";
     List<FriendsInfo.FriendsEntity> mData = new ArrayList<>();
     //ArrayList<UserInfo> mSearchData = new ArrayList<>();
 
@@ -46,6 +49,8 @@ public class FriendFragment extends Fragment {
     UserAdapter adapter = new UserAdapter();
     @Bind(R.id.add_friend_fab)
     FloatingActionButton addFriendFab;
+    @Bind(R.id.refresher)
+    SwipeRefreshLayout refresher;
 
     public FriendFragment() {
         // Required empty public constructor
@@ -56,7 +61,7 @@ public class FriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-                View view = inflater.inflate(R.layout.fragment_friend, container, false);
+        View view = inflater.inflate(R.layout.fragment_friend, container, false);
         ButterKnife.bind(this, view);
 
         addFriendFab.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +70,18 @@ public class FriendFragment extends Fragment {
                 SearchUserActivity.actionStart(getActivity());
             }
         });
+
+        refresher.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        refresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
         initUserList();
 
         return view;
@@ -89,7 +106,7 @@ public class FriendFragment extends Fragment {
 
                     @Override
                     public void onResponse(UserInfo info) {
-                        if(info.getResult().equals(NetworkManager.SUCCESS)){
+                        if (info.getResult().equals(NetworkManager.SUCCESS)) {
                             UserInfoActivity.actionStart(getActivity(),
                                     UserInfoActivity.TYPE_OTHER_USER, info);
                         }
@@ -111,17 +128,20 @@ public class FriendFragment extends Fragment {
     }
 
     private void refreshData() {
+        refresher.setRefreshing(true);
         NetworkManager.postRequestFriendList(YouJoinApplication.getCurrUser().getId(),
                 new ResponseListener<FriendsInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-
+                        LogUtils.e(TAG, volleyError.toString());
+                        refresher.setRefreshing(false);
                     }
 
                     @Override
                     public void onResponse(FriendsInfo info) {
                         mData = info.getFriends();
                         adapter.notifyDataSetChanged();
+                        refresher.setRefreshing(false);
                     }
                 });
     }

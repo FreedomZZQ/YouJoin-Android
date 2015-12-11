@@ -8,8 +8,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +36,11 @@ public class SearchUserActivity extends BaseActivity {
     FloatingActionButton searchUserFab;
     @Bind(R.id.search_content)
     EditText searchContent;
+    @Bind(R.id.search_result_list)
+    ListView searchResultList;
 
     List<UserInfo> searchResult = new ArrayList<>();
+    SearchResultAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,16 @@ public class SearchUserActivity extends BaseActivity {
         setContentView(R.layout.activity_search_user);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        adapter = new SearchResultAdapter(SearchUserActivity.this);
+        searchResultList.setAdapter(adapter);
+        searchResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UserInfoActivity.actionStart(SearchUserActivity.this, UserInfoActivity.TYPE_OTHER_USER,
+                        searchResult.get(position));
+            }
+        });
 
         searchUserFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +67,13 @@ public class SearchUserActivity extends BaseActivity {
             }
         });
 
+
     }
 
 
-
     private void doSearch() {
+        searchResult.clear();
+        adapter.notifyDataSetChanged();
         String search = searchContent.getText().toString();
         if (search.equals("")) {
             searchContent.setError("Please input userid or email or username.");
@@ -69,9 +86,9 @@ public class SearchUserActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(UserInfo info) {
-                    if (info.getResult().equals("sueecss")) {
+                    if (info.getResult().equals(NetworkManager.SUCCESS)) {
                         searchResult.add(info);
-
+                        adapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(SearchUserActivity.this, "Request UserInfo failure!", Toast.LENGTH_SHORT).show();
                     }
@@ -80,41 +97,41 @@ public class SearchUserActivity extends BaseActivity {
         }
     }
 
-    public class SearchResultAdapter extends BaseAdapter{
+    public class SearchResultAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
 
-        public SearchResultAdapter(Context context){
+        public SearchResultAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
         }
 
         @Override
-        public int getCount(){
+        public int getCount() {
             return searchResult.size();
         }
 
         @Override
-        public Object getItem(int pos){
+        public Object getItem(int pos) {
             return searchResult.get(pos);
         }
 
         @Override
-        public long getItemId(int pos){
+        public long getItemId(int pos) {
             return pos;
         }
 
         @Override
-        public View getView(int pos, View convertView, ViewGroup parent){
+        public View getView(int pos, View convertView, ViewGroup parent) {
             ViewHolder holder = null;
             //判断是否缓存
-            if(convertView == null){
+            if (convertView == null) {
                 holder = new ViewHolder();
                 //通过layoutInflater实例化布局
-                convertView = mInflater.inflate(R.layout.userlist_item, null);
+                convertView = mInflater.inflate(R.layout.userlist_item_content, null);
                 holder.img = (CircleImageView) convertView.findViewById(R.id.icon);
                 holder.name = (TextView) convertView.findViewById(R.id.name);
                 convertView.setTag(holder);
-            }else{
+            } else {
                 //通过tag找到缓存布局
                 holder = (ViewHolder) convertView.getTag();
             }
@@ -124,7 +141,7 @@ public class SearchUserActivity extends BaseActivity {
             return convertView;
         }
 
-        public final class ViewHolder{
+        public final class ViewHolder {
             public CircleImageView img;
             public TextView name;
         }

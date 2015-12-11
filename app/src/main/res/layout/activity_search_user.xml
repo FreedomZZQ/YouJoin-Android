@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/search_content"
             android:maxLines="1"
+            android:singleLine="true"
             android:hint="@string/hint_search_content" />
 
     </android.support.design.widget.TextInputLayout>
