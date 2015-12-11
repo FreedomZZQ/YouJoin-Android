@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.fragment.FriendFragment;
+import me.zq.youjoin.fragment.MessageFragment;
 import me.zq.youjoin.fragment.TweetsFragment;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.utils.StringUtils;
@@ -104,7 +105,7 @@ public class MainActivity extends BaseActivity  {
                                 switchToFriends();
                                 break;
                             case R.id.navigation_item_messages:
-
+                                switchToMessage();
                                 break;
                             case R.id.navigation_item_tweets:
                                 switchToTweets();
@@ -126,6 +127,10 @@ public class MainActivity extends BaseActivity  {
                 });
     }
 
+    private void switchToMessage() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new MessageFragment()).commit();
+        toolbar.setTitle(getString(R.string.title_message));
+    }
 
     private void switchToTweets(){
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new TweetsFragment()).commit();

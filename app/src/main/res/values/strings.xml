@@ -5,6 +5,7 @@
     <string name="title_tweets">新鲜事</string>
     <string name="title_mine">我的</string>
     <string name="title_friends">我关注的人</string>
+    <string name="title_message">消息</string>
 
     <!-- Activity的标题-->
     <string name="title_activity_main">YouJoin</string>
@@ -55,6 +56,9 @@
         completions."
     </string>
     <string name="title_activity_user_info">资料卡</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

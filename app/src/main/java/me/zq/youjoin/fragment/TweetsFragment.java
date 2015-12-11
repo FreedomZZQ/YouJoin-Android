@@ -2,7 +2,6 @@ package me.zq.youjoin.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,9 +26,7 @@ import me.zq.youjoin.network.ResponseListener;
 import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.widget.recycler.RecyclerItemClickListener;
 
-public class TweetsFragment extends Fragment {
-
-    public static final String TAG = "YouJoin_Tweets_TweetsFragment";
+public class TweetsFragment extends BaseFragment {
 
     @Bind(R.id.tweets_recycler_list)
     RecyclerView tweetsRecyclerList;

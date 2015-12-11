@@ -3,7 +3,6 @@ package me.zq.youjoin.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,9 +36,9 @@ import me.zq.youjoin.widget.sidebar.StringMatcher;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 
-public class FriendFragment extends Fragment {
+public class FriendFragment extends BaseFragment {
 
-    public static final String TAG = "YouJoinFriendFragment";
+
     List<FriendsInfo.FriendsEntity> mData = new ArrayList<>();
     //ArrayList<UserInfo> mSearchData = new ArrayList<>();
 
