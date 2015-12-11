@@ -88,9 +88,7 @@ public class PostUploadRequest<T> extends Request<T> {
 
     @Override
     public byte[] getBody() throws AuthFailureError {
-        if (mListItem == null||mListItem.size() == 0){
-            return super.getBody() ;
-        }
+
         ByteArrayOutputStream bos = new ByteArrayOutputStream() ;
 
         if(!params.isEmpty()) {
@@ -123,44 +121,47 @@ public class PostUploadRequest<T> extends Request<T> {
 
         }
 
-        int N = mListItem.size() ;
-        ImageInfo imageInfo ;
-        for (int i = 0; i < N ;i++){
-            imageInfo = mListItem.get(i) ;
-            StringBuilder sb= new StringBuilder() ;
+        if (!(mListItem == null||mListItem.size() == 0)){
+            int N = mListItem.size() ;
+            ImageInfo imageInfo ;
+            for (int i = 0; i < N ;i++){
+                imageInfo = mListItem.get(i) ;
+                StringBuilder sb= new StringBuilder() ;
             /*第一行*/
-            //`"--" + BOUNDARY + "\r\n"`
-            sb.append("--"+BOUNDARY);
-            sb.append("\r\n") ;
+                //`"--" + BOUNDARY + "\r\n"`
+                sb.append("--"+BOUNDARY);
+                sb.append("\r\n") ;
             /*第二行*/
-            //Content-Disposition: form-data; name="参数的名称"; filename="上传的文件名" + "\r\n"
-            sb.append("Content-Disposition: form-data;");
-            sb.append(" name=\"");
-            sb.append(PARAM + "[" + Integer.toString(i) + "]");
-            sb.append("\"") ;
-            sb.append("; filename=\"") ;
-            sb.append(imageInfo.getFileName()) ;
-            sb.append("\"");
-            sb.append("\r\n") ;
+                //Content-Disposition: form-data; name="参数的名称"; filename="上传的文件名" + "\r\n"
+                sb.append("Content-Disposition: form-data;");
+                sb.append(" name=\"");
+                sb.append(PARAM + "[" + Integer.toString(i) + "]");
+                sb.append("\"") ;
+                sb.append("; filename=\"") ;
+                sb.append(imageInfo.getFileName()) ;
+                sb.append("\"");
+                sb.append("\r\n") ;
             /*第三行*/
-            //Content-Type: 文件的 mime 类型 + "\r\n"
-            sb.append("Content-Type: ");
-            sb.append(imageInfo.getMime()) ;
-            sb.append("\r\n") ;
+                //Content-Type: 文件的 mime 类型 + "\r\n"
+                sb.append("Content-Type: ");
+                sb.append(imageInfo.getMime()) ;
+                sb.append("\r\n") ;
             /*第四行*/
-            //"\r\n"
-            sb.append("\r\n") ;
-            try {
-                bos.write(sb.toString().getBytes("utf-8"));
+                //"\r\n"
+                sb.append("\r\n") ;
+                try {
+                    bos.write(sb.toString().getBytes("utf-8"));
                 /*第五行*/
-                //文件的二进制数据 + "\r\n"
-                bos.write(imageInfo.getValue());
-                bos.write("\r\n".getBytes("utf-8"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                    //文件的二进制数据 + "\r\n"
+                    bos.write(imageInfo.getValue());
+                    bos.write("\r\n".getBytes("utf-8"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
+            }
         }
+
         /*结尾行*/
         //`"--" + BOUNDARY + "--" + "\r\n"`
         String endLine = "--" + BOUNDARY + "--" + "\r\n" ;

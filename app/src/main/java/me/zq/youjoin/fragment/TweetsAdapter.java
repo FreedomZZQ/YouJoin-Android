@@ -11,7 +11,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.TweetInfo;
+import me.zq.youjoin.utils.StringUtils;
 
 /**
  * YouJoin-Android
@@ -75,7 +77,9 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         //建立起ViewHolder中视图与数据的关联
         viewHolder.likeCount.setText(dataList.get(i).getUpvote_num());
         viewHolder.commentCount.setText(dataList.get(i).getComment_num());
-        viewHolder.tweetContent.setText(dataList.get(i).getTweets_content());
+        viewHolder.tweetContent.setText(StringUtils.getEmotionContent(
+                YouJoinApplication.getAppContext(), viewHolder.tweetContent,
+                dataList.get(i).getTweets_content()));
     }
 
     @Override
