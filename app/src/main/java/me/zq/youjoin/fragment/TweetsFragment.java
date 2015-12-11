@@ -3,6 +3,7 @@ package me.zq.youjoin.fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,8 @@ public class TweetsFragment extends Fragment {
 
     List<TweetInfo.TweetsEntity> tweetsList = new ArrayList<>();
     TweetsAdapter tweetsAdapter = new TweetsAdapter(tweetsList);
+    @Bind(R.id.refresher)
+    SwipeRefreshLayout refresher;
 
     public TweetsFragment() {
         // Required empty public constructor
@@ -63,6 +66,17 @@ public class TweetsFragment extends Fragment {
             }
         });
 
+        refresher.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        refresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
         tweetsRecyclerList.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         tweetsRecyclerList.setLayoutManager(layoutManager);
@@ -76,11 +90,13 @@ public class TweetsFragment extends Fragment {
     }
 
     private void refreshData() {
+        refresher.setRefreshing(true);
         NetworkManager.postRequestTweets(YouJoinApplication.getCurrUser().getId(), "0",
                 NetworkManager.TIME_NEW, new ResponseListener<TweetInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         LogUtils.e(TAG, volleyError.toString());
+                        refresher.setRefreshing(false);
                     }
 
                     @Override
@@ -88,14 +104,15 @@ public class TweetsFragment extends Fragment {
                         tweetsList = info.getTweets();
                         tweetsAdapter.setDataList(tweetsList);
                         tweetsAdapter.notifyDataSetChanged();
+                        refresher.setRefreshing(false);
                     }
                 });
     }
 
     private RecyclerItemClickListener.OnItemClickListener onItemClickListener =
             new RecyclerItemClickListener.OnItemClickListener() {
-        @Override
-        public void onItemClick(View view, int position) {
+                @Override
+                public void onItemClick(View view, int position) {
 //            Book book = mAdapter.getBook(position);
 //            Intent intent = new Intent(getActivity(), BookDetailActivity.class);
 //            intent.putExtra("book", book);
@@ -105,8 +122,8 @@ public class TweetsFragment extends Fragment {
 //                            view.findViewById(R.id.ivBook), getString(R.string.transition_book_img));
 //
 //            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-        }
-    };
+                }
+            };
 
     @Override
     public void onDestroyView() {
