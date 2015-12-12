@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#1e8cc8</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#888888</color>
 
     <!-- 基本颜色 -->
     <color name="white">#FFFFFF</color>
@@ -19,4 +19,11 @@
     <color name="font_black_9">#999999</color>
 
     <color name="emoji_line">#ffcbc9ca</color>
+
+    <color name="login_orange">#ff8d27</color>
+    <color name="login_text_bg">#05000000</color>
+    <color name="login_text_color">#b4b4b4</color>
+
+    <color name="bg_grey">#e6e6e6</color>
+    <color name="yellow">#fac800</color>
 </resources>

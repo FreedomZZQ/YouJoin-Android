@@ -69,7 +69,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
             btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
             btnComments = (ImageButton) itemView.findViewById(R.id.btnComments);
-            btnMore = (ImageButton) itemView.findViewById(R.id.btnMore);
             gridView = (AutoHeightGridView) itemView.findViewById(R.id.gridView);
 
         }

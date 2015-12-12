@@ -14,25 +14,53 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="13dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@mipmap/ic_account_circle_white_48dp"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                tools:text="youjoin"
+                android:id="@+id/username"
+                android:textColor="@color/font_black_9"
+                android:textSize="13sp"
+                android:layout_marginStart="@dimen/general_margin"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/time"
+                android:textColor="@color/font_black_9"
+                android:textSize="12sp"
+                tools:text="12:12"/>
+
+        </LinearLayout>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/content"
-            tools:text="content"
-            android:textSize="15sp"/>
-
-        <!--<GridView-->
-            <!--android:id="@+id/gridView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="12dp"-->
-            <!--android:layout_marginEnd="12dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:columnWidth="62dp"-->
-            <!--android:gravity="center"-->
-            <!--android:horizontalSpacing="8dp"-->
-            <!--android:numColumns="3"-->
-            <!--android:stretchMode="none"/>-->
+            tools:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentc"
+            android:textSize="17sp"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"/>
 
         <me.zq.youjoin.widget.enter.AutoHeightGridView
             android:id="@+id/gridView"
@@ -51,28 +79,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="13dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/avatar"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_account_circle_white_48dp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/btnLike"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
-                android:background="@drawable/ic_heart_outline_grey"/>
+                android:background="@drawable/ic_favorite_black_48dp"/>
 <!--android:background="@drawable/btn_feed_action"-->
 
             <TextSwitcher
                 android:id="@+id/tsLikesCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center">
                 <!--android:inAnimation="@anim/slide_in_likes_counter"
                                     android:outAnimation="@anim/slide_out_likes_counter"-->
@@ -80,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/like_count"
-                    tools:text="123"
+                    tools:text="13"
                     android:textColor="@color/grey"/>
 
                 <TextView
@@ -93,21 +121,16 @@
                 android:id="@+id/btnComments"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
-                android:background="@drawable/ic_comment_outline_grey"/>
+                android:background="@drawable/ic_comment_black_48dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/comment_count"
-                tools:text="123"
+                tools:text="23"
                 android:textColor="@color/grey"
-                android:layout_gravity="center"/>
-
-            <ImageButton
-                android:id="@+id/btnMore"
-                android:layout_width="@dimen/tweets_list_item_button_size"
-                android:layout_height="@dimen/tweets_list_item_button_size"
-                android:background="@drawable/ic_more_grey" />
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"/>
 
             <!--<LinearLayout-->
                 <!--android:layout_width="0dp"-->

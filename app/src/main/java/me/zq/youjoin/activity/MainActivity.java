@@ -47,6 +47,34 @@ public class MainActivity extends BaseActivity  {
         initView();
 
         switchToTweets();
+
+//        signCommitButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                attemptSign();
+//            }
+//        });
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window window = getWindow();
+//            // Translucent status bar
+//            window.setFlags(
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            // Translucent navigation bar
+//            window.setFlags(
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//
+//            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+//            tintManager.setStatusBarTintEnabled(true);
+//            // enable navigation bar tint
+//            tintManager.setNavigationBarTintEnabled(true);
+//            //此处可以重新指定状态栏颜色
+//            tintManager.setTintColor(R.color.colorPrimary);
+//            tintManager.setStatusBarTintResource(R.color.colorPrimary);
+//            tintManager.setNavigationBarTintResource(R.color.colorPrimary);
+//        }
     }
 
 

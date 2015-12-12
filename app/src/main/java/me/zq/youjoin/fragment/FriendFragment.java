@@ -283,11 +283,13 @@ public class FriendFragment extends BaseFragment {
                     if (i == 0) {
                         // For numeric section
                         for (int k = 0; k <= 9; k++) {
-                            if (StringMatcher.match(((UserInfo) getItem(j)).getFirstLetter().toUpperCase(), String.valueOf(k)))
+                            if (StringMatcher.match(((FriendsInfo.FriendsEntity)
+                                    getItem(j)).getFirstLetter().toUpperCase(), String.valueOf(k)))
                                 return j;
                         }
                     } else {
-                        if (StringMatcher.match(((UserInfo) getItem(j)).getFirstLetter().toUpperCase(), String.valueOf(mSections.charAt(i))))
+                        if (StringMatcher.match(((FriendsInfo.FriendsEntity)
+                                getItem(j)).getFirstLetter().toUpperCase(), String.valueOf(mSections.charAt(i))))
                             return j;
                     }
                 }

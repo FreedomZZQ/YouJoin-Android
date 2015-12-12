@@ -7,13 +7,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.android.volley.VolleyError;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -29,6 +34,8 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
     Toolbar toolbar;
     @Bind(R.id.sendmsg)
     ImageButton sendmsg;
+    @Bind(R.id.msg_List)
+    ListView msgList;
 
     private UserInfo receiver;
     public static final String RECEIVER = "receiver";
@@ -36,6 +43,10 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
     EnterEmojiLayout enterLayout;
     EditText msgEdit;
     private boolean mFirstFocus = true;
+
+    List<PrimsgInfo.MessegeEntity> dataList = new ArrayList<>();
+    MessageListAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +59,15 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
         sendmsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkManager.postSendMessage(YouJoinApplication.getCurrUser().getId(),
-                        receiver.getId(), msgEdit.getText().toString(), new ResponseListener<ResultInfo>() {
+
+                PrimsgInfo.MessegeEntity msg = new PrimsgInfo.MessegeEntity();
+                msg.setId(YouJoinApplication.getCurrUser().getId());
+                msg.setContent(msgEdit.getText().toString());
+                msg.setName(YouJoinApplication.getCurrUser().getNickname());
+                dataList.add(msg);
+
+                NetworkManager.postSendMessage(msg.getId(), receiver.getId(), msg.getContent(),
+                        new ResponseListener<ResultInfo>() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 LogUtils.e(TAG, volleyError.toString());
@@ -57,9 +75,12 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
 
                             @Override
                             public void onResponse(ResultInfo info) {
-                                if(info.getResult().equals(NetworkManager.SUCCESS)){
-                                    onSuccess();
-                                }else {
+                                if (info.getResult().equals(NetworkManager.SUCCESS)) {
+                                    msgEdit.setText("");
+                                    adapter.notifyDataSetChanged();
+
+
+                                } else {
 
                                 }
                             }
@@ -67,10 +88,11 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
             }
         });
         initEnter();
-    }
 
-    private void onSuccess() {
-        msgEdit.setText("");
+        adapter = new MessageListAdapter(MessageActivity.this, dataList);
+        msgList.setAdapter(adapter);
+
+
     }
 
     private void initEnter() {

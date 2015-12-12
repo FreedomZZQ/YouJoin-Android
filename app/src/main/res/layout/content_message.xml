@@ -8,9 +8,11 @@
     android:orientation="vertical">
 
     <ListView
+        android:id="@+id/msg_List"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:divider="@null"/>
 
     <include
         layout="@layout/primsg_input_layout"/>
