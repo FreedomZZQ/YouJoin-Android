@@ -26,19 +26,6 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <!--<EditText-->
-            <!--android:id="@+id/comment"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="@null"-->
-            <!--android:gravity="top|start"-->
-            <!--android:hint="@string/hint_publish"-->
-            <!--android:paddingBottom="14dp"-->
-            <!--android:paddingLeft="12dp"-->
-            <!--android:paddingRight="12dp"-->
-            <!--android:paddingTop="14dp"-->
-            <!--android:textSize="16sp" />-->
-
         <RelativeLayout
             android:layout_width="54dp"
             android:layout_height="42dp"
@@ -70,23 +57,6 @@
 
 
     </LinearLayout>
-
-
-
-    <!--<me.zq.youjoin.widget.enter.AutoHeightGridView-->
-        <!--android:id="@+id/gridView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/inputLayout"-->
-        <!--android:layout_marginStart="12dp"-->
-        <!--android:layout_marginEnd="12dp"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:columnWidth="62dp"-->
-        <!--android:gravity="center"-->
-        <!--android:horizontalSpacing="8dp"-->
-        <!--android:numColumns="4"-->
-        <!--android:stretchMode="none"-->
-        <!--android:verticalSpacing="8dp"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,31 +115,6 @@
                     android:background="@mipmap/ic_insert_photo_white_48dp" />
             </LinearLayout>
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/popTopic"-->
-                    <!--android:layout_width="32dp"-->
-                    <!--android:layout_height="32dp"-->
-                    <!--android:background="@drawable/pop_topic" />-->
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/popAt"-->
-                    <!--android:layout_width="32dp"-->
-                    <!--android:layout_height="32dp"-->
-                    <!--android:background="@drawable/pop_at" />-->
-            <!--</LinearLayout>-->
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -191,10 +136,6 @@
             </LinearLayout>
 
         </LinearLayout>
-        <!--<include-->
-            <!--layout="@layout/yj_publish_btns"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"/>-->
 
         <include
             layout="@layout/emoji_keyboard_content"

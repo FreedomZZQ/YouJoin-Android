@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:padding="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:padding="5dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/inputLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                tools:text="发送"
+                android:textColor="@color/black"
+                android:background="@color/trans_white"
+                />
+
+            <RelativeLayout
+                android:layout_width="54dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="2dp"
+                android:visibility="gone">
+
+                <ImageButton
+                    android:id="@+id/send"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/message_button_add"
+                    android:padding="5dp" />
+
+                <TextView
+                    android:id="@+id/sendText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/edit_send_green"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="发送"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/popEmoji"
+            android:layout_width="@dimen/btns_size"
+            android:layout_height="@dimen/btns_size"
+            android:background="@null"
+            android:padding="5dp"
+            android:layout_marginEnd="10dp"
+            android:button="@drawable/checkbox_pop_emoji"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageButton
+            android:id="@+id/sendmsg"
+            android:layout_width="@dimen/btns_size"
+            android:layout_height="@dimen/btns_size"
+            android:padding="5dp"
+            android:background="@mipmap/ic_send_white_48dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/emoji_keyboard_content"
+        android:visibility="gone" />
+</LinearLayout>

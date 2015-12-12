@@ -102,24 +102,8 @@ public class UserInfoActivity extends BaseActivity {
                 if(type == TYPE_CURR_USER){
                     EditUserInfoActivity.actionStart(UserInfoActivity.this);
                 }else if(type == TYPE_OTHER_USER){
-                    NetworkManager.postAddFriend(YouJoinApplication.getCurrUser().getId(),
-                            info.getId(), new ResponseListener<ResultInfo>() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    LogUtils.e(TAG, volleyError.toString());
-                                }
-
-                                @Override
-                                public void onResponse(ResultInfo info) {
-                                    if(info.getResult().equals(NetworkManager.SUCCESS)){
-                                        Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
-                                                Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(UserInfoActivity.this, "Add Friend Failure!",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    //addFriend();
+                    MessageActivity.actionStart(UserInfoActivity.this, info);
                 }else{
                     Snackbar.make(view, "You Shouldn't see this...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -127,6 +111,27 @@ public class UserInfoActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void addFriend() {
+        NetworkManager.postAddFriend(YouJoinApplication.getCurrUser().getId(),
+                info.getId(), new ResponseListener<ResultInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        LogUtils.e(TAG, volleyError.toString());
+                    }
+
+                    @Override
+                    public void onResponse(ResultInfo info) {
+                        if(info.getResult().equals(NetworkManager.SUCCESS)){
+                            Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
+                                    Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(UserInfoActivity.this, "Add Friend Failure!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 
