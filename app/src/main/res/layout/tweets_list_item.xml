@@ -21,23 +21,44 @@
             tools:text="content"
             android:textSize="15sp"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_account_circle_white_48dp" />
+        <!--<GridView-->
+            <!--android:id="@+id/gridView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="12dp"-->
+            <!--android:layout_marginEnd="12dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:columnWidth="62dp"-->
+            <!--android:gravity="center"-->
+            <!--android:horizontalSpacing="8dp"-->
+            <!--android:numColumns="3"-->
+            <!--android:stretchMode="none"/>-->
 
-
-        <ImageView
-            android:id="@+id/ivFeedBottom"
+        <me.zq.youjoin.widget.enter.AutoHeightGridView
+            android:id="@+id/gridView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:columnWidth="100dp"
+            android:gravity="center"
+            android:numColumns="3"
+            android:stretchMode="none"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/ivFeedBottom"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_account_circle_white_48dp" />
 
             <ImageButton
                 android:id="@+id/btnLike"

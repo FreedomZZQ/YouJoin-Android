@@ -7,19 +7,29 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.TweetInfo;
+import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.network.ResponseListener;
+import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.StringUtils;
+import me.zq.youjoin.widget.enter.AutoHeightGridView;
 
 /**
  * YouJoin-Android
  * Created by ZQ on 2015/12/10.
  */
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
+
+    public static final String TAG = "YouJoin";
 
     public OnItemClickListener itemClickListener;
 
@@ -49,6 +59,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public TextView commentCount;
         public TextView tweetContent;
         public CircleImageView avatar;
+        public AutoHeightGridView gridView;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -59,6 +70,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
             btnComments = (ImageButton) itemView.findViewById(R.id.btnComments);
             btnMore = (ImageButton) itemView.findViewById(R.id.btnMore);
+            gridView = (AutoHeightGridView) itemView.findViewById(R.id.gridView);
 
         }
 
@@ -73,13 +85,34 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i){
+    public void onBindViewHolder(final ViewHolder viewHolder, int i){
         //建立起ViewHolder中视图与数据的关联
         viewHolder.likeCount.setText(dataList.get(i).getUpvote_num());
         viewHolder.commentCount.setText(dataList.get(i).getComment_num());
         viewHolder.tweetContent.setText(StringUtils.getEmotionContent(
                 YouJoinApplication.getAppContext(), viewHolder.tweetContent,
                 dataList.get(i).getTweets_content()));
+
+        NetworkManager.postRequestUserInfo(dataList.get(i).getFriend_id(),
+                new ResponseListener<UserInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LogUtils.e(TAG, volleyError.toString());
+            }
+
+            @Override
+            public void onResponse(UserInfo info) {
+                Picasso.with(YouJoinApplication.getAppContext())
+                        .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
+                        .resize(200, 200)
+                        .centerCrop()
+                        .into(viewHolder.avatar);
+            }
+        });
+
+        List<String> urls = StringUtils.getPicUrlList(dataList.get(i).getTweets_img());
+        GridPhotoAdapter adapter = new GridPhotoAdapter(YouJoinApplication.getAppContext(), urls);
+        viewHolder.gridView.setAdapter(adapter);
     }
 
     @Override

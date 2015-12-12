@@ -29,6 +29,12 @@ import me.zq.youjoin.widget.enter.MyImageGetter;
  */
 public class StringUtils {
 
+    /**将纯string转换为支持表情显示的SpannableString
+     * @param context 程序上下文
+     * @param tv 用于获取textview的行高从而设置图片的大小
+     * @param source 要转换的String
+     * @return SpannableString
+     */
     public static SpannableString getEmotionContent(final Context context, final TextView tv, String source) {
         SpannableString spannableString = new SpannableString(source);
         Resources res = context.getResources();
@@ -70,6 +76,10 @@ public class StringUtils {
         return picUrlList;
     }
 
+    /**自动判断参数类型 1为userid，2为username，3为email
+     * @param param 待判断参数
+     * @return 参数类型
+     */
     public static String getParamType(String param){
         if(isEmailAddress(param)){
             return "3";
