@@ -105,7 +105,7 @@
     </ScrollView>
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/yj_personal_userphoto"
         android:layout_width="80dp"
         android:layout_height="80dp"

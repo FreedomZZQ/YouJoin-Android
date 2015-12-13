@@ -62,6 +62,7 @@
     <string name="title_activity_message">私信</string>
 
     <string name="error_network">获取信息失败，请检查网络连接</string>
-
+    <string name="send_tweet_success">动态发送成功</string>
+    <string name="update_success">更新用户信息成功</string>
 
 </resources>

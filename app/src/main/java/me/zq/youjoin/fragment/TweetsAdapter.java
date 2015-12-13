@@ -87,6 +87,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int i){
+        i = dataList.size() - i - 1;
         //建立起ViewHolder中视图与数据的关联
         viewHolder.likeCount.setText(Integer.toString(dataList.get(i).getUpvote_num()));
         viewHolder.commentCount.setText(Integer.toString(dataList.get(i).getComment_num()));

@@ -26,7 +26,7 @@ public class UpdateUserInfoResult {
         return img_url;
     }
 
-//    public void setResult(String result) {
-//        this.result = result;
-//    }
+    public void setResult(String result) {
+        this.result = result;
+    }
 }

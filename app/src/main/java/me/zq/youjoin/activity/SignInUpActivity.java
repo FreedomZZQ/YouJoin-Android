@@ -5,11 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,17 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.VolleyError;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
 import me.zq.youjoin.utils.StringUtils;
 
 
@@ -41,9 +36,8 @@ import me.zq.youjoin.utils.StringUtils;
  * A signin screen that offers signin via username/password.
  * Created by ZQ on 2015/11/13.
  */
-public class SignInUpActivity extends BaseActivity {
-
-    // UI references.
+public class SignInUpActivity extends BaseActivity
+implements DataPresenter.SignIn, DataPresenter.SignUp{
 
     @Bind(R.id.username_edit)
     EditText usernameEdit;
@@ -65,11 +59,6 @@ public class SignInUpActivity extends BaseActivity {
     private Boolean isSignIn;
 
     private static Activity welcomeActivity;
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private SignTask mAuthTask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,15 +103,7 @@ public class SignInUpActivity extends BaseActivity {
         }
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptSign() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         usernameEdit.setError(null);
@@ -193,81 +174,25 @@ public class SignInUpActivity extends BaseActivity {
 
     private void actionSign(String username, String password, String email){
         if(isSignIn){
-            NetworkManager.postSignIn(username, password, new ResponseListener<UserInfo>() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    Log.d(TAG, "Signin error! " + volleyError.toString());
-                    signFailure(volleyError.toString());
-                }
-
-                @Override
-                public void onResponse(UserInfo userInfo) {
-                    if (userInfo.getResult().equals("success")) {
-                        Log.d(TAG, "Signin Success! username is : " + userInfo.getUsername());
-                        signSuccess(userInfo);
-                    } else {
-                        Log.d(TAG, "Signin Failure! username is : " + userInfo.getUsername());
-                        signFailure(userInfo.getResult());
-                    }
-                }
-            });
+            DataPresenter.signIn(username, password, SignInUpActivity.this);
         }else {
-            NetworkManager.postSignUp(username, password, email, new ResponseListener<UserInfo>() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    Log.d(TAG, "Signup error!" + volleyError.toString());
-                    signFailure(volleyError.toString());
-                }
-
-                @Override
-                public void onResponse(UserInfo userInfo) {
-                    if (userInfo.getResult().equals("success")) {
-                        Log.d(TAG, "Signup Success! username is : " + userInfo.getUsername());
-                        signSuccess(userInfo);
-                    } else {
-                        Log.d(TAG, "Signup Failure! username is : " + userInfo.getUsername());
-                        signFailure(userInfo.getResult());
-                    }
-                }
-            });
+            DataPresenter.signUp(username, password, email, SignInUpActivity.this);
         }
     }
 
-    private void signSuccess(UserInfo userInfo){
-        YouJoinApplication.setCurrUser(userInfo);
-        NetworkManager.postRequestUserInfo(Integer.toString(YouJoinApplication.getCurrUser().getId()),
-                new ResponseListener<UserInfo>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(YouJoinApplication.getAppContext()
-                        , "Request User Info Error!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(UserInfo info) {
-                if(info.getResult().equals("success")){
-                    YouJoinApplication.setCurrUser(info);
-//                    Toast.makeText(YouJoinApplication.getAppContext(), info.getLocation()
-//                    , Toast.LENGTH_SHORT).show();
-
-                    showProgress(false);
-
-                    MainActivity.actionStart(SignInUpActivity.this);
-                    SignInUpActivity.this.finish();
-                    welcomeActivity.finish();
-                }
-
-            }
-        });
-
-
-    }
-
-    private void signFailure(String error){
+    @Override
+    public void onSign(UserInfo info){
         showProgress(false);
-        //passwordEdit.setError(getString(R.string.error_incorrect_password));
-        passwordEdit.setError(error);
-        passwordEdit.requestFocus();
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            YouJoinApplication.setCurrUser(info);
+            MainActivity.actionStart(SignInUpActivity.this);
+            SignInUpActivity.this.finish();
+            welcomeActivity.finish();
+        }else{
+            //passwordEdit.setError(getString(R.string.error_incorrect_password));
+            passwordEdit.setError(getString(R.string.error_network));
+            passwordEdit.requestFocus();
+        }
     }
 
     private boolean isUsernameValid(String username) {
@@ -315,81 +240,6 @@ public class SignInUpActivity extends BaseActivity {
             // and hide the relevant UI components.
             loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
             loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class SignTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String username;
-        private final String password;
-        private final String email;
-
-        SignTask(String username, String password, String email) {
-            this.username = username;
-            this.password = password;
-            this.email = email;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            if(isSignIn){
-                NetworkManager.postSignIn(username, password, new ResponseListener<UserInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.d(TAG, "Signin error! " + volleyError.toString());
-                    }
-
-                    @Override
-                    public void onResponse(UserInfo userInfo) {
-                        if (userInfo.getResult().equals("success")) {
-                            Log.d(TAG, "Signin Success! username is : " + userInfo.getUsername());
-                        } else {
-                            Log.d(TAG, "Signin Failure! username is : " + userInfo.getUsername());
-
-                        }
-                    }
-                });
-            }else {
-                NetworkManager.postSignUp(username, password, email, new ResponseListener<UserInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.d(TAG, "Signup error!" + volleyError.toString());
-                    }
-
-                    @Override
-                    public void onResponse(UserInfo userInfo) {
-                        Log.d(TAG, "Signup Success! username is: " + userInfo.getUsername());
-                    }
-                });
-            }
-
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                MainActivity.actionStart(SignInUpActivity.this);
-                SignInUpActivity.this.finish();
-                welcomeActivity.finish();
-            } else {
-                passwordEdit.setError(getString(R.string.error_incorrect_password));
-                passwordEdit.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
         }
     }
 

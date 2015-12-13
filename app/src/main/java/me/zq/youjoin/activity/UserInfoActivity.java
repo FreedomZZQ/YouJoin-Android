@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
@@ -146,6 +147,11 @@ public class UserInfoActivity extends BaseActivity
 
             }
         });
+    }
+
+    @OnClick(R.id.btn_follow)
+    protected void followUser(){
+
     }
 
     private void addFriend() {

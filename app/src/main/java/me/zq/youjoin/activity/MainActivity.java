@@ -16,15 +16,18 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.fragment.FriendFragment;
 import me.zq.youjoin.fragment.MessageFragment;
 import me.zq.youjoin.fragment.TweetsFragment;
 import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.StringUtils;
 
-public class MainActivity extends BaseActivity  {
+public class MainActivity extends BaseActivity
+implements DataPresenter.GetUserInfo{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -45,6 +48,8 @@ public class MainActivity extends BaseActivity  {
 
         setSupportActionBar(toolbar);
         initView();
+
+        DataPresenter.requestUserInfoById(YouJoinApplication.getCurrUser().getId(), MainActivity.this);
 
         switchToTweets();
 
@@ -77,7 +82,13 @@ public class MainActivity extends BaseActivity  {
 //        }
     }
 
-
+    @Override
+    public void onGetUserInfo(UserInfo info){
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            YouJoinApplication.setCurrUser(info);
+            refreshUserInfo();
+        }
+    }
 
     private void initView(){
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
@@ -102,15 +113,7 @@ public class MainActivity extends BaseActivity  {
         tvUserName = (TextView) navigationHeadView.findViewById(R.id.navigation_username);
         tvUserEmail = (TextView) navigationHeadView.findViewById(R.id.navigation_email);
 
-        UserInfo userInfo = YouJoinApplication.getCurrUser();
-
-        Picasso.with(MainActivity.this)
-                .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
-                .resize(200, 200)
-                .centerCrop()
-                .into(ivUserPhoto);
-        tvUserName.setText(userInfo.getUsername());
-        tvUserEmail.setText(userInfo.getEmail());
+        refreshUserInfo();
 
         ivUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +123,20 @@ public class MainActivity extends BaseActivity  {
             }
         });
 
+    }
+
+    private void refreshUserInfo() {
+        UserInfo userInfo = YouJoinApplication.getCurrUser();
+
+        if(userInfo.getImg_url() != null){
+            Picasso.with(MainActivity.this)
+                    .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(ivUserPhoto);
+        }
+        tvUserName.setText(userInfo.getUsername());
+        tvUserEmail.setText(userInfo.getEmail());
     }
 
 

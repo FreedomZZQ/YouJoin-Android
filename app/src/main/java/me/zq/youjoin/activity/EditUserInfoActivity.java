@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -18,16 +16,17 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
-import me.zq.youjoin.utils.LogUtils;
 
-public class EditUserInfoActivity extends BaseActivity {
+public class EditUserInfoActivity extends BaseActivity
+implements DataPresenter.UpdateUserInfo{
 
     @Bind(R.id.yj_personal_email)
     TextView yjPersonalEmail;
@@ -48,7 +47,7 @@ public class EditUserInfoActivity extends BaseActivity {
     @Bind(R.id.yj_personal_sign)
     EditText yjPersonalSign;
     @Bind(R.id.yj_personal_userphoto)
-    ImageView yjPersonalUserphoto;
+    CircleImageView yjPersonalUserphoto;
 
     private UserInfo userInfo;
     private String picPath;
@@ -73,29 +72,13 @@ public class EditUserInfoActivity extends BaseActivity {
         yjPersonalLocation.setText(userInfo.getLocation());
         yjPersonalSign.setText(userInfo.getUsersign());
 
-        Picasso.with(EditUserInfoActivity.this)
-                .load(userInfo.getImg_url())
-                .resize(200, 200)
-                .centerCrop()
-                .into(yjPersonalUserphoto);
-
-
-
-
-//        yjPersonalCommit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                updateInfo();
-//            }
-//        });
-//
-//        yjPersonalChoosePhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MultiImageSelectorActivity.startSelect(EditUserInfoActivity.this, 2, 1,
-//                        MultiImageSelectorActivity.MODE_SINGLE);
-//            }
-//        });
+        if(userInfo.getImg_url() != null){
+            Picasso.with(EditUserInfoActivity.this)
+                    .load(userInfo.getImg_url())
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(yjPersonalUserphoto);
+        }
     }
 
     @OnClick(R.id.yj_personal_choose_photo)
@@ -111,28 +94,21 @@ public class EditUserInfoActivity extends BaseActivity {
         userInfo.setLocation(yjPersonalLocation.getText().toString());
         userInfo.setBirth(yjPersonalBirth.getText().toString());
         userInfo.setUsersign(yjPersonalSign.getText().toString());
+        DataPresenter.updateUserInfo(userInfo, picPath, EditUserInfoActivity.this);
 
-        NetworkManager.postUpdateUserInfo(userInfo, picPath, new ResponseListener<UpdateUserInfoResult>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(EditUserInfoActivity.this, "UserInfo Update Fail with Network Error!"
-                        , Toast.LENGTH_SHORT).show();
-            }
+    }
 
-            @Override
-            public void onResponse(UpdateUserInfoResult result) {
-                if (result.getResult().equals("success")) {
-                    LogUtils.d("hehe", "photo url is : " + result.getImg_url());
-                    userInfo.setImg_url(result.getImg_url());
-                    Toast.makeText(EditUserInfoActivity.this, "UserInfo Update Successfully!"
-                            , Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(EditUserInfoActivity.this, "UserInfo Update Fail!"
-                            , Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+    @Override
+    public void onUpdateUserInfo(UpdateUserInfoResult result){
+        if (result.getResult().equals(NetworkManager.SUCCESS)) {
+            userInfo.setImg_url(result.getImg_url());
+            Toast.makeText(EditUserInfoActivity.this, getString(R.string.update_success)
+                    , Toast.LENGTH_SHORT).show();
+            EditUserInfoActivity.this.finish();
+        } else {
+            Toast.makeText(EditUserInfoActivity.this, getString(R.string.error_network)
+                    , Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

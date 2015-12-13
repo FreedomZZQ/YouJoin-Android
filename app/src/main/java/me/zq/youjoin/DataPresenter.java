@@ -1,10 +1,17 @@
 package me.zq.youjoin;
 
+import android.util.Log;
+
 import com.android.volley.VolleyError;
+
+import java.util.List;
 
 import me.zq.youjoin.db.DatabaseManager;
 import me.zq.youjoin.model.FriendsInfo;
+import me.zq.youjoin.model.ImageInfo;
+import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
+import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.network.ResponseListener;
@@ -111,6 +118,76 @@ public class DataPresenter {
                 });
     }
 
+    public static void sendTweet(int userId, String content, List<ImageInfo> images,
+                                 final SendTweet q){
+        NetworkManager.postSendTweet(Integer.toString(userId), content, images,
+                new ResponseListener<ResultInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        LogUtils.e(TAG, volleyError.toString());
+                        ResultInfo info = new ResultInfo();
+                        info.setResult(NetworkManager.FAILURE);
+                        q.onSendTweet(info);
+                    }
+
+                    @Override
+                    public void onResponse(ResultInfo info) {
+                        q.onSendTweet(info);
+                    }
+                });
+    }
+
+    public static void signIn(String username, String password, final SignIn q){
+        NetworkManager.postSignIn(username, password, new ResponseListener<UserInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d(TAG, "Signin error! " + volleyError.toString());
+                UserInfo info = new UserInfo();
+                info.setResult(NetworkManager.FAILURE);
+                q.onSign(info);
+            }
+
+            @Override
+            public void onResponse(UserInfo userInfo) {
+                q.onSign(userInfo);
+            }
+        });
+    }
+
+    public static void signUp(String username, String password, String email, final SignUp q){
+        NetworkManager.postSignUp(username, password, email, new ResponseListener<UserInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d(TAG, "Signup error!" + volleyError.toString());
+                UserInfo info = new UserInfo();
+                info.setResult(NetworkManager.FAILURE);
+                q.onSign(info);
+            }
+
+            @Override
+            public void onResponse(UserInfo userInfo) {
+                q.onSign(userInfo);
+            }
+        });
+    }
+
+    public static void updateUserInfo(final UserInfo userInfo, String picPath, final UpdateUserInfo q){
+        NetworkManager.postUpdateUserInfo(userInfo, picPath, new ResponseListener<UpdateUserInfoResult>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                UpdateUserInfoResult result = new UpdateUserInfoResult();
+                result.setResult(NetworkManager.FAILURE);
+                q.onUpdateUserInfo(result);
+            }
+
+            @Override
+            public void onResponse(UpdateUserInfoResult result) {
+                q.onUpdateUserInfo(result);
+                DatabaseManager.addUserInfo(userInfo);
+            }
+        });
+    }
+
     public interface GetUserInfo{
         void onGetUserInfo(UserInfo info);
     }
@@ -121,6 +198,22 @@ public class DataPresenter {
 
     public interface GetTweets{
         void onGetTweets(TweetInfo info);
+    }
+
+    public interface SendTweet{
+        void onSendTweet(ResultInfo info);
+    }
+
+    public interface SignIn{
+        void onSign(UserInfo info);
+    }
+
+    public interface SignUp{
+        void onSign(UserInfo info);
+    }
+
+    public interface UpdateUserInfo{
+        void onUpdateUserInfo(UpdateUserInfoResult info);
     }
 
 }

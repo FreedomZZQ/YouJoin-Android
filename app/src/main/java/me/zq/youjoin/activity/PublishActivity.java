@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.picasso.Picasso;
 
@@ -23,19 +22,19 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
 import me.zq.youjoin.utils.GlobalUtils;
-import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.widget.enter.EmojiFragment;
 import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
 
-public class PublishActivity extends BaseActivity implements EmojiFragment.EnterEmojiLayout {
+public class PublishActivity extends BaseActivity
+        implements EmojiFragment.EnterEmojiLayout, DataPresenter.SendTweet{
 
     @Bind(R.id.lay_photo_container)
     LinearLayout layPhotoContainer;
@@ -68,21 +67,8 @@ public class PublishActivity extends BaseActivity implements EmojiFragment.Enter
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkManager.postSendTweet(Integer.toString(YouJoinApplication.getCurrUser().getId()),
-                        msgEdit.getText().toString(), mData,
-                        new ResponseListener<ResultInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        LogUtils.e(TAG, volleyError.toString());
-                        Toast.makeText(PublishActivity.this, "Network Error!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onResponse(ResultInfo result) {
-                        LogUtils.d(TAG, result.getResult());
-                        onSendSuccess();
-                    }
-                });
+                DataPresenter.sendTweet(YouJoinApplication.getCurrUser().getId(),
+                        msgEdit.getText().toString(), mData, PublishActivity.this);
             }
         });
 
@@ -110,11 +96,20 @@ public class PublishActivity extends BaseActivity implements EmojiFragment.Enter
         }
     }
 
-    private void onSendSuccess(){
-        msgEdit.setText("");
-        mData.clear();
-        layPhotoContainer.removeAllViews();
-        GlobalUtils.popSoftkeyboard(PublishActivity.this, msgEdit, false);
+    @Override
+    public void onSendTweet(ResultInfo info){
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            msgEdit.setText("");
+            mData.clear();
+            layPhotoContainer.removeAllViews();
+            GlobalUtils.popSoftkeyboard(PublishActivity.this, msgEdit, false);
+            Toast.makeText(PublishActivity.this, getString(R.string.send_tweet_success)
+                    , Toast.LENGTH_SHORT).show();
+            PublishActivity.this.finish();
+        }else{
+            Toast.makeText(PublishActivity.this, getString(R.string.error_network)
+                    , Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initEnter() {
