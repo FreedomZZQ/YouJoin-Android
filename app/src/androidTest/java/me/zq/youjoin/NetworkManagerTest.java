@@ -23,9 +23,9 @@ import me.zq.youjoin.utils.LogUtils;
  */
 public class NetworkManagerTest extends AndroidTestCase {
 
-    public static final String testId = "16";
-    public static final String testId2 = "17";
-    public static final String testTweetId = "14";
+    public static final Integer testId = 16;
+    public static final Integer testId2 = 17;
+    public static final Integer testTweetId = 14;
     public static final String picPath = "/storage/emulated/0/Download/lufei.jpg";
     public static final String TAG = "YouJoinTest";
     public static final String SUCCESS = "success";
@@ -131,7 +131,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testRequestUserInfo(){
-        NetworkManager.postRequestUserInfo(testId, new ResponseListener<UserInfo>() {
+        NetworkManager.postRequestUserInfo(testId.toString(), new ResponseListener<UserInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -147,7 +147,8 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testSendPrivateMsg(){
-        NetworkManager.postSendMessage(testId, testId2, "first msg", new ResponseListener<ResultInfo>() {
+        NetworkManager.postSendMessage(testId.toString(), testId2.toString(),
+                "first msg", new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
@@ -161,7 +162,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testReceivePrivatemsg(){
-        NetworkManager.postRequestMessage(testId2, new ResponseListener<PrimsgInfo>() {
+        NetworkManager.postRequestMessage(testId2.toString(), new ResponseListener<PrimsgInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -170,7 +171,7 @@ public class NetworkManagerTest extends AndroidTestCase {
             @Override
             public void onResponse(PrimsgInfo info) {
                 assertEquals(info.getResult(), SUCCESS);
-                List<PrimsgInfo.MessageEntity> infos = info.getMessege();
+                List<PrimsgInfo.MessageEntity> infos = info.getMessage();
                 for( PrimsgInfo.MessageEntity i : infos){
                     LogUtils.d(TAG, i.getContent());
                 }
@@ -181,7 +182,7 @@ public class NetworkManagerTest extends AndroidTestCase {
 
     public void testAddFriend(){
 
-        NetworkManager.postAddFriend(testId2, testId, new ResponseListener<ResultInfo>() {
+        NetworkManager.postAddFriend(testId2.toString(), testId.toString(), new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -193,31 +194,31 @@ public class NetworkManagerTest extends AndroidTestCase {
             }
         });
 
-//        for(int i = 17; i < 150; i++){
-//            try {
-//                Thread.currentThread().sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            NetworkManager.postAddFriend(testId, Integer.toString(i), new ResponseListener<ResultInfo>() {
-//                @Override
-//                public void onErrorResponse(VolleyError volleyError) {
-//                    LogUtils.e(TAG, volleyError.toString());
-//                }
-//
-//                @Override
-//                public void onResponse(ResultInfo info) {
-////                    assertEquals(info.getResult(), SUCCESS);
-//                }
-//            });
-//        }
+        for(int i = 17; i < 150; i++){
+            try {
+                Thread.currentThread().sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            NetworkManager.postAddFriend(testId.toString(), Integer.toString(i), new ResponseListener<ResultInfo>() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    LogUtils.e(TAG, volleyError.toString());
+                }
+
+                @Override
+                public void onResponse(ResultInfo info) {
+//                    assertEquals(info.getResult(), SUCCESS);
+                }
+            });
+        }
 
     }
 
     public void testSendTweet(){
         List<ImageInfo> images = new ArrayList<>();
         images.add(new ImageInfo(picPath));
-        NetworkManager.postSendTweet(testId2, "haha i love mzz!", images, new ResponseListener<ResultInfo>() {
+        NetworkManager.postSendTweet(testId2.toString(), "haha i love mzz!", images, new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -231,7 +232,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testRequestTweets(){
-        NetworkManager.postRequestTweets(testId, testTweetId, "0", new ResponseListener<TweetInfo>() {
+        NetworkManager.postRequestTweets(testId.toString(), testTweetId.toString(), "0", new ResponseListener<TweetInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -249,7 +250,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testUpvoteTweet(){
-        NetworkManager.postUpvoteTweet(testId2, testTweetId, new ResponseListener<ResultInfo>() {
+        NetworkManager.postUpvoteTweet(testId2.toString(), testTweetId.toString(), new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -263,7 +264,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testCommentTweet(){
-        NetworkManager.postCommentTweet(testId2, testTweetId, "nice!", new ResponseListener<ResultInfo>() {
+        NetworkManager.postCommentTweet(testId2.toString(), testTweetId.toString(), "nice!", new ResponseListener<ResultInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
@@ -277,7 +278,7 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testRequestFriendList() {
-        NetworkManager.postRequestFriendList(testId2, new ResponseListener() {
+        NetworkManager.postRequestFriendList(testId2.toString(), new ResponseListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());

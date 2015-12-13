@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.widget.enter.MyImageGetter;
 
 /**
@@ -82,11 +83,11 @@ public class StringUtils {
      */
     public static String getParamType(String param){
         if(isEmailAddress(param)){
-            return "3";
+            return NetworkManager.PARAM_TYPE_USER_EMAIL;
         } else if(isLetter(param.charAt(0))){
-            return "2";
+            return NetworkManager.PARAM_TYPE_USER_NAME;
         } else if(isAllNumber(param)){
-            return "1";
+            return NetworkManager.PARAM_TYPE_USER_ID;
         }else{
             return "invalid";
         }

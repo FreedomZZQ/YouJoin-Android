@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.ResultInfo;
@@ -26,12 +28,13 @@ import me.zq.youjoin.network.ResponseListener;
 import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.StringUtils;
 
-public class UserInfoActivity extends BaseActivity {
+public class UserInfoActivity extends BaseActivity
+        implements DataPresenter.GetUserInfo {
 
     public static final int TYPE_CURR_USER = 0;
     public static final int TYPE_OTHER_USER = 1;
     public static final String TYPE = "type";
-    public static final String USER_INFO = "info";
+    public static final String USER_ID = "user_id";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -53,9 +56,16 @@ public class UserInfoActivity extends BaseActivity {
     TextView birth;
     @Bind(R.id.user_fab)
     FloatingActionButton userFab;
+    UserInfo info = new UserInfo();
+    @Bind(R.id.follow_num)
+    TextView followNum;
+    @Bind(R.id.focus_num)
+    TextView focusNum;
+    @Bind(R.id.btn_follow)
+    CheckBox btnFollow;
 
     int type = 0;
-    UserInfo info;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,21 +75,26 @@ public class UserInfoActivity extends BaseActivity {
         initView();
     }
 
-    private void initView() {
-        setSupportActionBar(toolbar);
-
-        type = getIntent().getExtras().getInt(TYPE);
-        info = getIntent().getParcelableExtra(USER_INFO);
-
+    @Override
+    public void onGetUserInfo(UserInfo userInfo) {
+        if(userInfo.getResult().equals(NetworkManager.FAILURE)){
+            Toast.makeText(UserInfoActivity.this, getString(R.string.error_network),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        this.info = userInfo;
         nickname.setText(info.getNickname());
         email.setText(info.getEmail());
         work.setText(info.getWork());
         sign.setText(info.getUsersign());
         birth.setText(info.getBirth());
+        followNum.setText(Integer.toString(info.getFollow_num()));
+        focusNum.setText(Integer.toString(info.getFocus_num()));
+        btnFollow.setChecked(false);
 
-        if(info.getSex().equals("0")){
+        if (info.getSex().equals("0")) {
             sex.setBackground(getResources().getDrawable(R.drawable.ic_sex_boy));
-        }else{
+        } else {
             sex.setBackground(getResources().getDrawable(R.drawable.ic_sex_girl));
         }
 
@@ -89,22 +104,42 @@ public class UserInfoActivity extends BaseActivity {
                 .resize(200, 200)
                 .centerCrop()
                 .into(avatar);
+    }
 
-        if(type == TYPE_CURR_USER){
+    private void initView() {
+        setSupportActionBar(toolbar);
+
+        type = getIntent().getExtras().getInt(TYPE);
+        info.setId(getIntent().getExtras().getInt(USER_ID));
+
+        nickname.setText("");
+        email.setText("");
+        work.setText("");
+        sign.setText("");
+        birth.setText("");
+        sex.setBackground(getResources().getDrawable(R.drawable.ic_sex_boy));
+        location.setText("");
+        followNum.setText("");
+        focusNum.setText("");
+        btnFollow.setChecked(false);
+
+        DataPresenter.requestUserInfoById(info.getId(), UserInfoActivity.this);
+
+        if (type == TYPE_CURR_USER) {
             userFab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_popup_attachment_rename));
-        }else if(type == TYPE_OTHER_USER){
+        } else if (type == TYPE_OTHER_USER) {
             userFab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_project_topic_label_add));
         }
 
         userFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(type == TYPE_CURR_USER){
+                if (type == TYPE_CURR_USER) {
                     EditUserInfoActivity.actionStart(UserInfoActivity.this);
-                }else if(type == TYPE_OTHER_USER){
+                } else if (type == TYPE_OTHER_USER) {
                     //addFriend();
                     MessageActivity.actionStart(UserInfoActivity.this, info);
-                }else{
+                } else {
                     Snackbar.make(view, "You Shouldn't see this...", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -123,10 +158,10 @@ public class UserInfoActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(ResultInfo info) {
-                        if(info.getResult().equals(NetworkManager.SUCCESS)){
+                        if (info.getResult().equals(NetworkManager.SUCCESS)) {
                             Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
                                     Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             Toast.makeText(UserInfoActivity.this, "Add Friend Failure!",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -135,10 +170,10 @@ public class UserInfoActivity extends BaseActivity {
     }
 
 
-    public static void actionStart(Context context, int type, UserInfo info) {
+    public static void actionStart(Context context, int type, int userId) {
         Intent intent = new Intent(context, UserInfoActivity.class);
         intent.putExtra(TYPE, type);
-        intent.putExtra(USER_INFO, info);
+        intent.putExtra(USER_ID, userId);
         context.startActivity(intent);
     }
 

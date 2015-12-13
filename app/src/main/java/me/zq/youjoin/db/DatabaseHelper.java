@@ -55,10 +55,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     private static final String CREATE_TABLE_FRIEND = "create table "
             + TABLE_FRIEND
-            + " (" + FRIEND_ID + " integer primary key, "
+            + " (" + FRIEND_ID + " integer primary key autoincrement, "
             + USER1_ID + " integer not null, "
             + USER2_ID + " integer not null, "
-            + FRIEND_TIME + "timestamp not null)";
+            + FRIEND_TIME + "timestamp)";
 
     public static final String TWEETS_ID = "tweets_id";
     public static final String TWEETS_CONTENT = "tweets_content";

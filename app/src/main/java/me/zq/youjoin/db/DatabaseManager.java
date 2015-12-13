@@ -3,6 +3,7 @@ package me.zq.youjoin.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,48 @@ import me.zq.youjoin.utils.StringUtils;
  */
 public class DatabaseManager {
 
-    /**向数据库添加用户信息
-     * @param info 要添加的用户信息
+
+    /**当前用户关注friendid
+     * @param friendid 要关注的friendid
+     */
+    public static void addFriendInfo(int friendid){
+
+        String sql = "select *from " + DatabaseHelper.TABLE_FRIEND
+                + " where " + DatabaseHelper.USER1_ID
+                + " = " + Integer.toString(friendid)
+                + " and " + DatabaseHelper.USER2_ID
+                + " = " + Integer.toString(YouJoinApplication.getCurrUser().getId());
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        if(parseFriendInfoCursor(db.rawQuery(sql, null)).size() != 0){
+            return;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.USER1_ID, friendid);
+        contentValues.put(DatabaseHelper.USER2_ID, YouJoinApplication.getCurrUser().getId());
+
+        db.insert(DatabaseHelper.TABLE_FRIEND, null, contentValues);
+
+    }
+
+    /**从数据库获取用户关注的列表
+     * @param userId 用户Id
+     * @return 该用户的关注信息
+     */
+    public static FriendsInfo getFriendList(int userId){
+
+        String sql = "select * from " + DatabaseHelper.TABLE_FRIEND
+                + " where " + DatabaseHelper.USER2_ID
+                + " = " + Integer.toString(userId);
+
+        return getFriendsInfo(sql);
+    }
+
+    /**向数据库添加或更新用户信息
+     * @param info 要添加或更新的用户信息
      */
     public static void addUserInfo(UserInfo info){
         SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
-        String sql = "";
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.USER_ID, info.getId());
         contentValues.put(DatabaseHelper.USER_NAME, info.getUsername());
@@ -40,12 +77,17 @@ public class DatabaseManager {
         contentValues.put(DatabaseHelper.USER_NICKNAME, info.getNickname());
         contentValues.put(DatabaseHelper.FOCUS_NUM, info.getFocus_num());
         contentValues.put(DatabaseHelper.FOLLOW_NUM, info.getFollow_num());
-        db.insert(DatabaseHelper.TABLE_USER_INFO, null, contentValues);
-        db.execSQL(sql);
+
+        if(getUserInfoById(info.getId()).getResult().equals(NetworkManager.SUCCESS)){
+            db.update(DatabaseHelper.TABLE_USER_INFO, contentValues,
+                    DatabaseHelper.USER_ID + " = ?", new String[] {Integer.toString(info.getId())});
+        }else {
+            db.insert(DatabaseHelper.TABLE_USER_INFO, null, contentValues);
+        }
     }
 
-    /**向数据库添加多个用户信息
-     * @param infos 要添加的用户信息列表
+    /**向数据库添加或更新多个用户信息
+     * @param infos 要添加或更新的用户信息列表
      */
     public static void addUsersInfo(List<UserInfo> infos){
         for(UserInfo info : infos){
@@ -53,16 +95,77 @@ public class DatabaseManager {
         }
     }
 
+
+    public static UserInfo getUserInfoAuto(String param){
+        String type = StringUtils.getParamType(param);
+        switch (type) {
+            case NetworkManager.PARAM_TYPE_USER_ID:
+                return getUserInfoById(Integer.getInteger(param));
+            case NetworkManager.PARAM_TYPE_USER_NAME:
+                return getUserInfoByUserName(param);
+            case NetworkManager.PARAM_TYPE_USER_EMAIL:
+                return getUserInfoByEmail(param);
+            default:
+                UserInfo info = new UserInfo();
+                info.setResult(NetworkManager.FAILURE);
+                return info;
+        }
+    }
     /**使用userid从数据库获取某用户的信息
      * @param userId 要获取的用户的id
      * @return 获取到的用户信息，result字段为success表示获取成功，failure表示获取失败
      */
-    public static UserInfo getUserInfoById(String userId){
+    public static UserInfo getUserInfoById(int userId){
+
+        String sql = "select * from " + DatabaseHelper.TABLE_USER_INFO
+                + " where " + DatabaseHelper.USER_ID + " = " + Integer.toString(userId);
+
+        return getUserInfo(sql);
+    }
+
+    /**使用username从数据库获取某用户的信息
+     * @param userName 要获取的用户的username
+     * @return 获取到的用户信息，result字段为success表示获取成功，failure表示获取失败
+     */
+    public static UserInfo getUserInfoByUserName(String userName){
+
+        String sql = "select * from " + DatabaseHelper.TABLE_USER_INFO
+                + " where " + DatabaseHelper.USER_NAME + " = '" + userName + "'";
+
+        return getUserInfo(sql);
+    }
+
+
+    /**使用email从数据库获取某用户的信息
+     * @param email 要获取的用户的 email
+     * @return 获取到的用户信息，result字段为success表示获取成功，failure表示获取失败
+     */
+    public static UserInfo getUserInfoByEmail(String email){
+        String sql = "select * from " + DatabaseHelper.TABLE_USER_INFO
+                + " where " + DatabaseHelper.USER_EMAIL + " = '" + email + "'";
+
+        return getUserInfo(sql);
+    }
+
+    @NonNull
+    private static FriendsInfo getFriendsInfo(String sql) {
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        List<FriendsInfo.FriendsEntity> results = parseFriendInfoCursor(db.rawQuery(sql, null));
+
+        FriendsInfo info = new FriendsInfo();
+        if(results.isEmpty()){
+            info.setResult(NetworkManager.FAILURE);
+            return info;
+        }else{
+            info.setFriends(results);
+            info.setResult(NetworkManager.SUCCESS);
+            return info;
+        }
+    }
+
+    @NonNull
+    private static UserInfo getUserInfo(String sql) {
         UserInfo info = new UserInfo();
-
-        String sql = "select from " + DatabaseHelper.TABLE_USER_INFO
-                + " where " + DatabaseHelper.USER_ID + " = '" + userId + "'";
-
         SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
         List<UserInfo> results = parseUserInfoCursor(db.rawQuery(sql, null));
 
@@ -76,33 +179,18 @@ public class DatabaseManager {
         }
     }
 
-    /**使用username从数据库获取某用户的信息
-     * @param userName 要获取的用户的username
-     * @return 获取到的用户信息，result字段为success表示获取成功，failure表示获取失败
-     */
-    public static UserInfo getUserInfoByUserName(String userName){
-        UserInfo info = new UserInfo();
-
-        return info;
-    }
-
-    /**使用email从数据库获取某用户的信息
-     * @param email 要获取的用户的 email
-     * @return 获取到的用户信息，result字段为success表示获取成功，failure表示获取失败
-     */
-    public static UserInfo getUserInfoByEmail(String email){
-        UserInfo info = new UserInfo();
-
-        return info;
-    }
-
-
     private static List<PrimsgInfo.MessageEntity> parsePrimsgInfoCursor(Cursor cursor){
         List<PrimsgInfo.MessageEntity> list = new ArrayList<>();
 
         if(cursor.moveToFirst()){
             do{
-
+                PrimsgInfo.MessageEntity info = new PrimsgInfo.MessageEntity();
+                info.setPrismg_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.PRIMSG_ID)));
+                info.setSender_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.SENDER_ID)));
+                info.setReceiver_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.RECEIVER_ID)));
+                info.setContent(cursor.getString(cursor.getColumnIndex(DatabaseHelper.PRIMSG_CONTENT)));
+                info.setReceive_date(cursor.getString(cursor.getColumnIndex(DatabaseHelper.PRIMSG_TIME)));
+                list.add(info);
             }while(cursor.moveToNext());
         }
         cursor.close();
@@ -114,7 +202,15 @@ public class DatabaseManager {
 
         if(cursor.moveToFirst()){
             do{
+                TweetInfo.TweetsEntity info = new TweetInfo.TweetsEntity();
+                info.setTweets_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.TWEETS_ID)));
+                info.setFriend_id(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.USER_ID)));
+                info.setComment_num(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COMMENT_NUM)));
+                info.setUpvote_num(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.UPVOTE_NUM)));
+                info.setTweets_content(cursor.getString(cursor.getColumnIndex(DatabaseHelper.TWEETS_CONTENT)));
+                info.setTweets_img(cursor.getString(cursor.getColumnIndex(DatabaseHelper.TWEETS_IMG)));
 
+                list.add(info);
             }while(cursor.moveToNext());
         }
         cursor.close();
@@ -128,7 +224,7 @@ public class DatabaseManager {
             do{
                 FriendsInfo.FriendsEntity info = new FriendsInfo.FriendsEntity();
                 info.setId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.USER1_ID)));
-
+                list.add(info);
             }while(cursor.moveToNext());
         }
         cursor.close();

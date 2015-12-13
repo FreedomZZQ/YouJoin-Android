@@ -12,8 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,22 +21,21 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.SearchUserActivity;
 import me.zq.youjoin.activity.UserInfoActivity;
 import me.zq.youjoin.model.FriendsInfo;
-import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
-import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.StringUtils;
 import me.zq.youjoin.widget.sidebar.IndexableListView;
 import me.zq.youjoin.widget.sidebar.StringMatcher;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 
-public class FriendFragment extends BaseFragment {
+public class FriendFragment extends BaseFragment
+implements DataPresenter.GetFriendList{
 
 
     List<FriendsInfo.FriendsEntity> mData = new ArrayList<>();
@@ -96,53 +95,29 @@ public class FriendFragment extends BaseFragment {
         userlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String friendId = Integer.toString(mData.get(position).getId());
-                NetworkManager.postRequestUserInfo(friendId, new ResponseListener<UserInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-
-                    }
-
-                    @Override
-                    public void onResponse(UserInfo info) {
-                        if (info.getResult().equals(NetworkManager.SUCCESS)) {
-                            UserInfoActivity.actionStart(getActivity(),
-                                    UserInfoActivity.TYPE_OTHER_USER, info);
-                        }
-                    }
-                });
+                UserInfoActivity.actionStart(getActivity(),
+                        UserInfoActivity.TYPE_OTHER_USER, mData.get(position).getId());
             }
         });
 
         refreshData();
-
-//        for (int i = 0; i < 26; i++) {
-//            for (int j = 0; j < 10; j++) {
-//                UserInfo info = new UserInfo();
-//                char[] name = {(char) ('A' + i), (char) ('A' + i)};
-//                info.setUsername(new String(name));
-//                mData.add(info);
-//            }
-//        }
     }
 
     private void refreshData() {
         refresher.setRefreshing(true);
-        NetworkManager.postRequestFriendList(Integer.toString(YouJoinApplication.getCurrUser().getId()),
-                new ResponseListener<FriendsInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        LogUtils.e(TAG, volleyError.toString());
-                        refresher.setRefreshing(false);
-                    }
+        DataPresenter.requestFriendList(YouJoinApplication.getCurrUser().getId(), FriendFragment.this);
+    }
 
-                    @Override
-                    public void onResponse(FriendsInfo info) {
-                        mData = info.getFriends();
-                        adapter.notifyDataSetChanged();
-                        refresher.setRefreshing(false);
-                    }
-                });
+    @Override
+    public void onGetFriendList(FriendsInfo info) {
+        refresher.setRefreshing(false);
+        if (info.getResult().equals(NetworkManager.SUCCESS)) {
+            mData = info.getFriends();
+            adapter.notifyDataSetChanged();
+        }else {
+            Toast.makeText(getActivity(), getActivity().getString(R.string.error_network),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

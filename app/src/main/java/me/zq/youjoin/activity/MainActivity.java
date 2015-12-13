@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity  {
             @Override
             public void onClick(View v) {
                 UserInfoActivity.actionStart(MainActivity.this, UserInfoActivity.TYPE_CURR_USER,
-                        YouJoinApplication.getCurrUser());
+                        YouJoinApplication.getCurrUser().getId());
             }
         });
 

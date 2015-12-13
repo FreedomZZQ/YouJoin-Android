@@ -10,23 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.VolleyError;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.PublishActivity;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
-import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.widget.recycler.RecyclerItemClickListener;
 
-public class TweetsFragment extends BaseFragment {
+public class TweetsFragment extends BaseFragment
+implements DataPresenter.GetTweets{
 
     @Bind(R.id.tweets_recycler_list)
     RecyclerView tweetsRecyclerList;
@@ -86,24 +84,21 @@ public class TweetsFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onGetTweets(TweetInfo info){
+        refresher.setRefreshing(false);
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            tweetsList = info.getTweets();
+            tweetsAdapter.setDataList(tweetsList);
+            tweetsAdapter.notifyDataSetChanged();
+        }
+
+    }
+
     private void refreshData() {
         refresher.setRefreshing(true);
-        NetworkManager.postRequestTweets(Integer.toString(YouJoinApplication.getCurrUser().getId()), "0",
-                NetworkManager.TIME_NEW, new ResponseListener<TweetInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        LogUtils.e(TAG, volleyError.toString());
-                        refresher.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onResponse(TweetInfo info) {
-                        tweetsList = info.getTweets();
-                        tweetsAdapter.setDataList(tweetsList);
-                        tweetsAdapter.notifyDataSetChanged();
-                        refresher.setRefreshing(false);
-                    }
-                });
+        DataPresenter.requestTweets(YouJoinApplication.getCurrUser().getId(),
+                "0", NetworkManager.TIME_NEW, TweetsFragment.this);
     }
 
     private RecyclerItemClickListener.OnItemClickListener onItemClickListener =

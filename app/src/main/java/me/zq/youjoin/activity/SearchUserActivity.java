@@ -15,20 +15,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
 
-public class SearchUserActivity extends BaseActivity {
+public class SearchUserActivity extends BaseActivity
+implements DataPresenter.GetUserInfo{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -55,7 +54,7 @@ public class SearchUserActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserInfoActivity.actionStart(SearchUserActivity.this, UserInfoActivity.TYPE_OTHER_USER,
-                        searchResult.get(position));
+                        searchResult.get(position).getId());
             }
         });
 
@@ -66,10 +65,19 @@ public class SearchUserActivity extends BaseActivity {
 
             }
         });
-
-
     }
 
+    @Override
+    public void onGetUserInfo(UserInfo userInfo){
+        if(userInfo.getResult().equals(NetworkManager.SUCCESS)){
+            searchResult.add(userInfo);
+            adapter.notifyDataSetChanged();
+        }else{
+            Toast.makeText(SearchUserActivity.this, getString(R.string.error_network),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     private void doSearch() {
         searchResult.clear();
@@ -78,22 +86,7 @@ public class SearchUserActivity extends BaseActivity {
         if (search.equals("")) {
             searchContent.setError("Please input userid or email or username.");
         } else {
-            NetworkManager.postRequestUserInfo(search, new ResponseListener<UserInfo>() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    searchContent.setError(volleyError.toString());
-                }
-
-                @Override
-                public void onResponse(UserInfo info) {
-                    if (info.getResult().equals(NetworkManager.SUCCESS)) {
-                        searchResult.add(info);
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Toast.makeText(SearchUserActivity.this, "Request UserInfo failure!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            DataPresenter.requestUserInfoAuto(search, SearchUserActivity.this);
         }
     }
 

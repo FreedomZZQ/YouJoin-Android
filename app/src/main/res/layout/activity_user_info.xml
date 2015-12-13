@@ -73,6 +73,61 @@
             android:textColor="@color/trans_white"
             android:layout_gravity="center_horizontal"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关注他的"
+                android:textColor="@color/trans_white"
+                android:textSize="@dimen/user_detail_text_size"
+                android:layout_marginEnd="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/follow_num"
+                tools:text="123"
+                android:textColor="@color/trans_white"
+                android:textSize="@dimen/user_detail_text_size"
+                android:layout_marginEnd="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="他关注的"
+                android:textColor="@color/trans_white"
+                android:textSize="@dimen/user_detail_text_size"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/focus_num"
+                tools:text="123"
+                android:textColor="@color/trans_white"
+                android:textSize="@dimen/user_detail_text_size"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_follow"
+                android:background="@null"
+                android:button="@drawable/checkbox_follow"
+                android:checked="false"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
