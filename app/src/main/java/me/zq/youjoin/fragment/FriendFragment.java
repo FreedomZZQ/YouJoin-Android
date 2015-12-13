@@ -96,7 +96,7 @@ public class FriendFragment extends BaseFragment {
         userlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String friendId = mData.get(position).getId();
+                String friendId = Integer.toString(mData.get(position).getId());
                 NetworkManager.postRequestUserInfo(friendId, new ResponseListener<UserInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
@@ -128,7 +128,7 @@ public class FriendFragment extends BaseFragment {
 
     private void refreshData() {
         refresher.setRefreshing(true);
-        NetworkManager.postRequestFriendList(YouJoinApplication.getCurrUser().getId(),
+        NetworkManager.postRequestFriendList(Integer.toString(YouJoinApplication.getCurrUser().getId()),
                 new ResponseListener<FriendsInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {

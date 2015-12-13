@@ -20,61 +20,78 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String TABLE_TWEETS = "yj_tweets";
     public static final String TABLE_PRIMSG = "yj_primsg";
 
+    public static final String USER_ID = "user_id";
+    public static final String USER_NAME = "user_name";
+    public static final String USER_EMAIL = "user_email";
+    public static final String USER_SEX = "user_sex";
+    public static final String USER_BIRTH = "user_birth";
+    public static final String USER_LOCATION = "user_location";
+    public static final String USER_PHOTO = "user_photo";
+    public static final String USER_SIGN = "user_sign";
+    public static final String USER_WORK = "user_work";
+    public static final String USER_NICKNAME = "user_nickname";
+    public static final String FOCUS_NUM = "focus_num";
+    public static final String FOLLOW_NUM = "follow_num";
+
     private static final String CREATE_TABLE_USER_INFO = "create table "
             + TABLE_USER_INFO
-            + " (user_id integer primary key,"
-            + " user_name text not null,"
-            + " user_email text not null,"
-            + " user_sex int not null,"
-            + " user_birth date not null,"
-            + " user_location text not null,"
-            + " user_photo text not null,"
-            + " user_sign text not null,"
-            + " user_work text not null,"
-            + " user_nickname text not null,"
-            + " focus_num integer not null,"
-            + " follow_num integer not null)";
+            + " (" + USER_ID + " integer primary key, "
+            + USER_NAME + " text not null, "
+            + USER_EMAIL + " text not null, "
+            + USER_SEX + " text not null, "
+            + USER_BIRTH + " date not null, "
+            + USER_LOCATION + " text not null, "
+            + USER_PHOTO + " text not null, "
+            + USER_SIGN + " text not null, "
+            + USER_WORK + " text not null, "
+            + USER_NICKNAME + " text not null, "
+            + FOCUS_NUM + " integer not null, "
+            + FOLLOW_NUM + " integer not null)";
+
+    public static final String FRIEND_ID = "friend_id";
+    public static final String USER1_ID = "user1_id";
+    public static final String USER2_ID = "user2_id";
+    public static final String FRIEND_TIME = "friend_time";
+
     private static final String CREATE_TABLE_FRIEND = "create table "
             + TABLE_FRIEND
-            + " (friend_id integer primary key,"
-            + " user1_id integer not null,"
-            + " user2_id integer not null,"
-            + " friend_time timestamp not null)";
+            + " (" + FRIEND_ID + " integer primary key, "
+            + USER1_ID + " integer not null, "
+            + USER2_ID + " integer not null, "
+            + FRIEND_TIME + "timestamp not null)";
+
+    public static final String TWEETS_ID = "tweets_id";
+    public static final String TWEETS_CONTENT = "tweets_content";
+    public static final String TWEETS_IMG = "tweets_img";
+    public static final String TWEETS_TIME = "tweets_time";
+    public static final String COMMENT_NUM = "comment_num";
+    public static final String UPVOTE_NUM = "upvote_num";
+
     private static final String CREATE_TABLE_TWEETS = "create table "
             + TABLE_TWEETS
-            + " (tweets_id integer primary key,"
-            + "user_id integer not null,"
-            + "tweets_content text not null,"
-            + "tweets_img text,"
-            + "tweets_time timestamp not null,"
-            + "comment_num integer not null,"
-            + "upvote_num integer not null)";
+            + " (" + TWEETS_ID + " integer primary key, "
+            + USER_ID + " integer not null, "
+            + TWEETS_CONTENT + " text not null, "
+            + TWEETS_IMG + " text, "
+            + TWEETS_TIME + " timestamp not null, "
+            + COMMENT_NUM + " integer not null, "
+            + UPVOTE_NUM + " integer not null)";
+
+    public static final String PRIMSG_ID = "primsg_id";
+    public static final String SENDER_ID = "sender_id";
+    public static final String RECEIVER_ID = "receiver_id";
+    public static final String PRIMSG_TIME = "primsg_time";
+    public static final String PRIMSG_STATUS = "primsg_status";
+    public static final String PRIMSG_CONTENT = "primsg_content";
+
     private static final String CREATE_TABLE_PRIMSG = "create table "
             + TABLE_PRIMSG
-            + " (primsg_id integer primary key,"
-            + " sender_id integer not null,"
-            + " receiver_id integer not null,"
-            + " primsg_time timestamp not null,"
-            + " primsg_status integer not null,"
-            + " primsg_content text not null)";
-
-//    private static final String CREATE_TABLE_MUSIC = "create table "
-//            + TABLE_MUSIC
-//            + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-//            + " songid integer, albumid integer, duration integer, musicname varchar(10), "
-//            + " artist char, data char, folder char, musicnamekey char, artistkey char, "
-//            + " favorite integer)";
-//
-//    private static final String CREATE_TABLE_MUSICLIST = "create table "
-//            + TABLE_MUSICLIST
-//            + " (_id integer primary key autoincrement,"
-//            + " songid integer, "
-//            + " listid integer)";
-//
-//    private static final String CREATE_TABLE_LIST = "create table "
-//            + TABLE_LIST
-//            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//            + KEY_LISTNAME + " char)";
+            + " (" + PRIMSG_ID + " integer primary key, "
+            + SENDER_ID + " integer not null, "
+            + RECEIVER_ID + " integer not null, "
+            + PRIMSG_TIME + " timestamp not null, "
+            + PRIMSG_STATUS + " integer not null, "
+            + PRIMSG_CONTENT + " text not null)";
 
     public static SQLiteDatabase getInstance(Context context){
         if(mDb == null){

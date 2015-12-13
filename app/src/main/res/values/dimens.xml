@@ -20,7 +20,7 @@
 
     <dimen name="tweets_list_item_button_size">16dp</dimen>
 
-    <dimen name="user_detail_margin">15dp</dimen>
+    <dimen name="user_detail_margin">30dp</dimen>
     <dimen name="user_detail_text_size">15sp</dimen>
     <dimen name="user_detail_item_margin">30dp</dimen>
     <dimen name="user_detail_text_width">70dp</dimen>

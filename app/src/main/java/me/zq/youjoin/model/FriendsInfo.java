@@ -40,7 +40,7 @@ public class FriendsInfo {
     }
 
     public static class FriendsEntity {
-        private String id;
+        private int id;
         private String nickname;
         private String img_url;
 
@@ -52,7 +52,7 @@ public class FriendsInfo {
             return "#";
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 
@@ -64,7 +64,7 @@ public class FriendsInfo {
             this.img_url = img_url;
         }
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 

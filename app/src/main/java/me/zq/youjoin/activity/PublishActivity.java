@@ -68,7 +68,7 @@ public class PublishActivity extends BaseActivity implements EmojiFragment.Enter
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetworkManager.postSendTweet(YouJoinApplication.getCurrUser().getId(),
+                NetworkManager.postSendTweet(Integer.toString(YouJoinApplication.getCurrUser().getId()),
                         msgEdit.getText().toString(), mData,
                         new ResponseListener<ResultInfo>() {
                     @Override

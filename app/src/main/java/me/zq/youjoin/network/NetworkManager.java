@@ -69,8 +69,8 @@ public class NetworkManager {
     /**
      * 服务器接口URL
      */
-    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
-//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 //    public static final String BASE_API_URL = "http://110.65.6.65:8088/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
@@ -277,12 +277,12 @@ public class NetworkManager {
      * @param listener ResponseListener
      */
     public static void postUpdateUserInfo(UserInfo userInfo, String picPath, ResponseListener listener){
-        if(userInfo.getId() == null) return;
+        if(userInfo.getId() < 0) return;
 
         List<ImageInfo> imageList = new ArrayList<>();
         imageList.add(new ImageInfo(picPath));
         Map<String, String> params = new HashMap<>();
-        params.put(USER_ID, userInfo.getId());
+        params.put(USER_ID, Integer.toString(userInfo.getId()));
         params.put(USER_WORK, userInfo.getWork());
         params.put(USER_LOCATION, userInfo.getLocation());
         params.put(USER_SEX, userInfo.getSex());

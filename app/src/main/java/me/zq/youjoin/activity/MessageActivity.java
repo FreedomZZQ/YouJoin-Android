@@ -44,7 +44,7 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
     EditText msgEdit;
     private boolean mFirstFocus = true;
 
-    List<PrimsgInfo.MessegeEntity> dataList = new ArrayList<>();
+    List<PrimsgInfo.MessageEntity> dataList = new ArrayList<>();
     MessageListAdapter adapter;
 
 
@@ -60,13 +60,14 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
             @Override
             public void onClick(View v) {
 
-                PrimsgInfo.MessegeEntity msg = new PrimsgInfo.MessegeEntity();
-                msg.setId(YouJoinApplication.getCurrUser().getId());
+                PrimsgInfo.MessageEntity msg = new PrimsgInfo.MessageEntity();
+                msg.setSender_id(YouJoinApplication.getCurrUser().getId());
                 msg.setContent(msgEdit.getText().toString());
-                msg.setName(YouJoinApplication.getCurrUser().getNickname());
+                //msg.setName(YouJoinApplication.getCurrUser().getNickname());
                 dataList.add(msg);
 
-                NetworkManager.postSendMessage(msg.getId(), receiver.getId(), msg.getContent(),
+                NetworkManager.postSendMessage(Integer.toString(msg.getSender_id()),
+                        Integer.toString(receiver.getId()), msg.getContent(),
                         new ResponseListener<ResultInfo>() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {

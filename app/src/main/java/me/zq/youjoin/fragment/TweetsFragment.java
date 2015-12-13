@@ -88,7 +88,7 @@ public class TweetsFragment extends BaseFragment {
 
     private void refreshData() {
         refresher.setRefreshing(true);
-        NetworkManager.postRequestTweets(YouJoinApplication.getCurrUser().getId(), "0",
+        NetworkManager.postRequestTweets(Integer.toString(YouJoinApplication.getCurrUser().getId()), "0",
                 NetworkManager.TIME_NEW, new ResponseListener<TweetInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {

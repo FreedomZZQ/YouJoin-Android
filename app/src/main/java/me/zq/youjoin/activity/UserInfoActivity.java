@@ -114,8 +114,8 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void addFriend() {
-        NetworkManager.postAddFriend(YouJoinApplication.getCurrUser().getId(),
-                info.getId(), new ResponseListener<ResultInfo>() {
+        NetworkManager.postAddFriend(Integer.toString(YouJoinApplication.getCurrUser().getId()),
+                Integer.toString(info.getId()), new ResponseListener<ResultInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         LogUtils.e(TAG, volleyError.toString());

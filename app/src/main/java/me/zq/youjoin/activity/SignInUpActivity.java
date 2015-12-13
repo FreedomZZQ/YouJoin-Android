@@ -235,7 +235,7 @@ public class SignInUpActivity extends BaseActivity {
 
     private void signSuccess(UserInfo userInfo){
         YouJoinApplication.setCurrUser(userInfo);
-        NetworkManager.postRequestUserInfo(YouJoinApplication.getCurrUser().getId(),
+        NetworkManager.postRequestUserInfo(Integer.toString(YouJoinApplication.getCurrUser().getId()),
                 new ResponseListener<UserInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {

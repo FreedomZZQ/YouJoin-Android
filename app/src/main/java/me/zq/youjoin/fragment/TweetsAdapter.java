@@ -54,10 +54,11 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageButton btnLike;
         public ImageButton btnComments;
-        public ImageButton btnMore;
+        public TextView nickname;
         public TextView likeCount;
         public TextView commentCount;
         public TextView tweetContent;
+        public TextView time;
         public CircleImageView avatar;
         public AutoHeightGridView gridView;
 
@@ -70,7 +71,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
             btnComments = (ImageButton) itemView.findViewById(R.id.btnComments);
             gridView = (AutoHeightGridView) itemView.findViewById(R.id.gridView);
-
+            nickname = (TextView) itemView.findViewById(R.id.username);
+            time = (TextView) itemView.findViewById(R.id.time);
         }
 
         //通过接口回调来实现点击事件
@@ -86,13 +88,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int i){
         //建立起ViewHolder中视图与数据的关联
-        viewHolder.likeCount.setText(dataList.get(i).getUpvote_num());
-        viewHolder.commentCount.setText(dataList.get(i).getComment_num());
+        viewHolder.likeCount.setText(Integer.toString(dataList.get(i).getUpvote_num()));
+        viewHolder.commentCount.setText(Integer.toString(dataList.get(i).getComment_num()));
         viewHolder.tweetContent.setText(StringUtils.getEmotionContent(
                 YouJoinApplication.getAppContext(), viewHolder.tweetContent,
                 dataList.get(i).getTweets_content()));
+        viewHolder.time.setText("12:12");
 
-        NetworkManager.postRequestUserInfo(dataList.get(i).getFriend_id(),
+        NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(i).getFriend_id()),
                 new ResponseListener<UserInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -106,6 +109,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                         .resize(200, 200)
                         .centerCrop()
                         .into(viewHolder.avatar);
+                viewHolder.nickname.setText(info.getNickname());
             }
         });
 

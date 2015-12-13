@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/content"
             tools:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentc"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="13dp"/>
 
@@ -92,7 +92,7 @@
                 android:id="@+id/btnLike"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
-                android:background="@drawable/ic_favorite_black_48dp"/>
+                android:background="@drawable/ic_favorite_black"/>
 <!--android:background="@drawable/btn_feed_action"-->
 
             <TextSwitcher
@@ -121,7 +121,7 @@
                 android:id="@+id/btnComments"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
-                android:background="@drawable/ic_comment_black_48dp"/>
+                android:background="@drawable/ic_comment_black"/>
 
             <TextView
                 android:layout_width="wrap_content"

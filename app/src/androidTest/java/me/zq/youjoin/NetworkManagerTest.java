@@ -170,8 +170,8 @@ public class NetworkManagerTest extends AndroidTestCase {
             @Override
             public void onResponse(PrimsgInfo info) {
                 assertEquals(info.getResult(), SUCCESS);
-                List<PrimsgInfo.MessegeEntity> infos = info.getMessege();
-                for( PrimsgInfo.MessegeEntity i : infos){
+                List<PrimsgInfo.MessageEntity> infos = info.getMessege();
+                for( PrimsgInfo.MessageEntity i : infos){
                     LogUtils.d(TAG, i.getContent());
                 }
 

@@ -42,27 +42,27 @@ public class TweetInfo {
     }
 
     public static class TweetsEntity {
-        private String friend_id;
-        private String tweets_id;
-        private String comment_num;
-        private String upvote_num;
+        private int friend_id;
+        private int tweets_id;
+        private int comment_num;
+        private int upvote_num;
         private String upvote_status;
         private String tweets_content;
         private String tweets_img;
 
-        public void setFriend_id(String friend_id) {
+        public void setFriend_id(int friend_id) {
             this.friend_id = friend_id;
         }
 
-        public void setTweets_id(String tweets_id) {
+        public void setTweets_id(int tweets_id) {
             this.tweets_id = tweets_id;
         }
 
-        public void setComment_num(String comment_num) {
+        public void setComment_num(int comment_num) {
             this.comment_num = comment_num;
         }
 
-        public void setUpvote_num(String upvote_num) {
+        public void setUpvote_num(int upvote_num) {
             this.upvote_num = upvote_num;
         }
 
@@ -78,19 +78,19 @@ public class TweetInfo {
             this.tweets_img = tweets_img;
         }
 
-        public String getFriend_id() {
+        public int getFriend_id() {
             return friend_id;
         }
 
-        public String getTweets_id() {
+        public int getTweets_id() {
             return tweets_id;
         }
 
-        public String getComment_num() {
+        public int getComment_num() {
             return comment_num;
         }
 
-        public String getUpvote_num() {
+        public int getUpvote_num() {
             return upvote_num;
         }
 

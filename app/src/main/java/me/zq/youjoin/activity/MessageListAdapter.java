@@ -33,11 +33,11 @@ public class MessageListAdapter extends BaseAdapter {
 
     public static final String TAG = "YouJoin";
 
-    private List<PrimsgInfo.MessegeEntity> dataList;
+    private List<PrimsgInfo.MessageEntity> dataList;
     private LayoutInflater inflater;
     private Context context;
 
-    public MessageListAdapter(Context context, List<PrimsgInfo.MessegeEntity> dataList){
+    public MessageListAdapter(Context context, List<PrimsgInfo.MessageEntity> dataList){
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
@@ -60,8 +60,8 @@ public class MessageListAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position){
-        PrimsgInfo.MessegeEntity msg = dataList.get(position);
-        if(msg.getId().equals(YouJoinApplication.getCurrUser().getId())){
+        PrimsgInfo.MessageEntity msg = dataList.get(position);
+        if(msg.getSender_id() == YouJoinApplication.getCurrUser().getId()){
             return TYPE_OUT;
         }else{
             return TYPE_IN;
@@ -93,7 +93,7 @@ public class MessageListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        NetworkManager.postRequestUserInfo(dataList.get(position).getId(),
+        NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(position).getSender_id()),
                 new ResponseListener<UserInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {

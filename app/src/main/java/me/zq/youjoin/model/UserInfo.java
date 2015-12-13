@@ -10,7 +10,7 @@ import me.zq.youjoin.utils.StringUtils;
  */
 public class UserInfo implements Parcelable {
 
-    private String id;
+    private int id;
     private String username;
     private String email;
     private String result;
@@ -20,8 +20,8 @@ public class UserInfo implements Parcelable {
     private String location;
     private String img_url;
     private String usersign;
-    private String follow_num;
-    private String focus_num;
+    private int follow_num;
+    private int focus_num;
 
     public String getNickname() {
         return nickname;
@@ -41,7 +41,7 @@ public class UserInfo implements Parcelable {
         return "#";
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -57,7 +57,7 @@ public class UserInfo implements Parcelable {
         this.result = result;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -128,7 +128,7 @@ public class UserInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
+        dest.writeInt(this.id);
         dest.writeString(this.username);
         dest.writeString(this.email);
         dest.writeString(this.result);
@@ -145,7 +145,7 @@ public class UserInfo implements Parcelable {
     }
 
     protected UserInfo(Parcel in) {
-        this.id = in.readString();
+        this.id = in.readInt();
         this.username = in.readString();
         this.email = in.readString();
         this.result = in.readString();
@@ -168,19 +168,19 @@ public class UserInfo implements Parcelable {
         }
     };
 
-    public void setFollow_num(String follow_num) {
+    public void setFollow_num(int follow_num) {
         this.follow_num = follow_num;
     }
 
-    public void setFocus_num(String focus_num) {
+    public void setFocus_num(int focus_num) {
         this.focus_num = focus_num;
     }
 
-    public String getFollow_num() {
+    public int getFollow_num() {
         return follow_num;
     }
 
-    public String getFocus_num() {
+    public int getFocus_num() {
         return focus_num;
     }
 }
