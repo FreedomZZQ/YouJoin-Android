@@ -12,10 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,7 +33,7 @@ import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.StringUtils;
 
 public class EditUserInfoActivity extends BaseActivity
-        implements DataPresenter.UpdateUserInfo {
+        implements DataPresenter.UpdateUserInfo, DatePickerDialog.OnDateSetListener{
 
 
     @Bind(R.id.edit_avatar)
@@ -102,9 +104,26 @@ public class EditUserInfoActivity extends BaseActivity
         editBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        EditUserInfoActivity.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH));
+                dpd.show(getFragmentManager(), "Datepickerdialog");
             }
         });
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth,
+                          int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
+
+        String date = Integer.toString(year) + "-"
+                + Integer.toString(monthOfYear + 1) + "-"
+                + Integer.toString(dayOfMonth);
+
+        birth.setText(date);
     }
 
     private void showSexChoose(){
