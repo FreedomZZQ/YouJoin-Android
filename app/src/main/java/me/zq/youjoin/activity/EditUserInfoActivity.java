@@ -112,7 +112,7 @@ public class EditUserInfoActivity extends BaseActivity
         final String[] sexs = {getString(R.string.sex_man), getString(R.string.sex_woman)};
         builder.setTitle("请选择性别");
         int defaultWhich;
-        if(userInfo.getSex().equals("1")) {
+        if(sex.getText().toString().equals(sexs[1])) {
             defaultWhich = 1;
         } else{
             defaultWhich = 0;
