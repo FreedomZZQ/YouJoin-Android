@@ -221,19 +221,6 @@ public final class BitmapUtils {
         }
     }
 
-    /**
-     * 获取一个指定大小的bitmap<br>
-     * 实际调用的方法是bitmapFromByteArray(data, 0, data.length, w, h);
-     *
-     * @param is        从输入流中读取Bitmap
-     * @param reqWidth  目标宽度
-     * @param reqHeight 目标高度
-     */
-    public static Bitmap getBitmapFromStream(InputStream is, int reqWidth,
-                                             int reqHeight) {
-        byte[] data = FileUtils.input2byte(is);
-        return getBitmapFromByteArray(data, 0, data.length, reqWidth, reqHeight);
-    }
 
     /**
      * 获取一个指定大小的bitmap

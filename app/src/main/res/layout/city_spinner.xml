@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Spinner
+        android:id="@+id/address_province"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/choose_province">
+
+    </Spinner>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/address_city"
+        android:text="@string/choose_city">
+
+    </Spinner>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/address_county"
+        android:text="@string/choose_county">
+
+    </Spinner>
+
+
+
+</LinearLayout>

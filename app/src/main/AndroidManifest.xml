@@ -19,8 +19,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.SignInUpActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_main"
@@ -60,6 +60,10 @@
             android:label="@string/title_activity_message"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".activity.ChooseLocationActivity"
+            android:label="@string/title_activity_choose_location"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

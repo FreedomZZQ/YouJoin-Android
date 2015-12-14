@@ -70,6 +70,10 @@ public class EditUserInfoActivity extends BaseActivity
     private UserInfo userInfo;
     private String picPath;
 
+
+    private static final int RESULT_CHOOSE_LOCATION = 1;
+    private static final int RESULT_CHOOSE_PHOTO = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +86,8 @@ public class EditUserInfoActivity extends BaseActivity
         editAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MultiImageSelectorActivity.startSelect(EditUserInfoActivity.this, 2, 1,
-                        MultiImageSelectorActivity.MODE_SINGLE);
+                MultiImageSelectorActivity.startSelect(EditUserInfoActivity.this,
+                        RESULT_CHOOSE_PHOTO, 1, MultiImageSelectorActivity.MODE_SINGLE);
             }
         });
 
@@ -97,7 +101,7 @@ public class EditUserInfoActivity extends BaseActivity
         editLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ChooseLocationActivity.actionStart(EditUserInfoActivity.this, RESULT_CHOOSE_LOCATION);
             }
         });
 
@@ -214,7 +218,7 @@ public class EditUserInfoActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2) {
+        if (requestCode == RESULT_CHOOSE_PHOTO) {
             if (resultCode == RESULT_OK) {
                 ArrayList<String> mSelectPath =
                         data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
@@ -227,6 +231,10 @@ public class EditUserInfoActivity extends BaseActivity
                             .into(avatar);
                     picPath = p;
                 }
+            }
+        }else if(requestCode == RESULT_CHOOSE_LOCATION) {
+            if(resultCode == RESULT_OK){
+                location.setText(data.getStringExtra("location"));
             }
         }
     }
