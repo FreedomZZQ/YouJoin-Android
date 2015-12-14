@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
@@ -21,16 +20,13 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
-import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
-import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.StringUtils;
 
 public class UserInfoActivity extends BaseActivity
-        implements DataPresenter.GetUserInfo {
+        implements DataPresenter.GetUserInfo, DataPresenter.AddFriend{
 
     public static final int TYPE_CURR_USER = 0;
     public static final int TYPE_OTHER_USER = 1;
@@ -154,27 +150,16 @@ public class UserInfoActivity extends BaseActivity
 
     }
 
-    private void addFriend() {
-        NetworkManager.postAddFriend(Integer.toString(YouJoinApplication.getCurrUser().getId()),
-                Integer.toString(info.getId()), new ResponseListener<ResultInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        LogUtils.e(TAG, volleyError.toString());
-                    }
-
-                    @Override
-                    public void onResponse(ResultInfo info) {
-                        if (info.getResult().equals(NetworkManager.SUCCESS)) {
-                            Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(UserInfoActivity.this, "Add Friend Failure!",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+    @Override
+    public void onAddFriend(ResultInfo info){
+        if (info.getResult().equals(NetworkManager.SUCCESS)) {
+            Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(UserInfoActivity.this, "Add Friend Failure!",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
-
 
     public static void actionStart(Context context, int type, int userId) {
         Intent intent = new Intent(context, UserInfoActivity.class);

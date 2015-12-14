@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.TweetInfo;
@@ -96,23 +97,33 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 dataList.get(i).getTweets_content()));
         viewHolder.time.setText("12:12");
 
-        NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(i).getFriend_id()),
-                new ResponseListener<UserInfo>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                LogUtils.e(TAG, volleyError.toString());
-            }
+        UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(i).getFriend_id());
+        if(info.getResult().equals(NetworkManager.SUCCESS)
+                && info.getImg_url() != null){
+            Picasso.with(YouJoinApplication.getAppContext())
+                    .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(viewHolder.avatar);
+        }else {
+            NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(i).getFriend_id()),
+                    new ResponseListener<UserInfo>() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            LogUtils.e(TAG, volleyError.toString());
+                        }
 
-            @Override
-            public void onResponse(UserInfo info) {
-                Picasso.with(YouJoinApplication.getAppContext())
-                        .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
-                        .resize(200, 200)
-                        .centerCrop()
-                        .into(viewHolder.avatar);
-                viewHolder.nickname.setText(info.getNickname());
-            }
-        });
+                        @Override
+                        public void onResponse(UserInfo info) {
+                            Picasso.with(YouJoinApplication.getAppContext())
+                                    .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
+                                    .resize(200, 200)
+                                    .centerCrop()
+                                    .into(viewHolder.avatar);
+                            viewHolder.nickname.setText(info.getNickname());
+                        }
+                    });
+        }
 
         List<String> urls = StringUtils.getPicUrlList(dataList.get(i).getTweets_img());
         GridPhotoAdapter adapter = new GridPhotoAdapter(YouJoinApplication.getAppContext(), urls);

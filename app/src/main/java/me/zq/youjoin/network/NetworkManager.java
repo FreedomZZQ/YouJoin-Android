@@ -201,7 +201,6 @@ public class NetworkManager {
     public static void postSendMessage(String userId, String receiveUserId, String content,
                                        ResponseListener listener){
         Map<String, String> params = new HashMap<>();
-//        params.put(SEND_USERID, YouJoinApplication.getCurrUser().getId());
         params.put(SEND_USERID, userId);
         params.put(RECEIVE_USERID, receiveUserId);
         params.put(MESSAGE_CONTENT, content);
@@ -257,21 +256,6 @@ public class NetworkManager {
                 listener);
         NetworkManager.getRequestQueue().add(request);
     }
-
-//    public static void postRequestUserInfo(String param, ResponseListener listener){
-//        String type = StringUtils.getParamType(param);
-//        if(type.equals("invalid")) {
-//            LogUtils.e(TAG, "param invalid!");
-//            return;
-//        }
-//        Map<String, String> params = new HashMap<>();
-//        params.put(USER_ID, param);
-//        Request request = new PostObjectRequest(
-//                API_REQUEST_USERINFO,
-//                params,new TypeToken<UserInfo>(){}.getType(),
-//                listener);
-//        NetworkManager.getRequestQueue().add(request);
-//    }
 
     /**
      * 个人资料更新（上传）接口

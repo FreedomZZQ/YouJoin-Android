@@ -95,7 +95,6 @@ implements DataPresenter.UpdateUserInfo{
         userInfo.setBirth(yjPersonalBirth.getText().toString());
         userInfo.setUsersign(yjPersonalSign.getText().toString());
         DataPresenter.updateUserInfo(userInfo, picPath, EditUserInfoActivity.this);
-
     }
 
     @Override

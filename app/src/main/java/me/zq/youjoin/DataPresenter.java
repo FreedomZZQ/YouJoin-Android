@@ -25,6 +25,10 @@ public class DataPresenter {
 
     public static final String TAG = "YouJoin";
 
+    public static UserInfo requestUserInfoFromCache(int userId){
+        return DatabaseManager.getUserInfoById(userId);
+    }
+
     public static void requestUserInfoAuto(String param, final GetUserInfo q){
         UserInfo cookieInfo = DatabaseManager.getUserInfoAuto(param);
         if(cookieInfo.getResult().equals(NetworkManager.SUCCESS)){
@@ -95,6 +99,7 @@ public class DataPresenter {
 
                     @Override
                     public void onResponse(FriendsInfo info) {
+
                         q.onGetFriendList(info);
                     }
                 });
@@ -186,6 +191,64 @@ public class DataPresenter {
                 DatabaseManager.addUserInfo(userInfo);
             }
         });
+    }
+
+    public static void sendPrimsg(int receiverId, String content, final SendPrimsg q){
+
+        NetworkManager.postSendMessage(Integer.toString(YouJoinApplication.getCurrUser().getId()),
+                Integer.toString(receiverId), content,
+                new ResponseListener<ResultInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        LogUtils.e(TAG, volleyError.toString());
+                        ResultInfo info = new ResultInfo();
+                        info.setResult(NetworkManager.FAILURE);
+                        q.onSendPrimsg(info);
+                    }
+
+                    @Override
+                    public void onResponse(ResultInfo info) {
+                        q.onSendPrimsg(info);
+                    }
+                });
+
+    }
+
+    public static void addFriend(final int friendId, final AddFriend q){
+        NetworkManager.postAddFriend(Integer.toString(YouJoinApplication.getCurrUser().getId()),
+                Integer.toString(friendId), new ResponseListener<ResultInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        LogUtils.e(TAG, volleyError.toString());
+                        ResultInfo info = new ResultInfo();
+                        info.setResult(NetworkManager.FAILURE);
+                        q.onAddFriend(info);
+                    }
+
+                    @Override
+                    public void onResponse(ResultInfo info) {
+                        q.onAddFriend(info);
+                        if(info.getResult().equals(NetworkManager.SUCCESS)){
+                            DatabaseManager.addFriendInfo(friendId);
+                        }
+                    }
+                });
+    }
+
+    public static void deleteFriend(final int firendId, final AddFriend q){
+
+    }
+
+    public interface DeleteFriend{
+        void onDeleteFriend(ResultInfo info);
+    }
+
+    public interface AddFriend{
+        void onAddFriend(ResultInfo info);
+    }
+
+    public interface SendPrimsg{
+        void onSendPrimsg(ResultInfo info);
     }
 
     public interface GetUserInfo{

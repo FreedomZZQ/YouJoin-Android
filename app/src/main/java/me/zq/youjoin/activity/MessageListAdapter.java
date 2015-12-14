@@ -7,18 +7,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
 import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.StringUtils;
 
@@ -93,24 +92,18 @@ public class MessageListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(position).getSender_id()),
-                new ResponseListener<UserInfo>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                LogUtils.e(TAG, volleyError.toString());
-            }
+        UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(position).getSender_id());
+        if(info.getResult().equals(NetworkManager.SUCCESS)
+                && info.getImg_url() != null){
+            Picasso.with(context)
+                    .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(holder.avatar);
+        }else {
+            LogUtils.e(TAG, "MessageListAdapter get pic failure");
+        }
 
-            @Override
-            public void onResponse(UserInfo info) {
-                if(info.getResult().equals(NetworkManager.SUCCESS)){
-                    Picasso.with(context)
-                            .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
-                            .resize(200, 200)
-                            .centerCrop()
-                            .into(holder.avatar);
-                }
-            }
-        });
         holder.text.setText(StringUtils.getEmotionContent(
                 YouJoinApplication.getAppContext(), holder.text,
                 dataList.get(position).getContent()));

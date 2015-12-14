@@ -8,27 +8,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-
-import com.android.volley.VolleyError;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.network.ResponseListener;
-import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.widget.enter.EmojiFragment;
 import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
 
-public class MessageActivity extends BaseActivity implements EmojiFragment.EnterEmojiLayout {
+public class MessageActivity extends BaseActivity
+        implements EmojiFragment.EnterEmojiLayout, DataPresenter.SendPrimsg {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -56,44 +56,32 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
         receiver = getIntent().getParcelableExtra(RECEIVER);
         setSupportActionBar(toolbar);
 
-        sendmsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                PrimsgInfo.MessageEntity msg = new PrimsgInfo.MessageEntity();
-                msg.setSender_id(YouJoinApplication.getCurrUser().getId());
-                msg.setContent(msgEdit.getText().toString());
-                //msg.setName(YouJoinApplication.getCurrUser().getNickname());
-                dataList.add(msg);
-
-                NetworkManager.postSendMessage(Integer.toString(msg.getSender_id()),
-                        Integer.toString(receiver.getId()), msg.getContent(),
-                        new ResponseListener<ResultInfo>() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                LogUtils.e(TAG, volleyError.toString());
-                            }
-
-                            @Override
-                            public void onResponse(ResultInfo info) {
-                                if (info.getResult().equals(NetworkManager.SUCCESS)) {
-                                    msgEdit.setText("");
-                                    adapter.notifyDataSetChanged();
-
-
-                                } else {
-
-                                }
-                            }
-                        });
-            }
-        });
         initEnter();
 
         adapter = new MessageListAdapter(MessageActivity.this, dataList);
         msgList.setAdapter(adapter);
 
 
+    }
+
+    @OnClick(R.id.sendmsg)
+    protected void sendMsg(){
+        PrimsgInfo.MessageEntity msg = new PrimsgInfo.MessageEntity();
+        msg.setSender_id(YouJoinApplication.getCurrUser().getId());
+        msg.setContent(msgEdit.getText().toString());
+        //msg.setName(YouJoinApplication.getCurrUser().getNickname());
+        dataList.add(msg);
+        DataPresenter.sendPrimsg(receiver.getId(), msg.getContent(), MessageActivity.this);
+    }
+
+    @Override
+    public void onSendPrimsg(ResultInfo info){
+        if (info.getResult().equals(NetworkManager.SUCCESS)) {
+            msgEdit.setText("");
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(MessageActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initEnter() {
