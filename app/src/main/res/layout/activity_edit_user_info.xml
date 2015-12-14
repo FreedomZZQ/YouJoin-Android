@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,121 +8,272 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activity.EditUserInfoActivity"
-    android:orientation="vertical">
+    tools:context=".activity.EditUserInfoActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        android:divider="@drawable/dividershape"
+        android:dividerPadding="1dp"
+        android:id="@+id/edit_container">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/yj_personal_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="ksudzhan@vip.qq.com"/>
+            android:orientation="horizontal"
+            android:id="@+id/edit_avatar"
+            android:background="@drawable/linearlayoutclick">
 
             <TextView
-                android:id="@+id/yj_personal_username"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="YouJoin"/>
+                android:text="@string/hint_avatar"
+                android:layout_gravity="center_vertical"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
 
-                <EditText
-                    android:id="@+id/yj_personal_sex"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_sex"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-                <EditText
-                    android:id="@+id/yj_personal_work"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_work"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-                <EditText
-                    android:id="@+id/yj_personal_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_location"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-                <EditText
-                    android:id="@+id/yj_personal_birth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_birth"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-                <EditText
-                    android:id="@+id/yj_personal_sign"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_sign"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/avatar"
+                android:src="@mipmap/ic_account_circle_white_48dp"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 
-    </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_username"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="YouJoin"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_email"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="ksudzhan@vip.qq.com"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_nickname"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/edit_nickname"
+                android:layout_width="@dimen/edit_userinfo_item_width"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_nickname"
+                tools:text="吃桔子的攻城狮"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_sign"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/edit_sign"
+                android:layout_width="@dimen/edit_userinfo_item_width"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_sign"
+                tools:text=""
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:id="@+id/edit_sex"
+            android:background="@drawable/linearlayoutclick">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_sex"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/linearlayoutclick"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="男"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_work"
+                android:layout_gravity="center_vertical"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <EditText
+                android:id="@+id/edit_work"
+                android:layout_width="@dimen/edit_userinfo_item_width"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_work"
+                tools:text="程序员"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:id="@+id/edit_location"
+            android:background="@drawable/linearlayoutclick">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_location"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/linearlayoutclick"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="广东 广州"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_userinfo_item_height"
+            android:orientation="horizontal"
+            android:id="@+id/edit_birth"
+            android:background="@drawable/linearlayoutclick">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_birth"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/linearlayoutclick"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/birth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="1995-03-13"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/yj_personal_userphoto"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"/>
-
-    <Button
-        android:id="@+id/yj_personal_choose_photo"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/commit_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Photo"/>
+        android:src="@mipmap/ic_send_white_48dp"
+        app:backgroundTint="@color/yellow"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
 
-    <Button
-        android:id="@+id/yj_personal_commit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Commit"
-        />
-
-</LinearLayout>
+</RelativeLayout>

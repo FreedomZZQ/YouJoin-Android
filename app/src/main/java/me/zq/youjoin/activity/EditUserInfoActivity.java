@@ -1,10 +1,14 @@
 package me.zq.youjoin.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,30 +28,42 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.utils.StringUtils;
 
 public class EditUserInfoActivity extends BaseActivity
-implements DataPresenter.UpdateUserInfo{
+        implements DataPresenter.UpdateUserInfo {
 
-    @Bind(R.id.yj_personal_email)
-    TextView yjPersonalEmail;
-    @Bind(R.id.yj_personal_username)
-    TextView yjPersonalUsername;
-    @Bind(R.id.yj_personal_sex)
-    EditText yjPersonalSex;
-    @Bind(R.id.yj_personal_work)
-    EditText yjPersonalWork;
-    @Bind(R.id.yj_personal_location)
-    EditText yjPersonalLocation;
-    @Bind(R.id.yj_personal_birth)
-    EditText yjPersonalBirth;
-    @Bind(R.id.yj_personal_commit)
-    Button yjPersonalCommit;
-    @Bind(R.id.yj_personal_choose_photo)
-    Button yjPersonalChoosePhoto;
-    @Bind(R.id.yj_personal_sign)
-    EditText yjPersonalSign;
-    @Bind(R.id.yj_personal_userphoto)
-    CircleImageView yjPersonalUserphoto;
+
+    @Bind(R.id.edit_avatar)
+    LinearLayout editAvatar;
+    @Bind(R.id.username)
+    TextView username;
+    @Bind(R.id.email)
+    TextView email;
+    @Bind(R.id.edit_nickname)
+    EditText editNickname;
+    @Bind(R.id.edit_sign)
+    EditText editSign;
+    @Bind(R.id.sex)
+    TextView sex;
+    @Bind(R.id.edit_sex)
+    LinearLayout editSex;
+    @Bind(R.id.edit_work)
+    EditText editWork;
+    @Bind(R.id.location)
+    TextView location;
+    @Bind(R.id.edit_location)
+    LinearLayout editLocation;
+    @Bind(R.id.birth)
+    TextView birth;
+    @Bind(R.id.edit_birth)
+    LinearLayout editBirth;
+    @Bind(R.id.edit_container)
+    LinearLayout editContainer;
+    @Bind(R.id.commit_fab)
+    FloatingActionButton commitFab;
+    @Bind(R.id.avatar)
+    CircleImageView avatar;
 
     private UserInfo userInfo;
     private String picPath;
@@ -60,45 +76,111 @@ implements DataPresenter.UpdateUserInfo{
 
         userInfo = YouJoinApplication.getCurrUser();
 
-        initViews();
+        refreshViews();
+        editAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MultiImageSelectorActivity.startSelect(EditUserInfoActivity.this, 2, 1,
+                        MultiImageSelectorActivity.MODE_SINGLE);
+            }
+        });
+
+        editSex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSexChoose();
+            }
+        });
+
+        editLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        editBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
-    private void initViews() {
-        yjPersonalEmail.setText(userInfo.getEmail());
-        yjPersonalUsername.setText(userInfo.getUsername());
-        yjPersonalBirth.setText(userInfo.getBirth());
-        yjPersonalSex.setText(userInfo.getSex());
-        yjPersonalWork.setText(userInfo.getWork());
-        yjPersonalLocation.setText(userInfo.getLocation());
-        yjPersonalSign.setText(userInfo.getUsersign());
+    private void showSexChoose(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(EditUserInfoActivity.this);
+        final String[] sexs = {getString(R.string.sex_man), getString(R.string.sex_woman)};
+        builder.setTitle("请选择性别");
+        int defaultWhich;
+        if(userInfo.getSex().equals("1")) {
+            defaultWhich = 1;
+        } else{
+            defaultWhich = 0;
+        }
+        builder.setSingleChoiceItems(sexs, defaultWhich,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sex.setText(sexs[which]);
+                    }
+                });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-        if(userInfo.getImg_url() != null){
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
+
+    private void refreshViews() {
+        email.setText(userInfo.getEmail());
+        username.setText(userInfo.getUsername());
+        birth.setText(userInfo.getBirth());
+        if(userInfo.getSex().equals("0")){
+            sex.setText(getString(R.string.sex_man));
+        }else{
+            sex.setText(getString(R.string.sex_woman));
+        }
+        editWork.setText(userInfo.getWork());
+        location.setText(userInfo.getLocation());
+        editSign.setText(userInfo.getUsersign());
+        editNickname.setText(userInfo.getNickname());
+
+        if (userInfo.getImg_url() != null) {
             Picasso.with(EditUserInfoActivity.this)
-                    .load(userInfo.getImg_url())
+                    .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
                     .resize(200, 200)
                     .centerCrop()
-                    .into(yjPersonalUserphoto);
+                    .into(avatar);
         }
     }
 
-    @OnClick(R.id.yj_personal_choose_photo)
-    protected void onCommit(){
-        MultiImageSelectorActivity.startSelect(EditUserInfoActivity.this, 2, 1,
-                MultiImageSelectorActivity.MODE_SINGLE);
-    }
 
-    @OnClick(R.id.yj_personal_commit)
+    @OnClick(R.id.commit_fab)
     protected void updateInfo() {
-        userInfo.setSex(yjPersonalSex.getText().toString());
-        userInfo.setWork(yjPersonalWork.getText().toString());
-        userInfo.setLocation(yjPersonalLocation.getText().toString());
-        userInfo.setBirth(yjPersonalBirth.getText().toString());
-        userInfo.setUsersign(yjPersonalSign.getText().toString());
+        if(sex.getText().toString().equals(getString(R.string.sex_man))){
+            userInfo.setSex("0");
+        }else{
+            userInfo.setSex("1");
+        }
+        userInfo.setWork(editWork.getText().toString());
+        userInfo.setLocation(location.getText().toString());
+        userInfo.setBirth(birth.getText().toString());
+        userInfo.setUsersign(editSign.getText().toString());
+        userInfo.setNickname(editNickname.getText().toString());
         DataPresenter.updateUserInfo(userInfo, picPath, EditUserInfoActivity.this);
+
     }
 
     @Override
-    public void onUpdateUserInfo(UpdateUserInfoResult result){
+    public void onUpdateUserInfo(UpdateUserInfoResult result) {
         if (result.getResult().equals(NetworkManager.SUCCESS)) {
             userInfo.setImg_url(result.getImg_url());
             Toast.makeText(EditUserInfoActivity.this, getString(R.string.update_success)
@@ -119,15 +201,12 @@ implements DataPresenter.UpdateUserInfo{
                         data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
 
                 for (String p : mSelectPath) {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(p);
-
                     Picasso.with(EditUserInfoActivity.this)
                             .load(new File(p))
                             .resize(200, 200)
                             .centerCrop()
-                            .into(yjPersonalUserphoto);
-                    picPath = sb.toString();
+                            .into(avatar);
+                    picPath = p;
                 }
             }
         }

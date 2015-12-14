@@ -30,6 +30,8 @@
     <string name="hint_birth">生日</string>
     <string name="hint_sex">性别</string>
     <string name="hint_sign">个性签名</string>
+    <string name="hint_avatar">头像</string>
+    <string name="hint_nickname">昵称</string>
 
     <!-- Strings related to publish-->
     <string name="hint_publish">分享新鲜事</string>
@@ -38,31 +40,28 @@
     <string name="hint_search_content">输入用户名、邮箱或用户ID进行搜索</string>
 
     <!-- Strings related to login -->
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
-    <string name="hint_confirm_password">Confirm Password</string>
-    <string name="hint_username">Username</string>
+    <string name="hint_email">邮箱</string>
+    <string name="hint_password">密码</string>
+    <string name="hint_confirm_password">确认密码</string>
+    <string name="hint_username">用户名</string>
 
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_up">Sign up</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_up">注册</string>
 
-    <string name="error_invalid_username">This username is invalid</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_invalid_confirm_password">This field is not equal than password</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="error_invalid_username">用户名不合法</string>
+    <string name="error_invalid_email">邮箱不合法</string>
+    <string name="error_invalid_password">密码长度过短</string>
+    <string name="error_invalid_confirm_password">两次密码输入不匹配</string>
+    <string name="error_field_required">此项为必填项</string>
     <string name="title_activity_user_info">资料卡</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_message">私信</string>
 
     <string name="error_network">连接服务器失败，请检查网络连接</string>
     <string name="send_tweet_success">动态发送成功</string>
     <string name="update_success">更新用户信息成功</string>
+
+    <string name="sex_man">男</string>
+    <string name="sex_woman">女</string>
 
 </resources>
