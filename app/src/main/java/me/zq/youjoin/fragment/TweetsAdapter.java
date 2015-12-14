@@ -105,6 +105,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     .resize(200, 200)
                     .centerCrop()
                     .into(viewHolder.avatar);
+            viewHolder.nickname.setText(info.getNickname());
         }else {
             NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(i).getFriend_id()),
                     new ResponseListener<UserInfo>() {

@@ -230,15 +230,30 @@
 
     </LinearLayout>
 
-
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/user_fab"
+        android:id="@+id/curr_user_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_popup_attachment_rename"
+        app:backgroundTint="@color/yellow"
+        android:visibility="gone"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"/>
-<!--android:src="@android:drawable/ic_dialog_email"-->
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/other_user_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_send_white_48dp"
+        app:backgroundTint="@color/yellow"
+        android:visibility="gone"
+        android:layout_gravity="bottom|end"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/fab_margin"/>
+
+
+    <!--android:src="@android:drawable/ic_dialog_email"-->
 </RelativeLayout>

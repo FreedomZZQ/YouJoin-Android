@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,7 +25,7 @@ import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.StringUtils;
 
 public class UserInfoActivity extends BaseActivity
-        implements DataPresenter.GetUserInfo, DataPresenter.AddFriend{
+        implements DataPresenter.GetUserInfo, DataPresenter.AddFriend {
 
     public static final int TYPE_CURR_USER = 0;
     public static final int TYPE_OTHER_USER = 1;
@@ -51,8 +50,7 @@ public class UserInfoActivity extends BaseActivity
     TextView sign;
     @Bind(R.id.birth)
     TextView birth;
-    @Bind(R.id.user_fab)
-    FloatingActionButton userFab;
+
     UserInfo info = new UserInfo();
     @Bind(R.id.follow_num)
     TextView followNum;
@@ -60,9 +58,12 @@ public class UserInfoActivity extends BaseActivity
     TextView focusNum;
     @Bind(R.id.btn_follow)
     CheckBox btnFollow;
+    @Bind(R.id.curr_user_fab)
+    FloatingActionButton currUserFab;
+    @Bind(R.id.other_user_fab)
+    FloatingActionButton otherUserFab;
 
     int type = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,7 @@ public class UserInfoActivity extends BaseActivity
 
     @Override
     public void onGetUserInfo(UserInfo userInfo) {
-        if(userInfo.getResult().equals(NetworkManager.FAILURE)){
+        if (userInfo.getResult().equals(NetworkManager.FAILURE)) {
             Toast.makeText(UserInfoActivity.this, getString(R.string.error_network),
                     Toast.LENGTH_SHORT).show();
             return;
@@ -123,35 +124,34 @@ public class UserInfoActivity extends BaseActivity
         DataPresenter.requestUserInfoById(info.getId(), UserInfoActivity.this);
 
         if (type == TYPE_CURR_USER) {
-            userFab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_popup_attachment_rename));
+            currUserFab.setVisibility(View.VISIBLE);
         } else if (type == TYPE_OTHER_USER) {
-            userFab.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_project_topic_label_add));
+            otherUserFab.setVisibility(View.VISIBLE);
         }
 
-        userFab.setOnClickListener(new View.OnClickListener() {
+        currUserFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (type == TYPE_CURR_USER) {
-                    EditUserInfoActivity.actionStart(UserInfoActivity.this);
-                } else if (type == TYPE_OTHER_USER) {
-                    //addFriend();
-                    MessageActivity.actionStart(UserInfoActivity.this, info);
-                } else {
-                    Snackbar.make(view, "You Shouldn't see this...", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
+                EditUserInfoActivity.actionStart(UserInfoActivity.this);
 
+            }
+        });
+
+        otherUserFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MessageActivity.actionStart(UserInfoActivity.this, info);
             }
         });
     }
 
     @OnClick(R.id.btn_follow)
-    protected void followUser(){
+    protected void followUser() {
 
     }
 
     @Override
-    public void onAddFriend(ResultInfo info){
+    public void onAddFriend(ResultInfo info) {
         if (info.getResult().equals(NetworkManager.SUCCESS)) {
             Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
                     Toast.LENGTH_SHORT).show();
