@@ -9,6 +9,7 @@ import java.util.List;
 import me.zq.youjoin.db.DatabaseManager;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
+import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
@@ -235,12 +236,35 @@ public class DataPresenter {
                 });
     }
 
-    public static void deleteFriend(final int firendId, final AddFriend q){
+    public static void getPrimsgList(int friendId, final GetPrimsgList q){
+        PrimsgInfo cookieInfo = DatabaseManager.getPrimsgList(friendId);
+        if(cookieInfo.getResult().equals(NetworkManager.SUCCESS)){
+            q.onGetPrimsgList(cookieInfo);
+        }
 
+        NetworkManager.postRequestPrimsg(Integer.toString(YouJoinApplication.getCurrUser().getId()),
+                Integer.toString(friendId), NetworkManager.TIME_OLD, "99999999",
+                new ResponseListener<PrimsgInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        LogUtils.e(TAG, volleyError.toString());
+                        PrimsgInfo info = new PrimsgInfo();
+                        info.setResult(NetworkManager.FAILURE);
+                        q.onGetPrimsgList(info);
+                    }
+
+                    @Override
+                    public void onResponse(PrimsgInfo info) {
+                        q.onGetPrimsgList(info);
+                        if(info.getResult().equals(NetworkManager.SUCCESS)){
+                            DatabaseManager.addPrimsgList(info);
+                        }
+                    }
+                });
     }
 
-    public interface DeleteFriend{
-        void onDeleteFriend(ResultInfo info);
+    public interface GetPrimsgList{
+        void onGetPrimsgList(PrimsgInfo info);
     }
 
     public interface AddFriend{

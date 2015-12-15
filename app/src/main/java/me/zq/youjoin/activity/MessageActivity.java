@@ -2,9 +2,11 @@ package me.zq.youjoin.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -28,7 +30,7 @@ import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
 
 public class MessageActivity extends BaseActivity
-        implements EmojiFragment.EnterEmojiLayout, DataPresenter.SendPrimsg {
+        implements EmojiFragment.EnterEmojiLayout, DataPresenter.SendPrimsg, DataPresenter.GetPrimsgList{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -60,7 +62,14 @@ public class MessageActivity extends BaseActivity
 
         adapter = new MessageListAdapter(MessageActivity.this, dataList);
         msgList.setAdapter(adapter);
+        DataPresenter.getPrimsgList(receiver.getId(), MessageActivity.this);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+        }
 
     }
 
@@ -79,7 +88,22 @@ public class MessageActivity extends BaseActivity
         if (info.getResult().equals(NetworkManager.SUCCESS)) {
             msgEdit.setText("");
             adapter.notifyDataSetChanged();
+            msgList.setSelection(msgList.getBottom());
         } else {
+            Toast.makeText(MessageActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onGetPrimsgList(PrimsgInfo info){
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            dataList.clear();
+            for(PrimsgInfo.MessageEntity entity : info.getMessage()){
+                dataList.add(entity);
+            }
+            adapter.notifyDataSetChanged();
+            msgList.setSelection(msgList.getBottom());
+        }else {
             Toast.makeText(MessageActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
     }

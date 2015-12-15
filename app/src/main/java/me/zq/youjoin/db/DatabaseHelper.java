@@ -90,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             + SENDER_ID + " integer not null, "
             + RECEIVER_ID + " integer not null, "
             + PRIMSG_TIME + " timestamp not null, "
-            + PRIMSG_STATUS + " integer not null, "
+            + PRIMSG_STATUS + " integer , "
             + PRIMSG_CONTENT + " text not null)";
 
     public static SQLiteDatabase getInstance(Context context){

@@ -7,6 +7,7 @@ import com.android.volley.VolleyError;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
@@ -286,6 +287,35 @@ public class NetworkManagerTest extends AndroidTestCase {
 
             @Override
             public void onResponse(Object o) {
+
+            }
+        });
+    }
+
+    public void testRequestComments(){
+        NetworkManager.postRequestComments(testTweetId.toString(), new ResponseListener<CommentInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LogUtils.e(TAG, volleyError.toString());
+            }
+
+            @Override
+            public void onResponse(CommentInfo o) {
+
+            }
+        });
+    }
+
+    public void testRequestPrimsgLog(){
+        NetworkManager.postRequestPrimsg(testId.toString(), testId2.toString(),
+                NetworkManager.TIME_OLD, "9999", new ResponseListener<PrimsgInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LogUtils.e(TAG, volleyError.toString());
+            }
+
+            @Override
+            public void onResponse(PrimsgInfo o) {
 
             }
         });

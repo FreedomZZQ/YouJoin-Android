@@ -68,5 +68,6 @@
     <string name="choose_city">选择城市</string>
     <string name="choose_county">选择区县</string>
     <string name="title_activity_choose_location">ChooseLocationActivity</string>
+    <string name="title_activity_tweet_detail">TweetDetailActivity</string>
 
 </resources>

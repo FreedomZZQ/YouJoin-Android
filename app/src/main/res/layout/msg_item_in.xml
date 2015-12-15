@@ -23,6 +23,7 @@
         android:textSize="14sp"
         android:textColor="@color/white"
         tools:text="hello!hello!hello!hello!hello!hello!hello!hello!"
+        android:maxWidth="200dp"
         android:padding="10dp"
         android:layout_marginStart="10dp"/>
 

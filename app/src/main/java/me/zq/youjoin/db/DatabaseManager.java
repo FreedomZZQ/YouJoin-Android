@@ -23,14 +23,64 @@ import me.zq.youjoin.utils.StringUtils;
 public class DatabaseManager {
 
 
-    /**当前用户关注friendid
-     * @param friendid 要关注的friendid
+    /**向数据库添加多条私信
+     * @param info 要添加的私信
      */
-    public static void addFriendInfo(int friendid){
+    public static void addPrimsgList(PrimsgInfo info){
+        for(PrimsgInfo.MessageEntity entity : info.getMessage()){
+            addPrimsg(entity);
+        }
+    }
+
+    /** 向数据库添加一条私信记录
+     * @param entity 要添加的私信对象
+     */
+    public static void addPrimsg(PrimsgInfo.MessageEntity entity){
+
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        String sql = "select * from "
+                + DatabaseHelper.TABLE_PRIMSG
+                + " where " + DatabaseHelper.PRIMSG_ID + " = " + Integer.toString(entity.getPrismg_id());
+        if(parsePrimsgInfoCursor(db.rawQuery(sql, null)).size() != 0){
+            return;
+        }
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseHelper.PRIMSG_ID, entity.getPrismg_id());
+        contentValues.put(DatabaseHelper.SENDER_ID, entity.getSender_id());
+        contentValues.put(DatabaseHelper.RECEIVER_ID, entity.getReceiver_id());
+        contentValues.put(DatabaseHelper.PRIMSG_CONTENT, entity.getContent());
+        contentValues.put(DatabaseHelper.PRIMSG_TIME, entity.getReceive_date());
+        db.insert(DatabaseHelper.TABLE_PRIMSG, null, contentValues);
+
+    }
+
+    /**获取当前用户与某用户的私信记录
+     * @param friendId 某用户id
+     * @return 私信记录
+     */
+    public static PrimsgInfo getPrimsgList(int friendId){
+        int userId = YouJoinApplication.getCurrUser().getId();
+
+        String sql = "select * from "
+                + DatabaseHelper.TABLE_PRIMSG
+                + " where ( " + DatabaseHelper.SENDER_ID + " = " + Integer.toString(userId)
+                + " and " + DatabaseHelper.RECEIVER_ID + " = " + Integer.toString(friendId)
+                + " ) or ( " + DatabaseHelper.SENDER_ID + " = " + Integer.toString(friendId)
+                + " and " + DatabaseHelper.RECEIVER_ID + " = " + Integer.toString(userId) + " ) ";
+
+        return getPrimsgInfo(sql);
+    }
+
+
+    /**当前用户关注friendid
+     * @param friendId 要关注的friendid
+     */
+    public static void addFriendInfo(int friendId){
 
         String sql = "select *from " + DatabaseHelper.TABLE_FRIEND
                 + " where " + DatabaseHelper.USER1_ID
-                + " = " + Integer.toString(friendid)
+                + " = " + Integer.toString(friendId)
                 + " and " + DatabaseHelper.USER2_ID
                 + " = " + Integer.toString(YouJoinApplication.getCurrUser().getId());
         SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
@@ -39,7 +89,7 @@ public class DatabaseManager {
         }
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseHelper.USER1_ID, friendid);
+        contentValues.put(DatabaseHelper.USER1_ID, friendId);
         contentValues.put(DatabaseHelper.USER2_ID, YouJoinApplication.getCurrUser().getId());
 
         db.insert(DatabaseHelper.TABLE_FRIEND, null, contentValues);
@@ -175,6 +225,21 @@ public class DatabaseManager {
         }else{
             info = results.get(0);
             info.setResult(NetworkManager.SUCCESS);
+            return info;
+        }
+    }
+
+    @NonNull
+    private static PrimsgInfo getPrimsgInfo(String sql) {
+        PrimsgInfo info = new PrimsgInfo();
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        List<PrimsgInfo.MessageEntity> results = parsePrimsgInfoCursor(db.rawQuery(sql, null));
+        if(results.isEmpty()){
+            info.setResult(NetworkManager.FAILURE);
+            return info;
+        }else{
+            info.setResult(NetworkManager.SUCCESS);
+            info.setMessage(results);
             return info;
         }
     }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
@@ -65,6 +66,8 @@ public class NetworkManager {
     public static final String TIME_NEW = "1";
     public static final String TIME_TYPE = "time";
 
+    public static final String PRIMSG_ID = "primsg_id";
+
     public static final String SUCCESS = "success";
     public static final String FAILURE = "failure";
     public static final String FAILURE_SERVER_BUSY = "";
@@ -87,11 +90,32 @@ public class NetworkManager {
     public static final String API_COMMENT_TWEET = BASE_API_URL + "comment_tweet.php";
     public static final String API_UPVOTE_TWEET = BASE_API_URL + "upvote_tweet.php";
     public static final String API_REQUEST_FRIEND_LIST = BASE_API_URL + "get_friendlist.php";
+    public static final String API_REQUEST_COMMENTS = BASE_API_URL + "get_comments.php";
+    public static final String API_REQUEST_PRIMSG_LOG = BASE_API_URL + "chat_log.php";
 
     private static RequestQueue mRequestQueue ;
 
     public static final String TAG = "YouJoin_Network";
 
+    public static void postRequestPrimsg(String userId, String friendId, String type, String primsgId,
+                                         ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        params.put(FRIEND_ID, friendId);
+        params.put(TIME_TYPE, type);
+        params.put(PRIMSG_ID, primsgId);
+        Request request = new PostObjectRequest(API_REQUEST_PRIMSG_LOG,
+                params, new TypeToken<PrimsgInfo>(){}.getType(), listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
+
+    public static void postRequestComments(String tweetId, ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(TWEET_ID, tweetId);
+        Request request = new PostObjectRequest(API_REQUEST_COMMENTS,
+                params, new TypeToken<CommentInfo>(){}.getType(), listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
 
     /**获取当前用户的关注列表
      * @param userId 当前登录用户id
