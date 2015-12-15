@@ -66,6 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String TWEETS_TIME = "tweets_time";
     public static final String COMMENT_NUM = "comment_num";
     public static final String UPVOTE_NUM = "upvote_num";
+    public static final String UPVOTE_STATUS = "upvote_status";
 
     private static final String CREATE_TABLE_TWEETS = "create table "
             + TABLE_TWEETS
@@ -75,7 +76,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
             + TWEETS_IMG + " text, "
             + TWEETS_TIME + " timestamp not null, "
             + COMMENT_NUM + " integer not null, "
-            + UPVOTE_NUM + " integer not null)";
+            + UPVOTE_NUM + " integer not null, "
+            + UPVOTE_STATUS + " integer not null )";
 
     public static final String PRIMSG_ID = "primsg_id";
     public static final String SENDER_ID = "sender_id";

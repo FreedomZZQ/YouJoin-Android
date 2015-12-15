@@ -54,7 +54,7 @@
         <activity
             android:name=".activity.UserInfoActivity"
             android:label="@string/title_activity_user_info"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.MessageActivity"
             android:label="@string/title_activity_message"
@@ -67,7 +67,7 @@
         <activity
             android:name=".activity.TweetDetailActivity"
             android:label="@string/title_activity_tweet_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -50,6 +50,8 @@ public class NetworkManager {
     public static final String TWEETS_CONTNET = "tweets_content";
     public static final String TWEET_ID = "tweet_id";
     public static final String TWEET_COMMENT = "comment_content";
+    public static final int UPVOTE_STATUS_YES = 1;
+    public static final int UPVOTE_STATUS_NO = 0;
 
     public static final String FRIEND_ID = "friend_id";
 
@@ -77,7 +79,7 @@ public class NetworkManager {
      */
 //    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
     public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
-//    public static final String BASE_API_URL = "http://110.65.7.36:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://110.65.7.154:8088/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
     public static final String API_UPDATE_USERINFO = BASE_API_URL + "update_userinfo.php";

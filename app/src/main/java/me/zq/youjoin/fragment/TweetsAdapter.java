@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -53,7 +56,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public ImageButton btnLike;
+        public CheckBox btnLike;
         public ImageButton btnComments;
         public TextView nickname;
         public TextView likeCount;
@@ -69,7 +72,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             commentCount = (TextView) itemView.findViewById(R.id.comment_count);
             tweetContent = (TextView) itemView.findViewById(R.id.content);
             avatar = (CircleImageView) itemView.findViewById(R.id.avatar);
-            btnLike = (ImageButton) itemView.findViewById(R.id.btnLike);
+            btnLike = (CheckBox) itemView.findViewById(R.id.btnLike);
             btnComments = (ImageButton) itemView.findViewById(R.id.btnComments);
             gridView = (AutoHeightGridView) itemView.findViewById(R.id.gridView);
             nickname = (TextView) itemView.findViewById(R.id.username);
@@ -88,14 +91,52 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int i){
-        i = dataList.size() - i - 1;
+        final int location = dataList.size() - i - 1;
         //建立起ViewHolder中视图与数据的关联
-        viewHolder.likeCount.setText(Integer.toString(dataList.get(i).getUpvote_num()));
-        viewHolder.commentCount.setText(Integer.toString(dataList.get(i).getComment_num()));
+        viewHolder.likeCount.setText(Integer.toString(dataList.get(location).getUpvote_num()));
+        viewHolder.commentCount.setText(Integer.toString(dataList.get(location).getComment_num()));
         viewHolder.tweetContent.setText(StringUtils.getEmotionContent(
                 YouJoinApplication.getAppContext(), viewHolder.tweetContent,
-                dataList.get(i).getTweets_content()));
+                dataList.get(location).getTweets_content()));
         viewHolder.time.setText("12:12");
+        if(dataList.get(location).getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO){
+            viewHolder.btnLike.setChecked(false);
+        }else {
+            viewHolder.btnLike.setChecked(true);
+        }
+
+        viewHolder.btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                NetworkManager.postUpvoteTweet(Integer.toString(
+                        YouJoinApplication.getCurrUser().getId()),
+                        Integer.toString(dataList.get(location).getTweets_id()),
+                        new ResponseListener<ResultInfo>() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                LogUtils.e(TAG, volleyError.toString());
+                            }
+
+                            @Override
+                            public void onResponse(ResultInfo info) {
+                                if(info.getResult().equals(NetworkManager.SUCCESS)){
+                                    viewHolder.btnLike.setChecked(isChecked);
+                                    int k = dataList.get(location).getUpvote_num();
+                                    if(isChecked){
+                                        k++;
+                                    }else{
+                                        k--;
+                                    }
+                                    dataList.get(location).setUpvote_num(k);
+                                    viewHolder.likeCount.setText(Integer.toString(k));
+                                }else{
+                                    viewHolder.btnLike.setChecked(!isChecked);
+                                }
+                            }
+                        });
+
+            }
+        });
 
         UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(i).getFriend_id());
         if(info.getResult().equals(NetworkManager.SUCCESS)

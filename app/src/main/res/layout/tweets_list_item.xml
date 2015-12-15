@@ -88,11 +88,13 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"/>
 
-            <ImageButton
+            <CheckBox
                 android:id="@+id/btnLike"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
-                android:background="@drawable/ic_favorite_black"/>
+                android:button="@null"
+                android:background="@drawable/checkbox_upvote"
+                android:checked="true"/>
 <!--android:background="@drawable/btn_feed_action"-->
 
             <TextSwitcher

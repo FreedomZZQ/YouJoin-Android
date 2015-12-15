@@ -148,7 +148,7 @@
             <TextView
                 android:layout_width="@dimen/user_detail_text_width"
                 android:layout_height="wrap_content"
-                android:text="work"
+                android:text="@string/hint_work"
                 android:textSize="@dimen/user_detail_text_size"
                 android:layout_marginStart="@dimen/user_detail_item_margin"
                 android:layout_marginEnd="@dimen/user_detail_item_margin"/>
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/work"
-                android:text="student"
+                tools:text="student"
                 android:textSize="@dimen/user_detail_text_size"/>
 
         </LinearLayout>
@@ -170,7 +170,7 @@
             <TextView
                 android:layout_width="@dimen/user_detail_text_width"
                 android:layout_height="wrap_content"
-                android:text="location"
+                android:text="@string/hint_location"
                 android:textSize="@dimen/user_detail_text_size"
                 android:layout_marginStart="@dimen/user_detail_item_margin"
                 android:layout_marginEnd="@dimen/user_detail_item_margin"/>
@@ -179,7 +179,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/location"
-                android:text="location"
+                tools:text="location"
                 android:textSize="@dimen/user_detail_text_size"/>
 
         </LinearLayout>
@@ -192,7 +192,7 @@
             <TextView
                 android:layout_width="@dimen/user_detail_text_width"
                 android:layout_height="wrap_content"
-                android:text="sign"
+                android:text="@string/hint_sign"
                 android:textSize="@dimen/user_detail_text_size"
                 android:layout_marginStart="@dimen/user_detail_item_margin"
                 android:layout_marginEnd="@dimen/user_detail_item_margin"/>
@@ -201,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/sign"
-                android:text="sign"
+                tools:text="sign"
                 android:textSize="@dimen/user_detail_text_size"/>
 
         </LinearLayout>
@@ -214,7 +214,7 @@
             <TextView
                 android:layout_width="@dimen/user_detail_text_width"
                 android:layout_height="wrap_content"
-                android:text="birth"
+                android:text="@string/hint_birth"
                 android:textSize="@dimen/user_detail_text_size"
                 android:layout_marginStart="@dimen/user_detail_item_margin"
                 android:layout_marginEnd="@dimen/user_detail_item_margin"/>
@@ -223,7 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/birth"
-                android:text="birth"
+                tools:text="birth"
                 android:textSize="@dimen/user_detail_text_size"/>
 
         </LinearLayout>

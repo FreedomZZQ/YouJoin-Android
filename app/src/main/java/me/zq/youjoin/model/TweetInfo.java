@@ -46,7 +46,7 @@ public class TweetInfo {
         private int tweets_id;
         private int comment_num;
         private int upvote_num;
-        private String upvote_status;
+        private int upvote_status;
         private String tweets_content;
         private String tweets_img;
 
@@ -66,7 +66,7 @@ public class TweetInfo {
             this.upvote_num = upvote_num;
         }
 
-        public void setUpvote_status(String upvote_status) {
+        public void setUpvote_status(int upvote_status) {
             this.upvote_status = upvote_status;
         }
 
@@ -94,7 +94,7 @@ public class TweetInfo {
             return upvote_num;
         }
 
-        public String getUpvote_status() {
+        public int getUpvote_status() {
             return upvote_status;
         }
 
