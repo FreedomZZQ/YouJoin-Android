@@ -172,15 +172,15 @@ public class PostUploadRequest<T> extends Request<T> {
             sb.append(" name=\"");
             sb.append(PARAM + "[0]");
             sb.append("\"") ;
-            //sb.append("; filename=\"") ;
-            //sb.append("null") ;
-            //sb.append("\"");
+            sb.append("; filename=\"") ;
+            sb.append("") ;
+            sb.append("\"");
             sb.append("\r\n") ;
             /*第三行*/
             //Content-Type: 文件的 mime 类型 + "\r\n"
-            //sb.append("Content-Type: ");
-            //sb.append("image/png") ;
-            //sb.append("\r\n") ;
+            sb.append("Content-Type: ");
+            sb.append("application/octet-stream") ;
+            sb.append("\r\n") ;
             /*第四行*/
             //"\r\n"
             sb.append("\r\n") ;

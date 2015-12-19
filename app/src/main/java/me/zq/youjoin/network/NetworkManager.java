@@ -304,7 +304,9 @@ public class NetworkManager {
         if(userInfo.getId() < 0) return;
 
         List<ImageInfo> imageList = new ArrayList<>();
-        imageList.add(new ImageInfo(picPath));
+        if(picPath != null){
+            imageList.add(new ImageInfo(picPath));
+        }
         Map<String, String> params = new HashMap<>();
         params.put(USER_ID, Integer.toString(userInfo.getId()));
         params.put(USER_WORK, userInfo.getWork());

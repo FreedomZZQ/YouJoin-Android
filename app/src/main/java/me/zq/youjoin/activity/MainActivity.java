@@ -113,7 +113,7 @@ implements DataPresenter.GetUserInfo{
     private void refreshUserInfo() {
         UserInfo userInfo = YouJoinApplication.getCurrUser();
 
-        if(userInfo.getImg_url() != null){
+        if(userInfo.getImg_url() != null && !userInfo.getImg_url().equals("")){
             Picasso.with(MainActivity.this)
                     .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
                     .resize(200, 200)
