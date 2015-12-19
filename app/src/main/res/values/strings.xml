@@ -67,7 +67,8 @@
     <string name="choose_province">选择省份</string>
     <string name="choose_city">选择城市</string>
     <string name="choose_county">选择区县</string>
-    <string name="title_activity_choose_location">ChooseLocationActivity</string>
-    <string name="title_activity_tweet_detail">TweetDetailActivity</string>
+    <string name="title_activity_choose_location">选择地区</string>
+    <string name="title_activity_tweet_detail">动态详情</string>
+    <string name="click_again_to_exit">再按一次返回键退出YouJoin</string>
 
 </resources>

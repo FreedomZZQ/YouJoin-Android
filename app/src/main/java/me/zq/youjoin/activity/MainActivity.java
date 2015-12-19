@@ -8,11 +8,13 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +43,8 @@ implements DataPresenter.GetUserInfo{
     ImageView ivUserPhoto;
     TextView tvUserName;
     TextView tvUserEmail;
+
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +175,28 @@ implements DataPresenter.GetUserInfo{
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(drawerLayout.isDrawerOpen(navigationView)){
+                drawerLayout.closeDrawers();
+                return true;
+            }
+            if((System.currentTimeMillis() - exitTime) > 2000){
+
+                Toast.makeText(MainActivity.this, getString(R.string.click_again_to_exit),
+                        Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            }else{
+                ActivityManager.finishAll();
+            }
+            return true;
+
+
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }
