@@ -20,6 +20,7 @@ import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.PublishActivity;
 import me.zq.youjoin.activity.TweetDetailActivity;
+import me.zq.youjoin.adapter.TweetsAdapter;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.widget.recycler.RecyclerItemClickListener;
@@ -78,12 +79,6 @@ implements DataPresenter.GetTweets{
         tweetsRecyclerList.setLayoutManager(layoutManager);
         tweetsRecyclerList.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), onItemClickListener));
         tweetsRecyclerList.setItemAnimator(new DefaultItemAnimator());
-//        tweetsAdapter.setOnItemClickListener(new TweetsAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                TweetDetailActivity.actionStart(getActivity(), tweetsList.get(position));
-//            }
-//        });
         tweetsRecyclerList.setAdapter(tweetsAdapter);
 
         refreshData();
@@ -112,7 +107,8 @@ implements DataPresenter.GetTweets{
             new RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    TweetDetailActivity.actionStart(getActivity(), tweetsList.get(position));
+                    TweetDetailActivity.actionStart(getActivity(),
+                            tweetsList.get(tweetsList.size() - position - 1));
                 }
             };
 

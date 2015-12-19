@@ -1,4 +1,4 @@
-package me.zq.youjoin.fragment;
+package me.zq.youjoin.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

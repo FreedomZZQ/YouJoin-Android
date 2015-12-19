@@ -21,6 +21,7 @@ import butterknife.OnClick;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.adapter.MessageListAdapter;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UserInfo;

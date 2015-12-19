@@ -1,4 +1,4 @@
-package me.zq.youjoin.fragment;
+package me.zq.youjoin.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

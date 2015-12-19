@@ -3,33 +3,44 @@ package me.zq.youjoin.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.adapter.GridPhotoAdapter;
 import me.zq.youjoin.model.TweetInfo;
+import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.GlobalUtils;
+import me.zq.youjoin.utils.StringUtils;
 import me.zq.youjoin.widget.enter.AutoHeightGridView;
+import me.zq.youjoin.widget.enter.EmojiFragment;
+import me.zq.youjoin.widget.enter.EnterEmojiLayout;
+import me.zq.youjoin.widget.enter.EnterLayout;
 
-public class TweetDetailActivity extends BaseActivity {
+public class TweetDetailActivity extends BaseActivity
+        implements EmojiFragment.EnterEmojiLayout, DataPresenter.GetUserInfo{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.avatar)
     CircleImageView avatar;
     @Bind(R.id.username)
-    TextView username;
+    TextView nickname;
     @Bind(R.id.time)
     TextView time;
     @Bind(R.id.content)
@@ -40,35 +51,19 @@ public class TweetDetailActivity extends BaseActivity {
     CheckBox btnLike;
     @Bind(R.id.like_count)
     TextView likeCount;
-    @Bind(R.id.tsLikesCounter)
-    TextSwitcher tsLikesCounter;
     @Bind(R.id.btnComments)
     ImageButton btnComments;
     @Bind(R.id.comment_count)
     TextView commentCount;
     @Bind(R.id.comments_list)
     ListView commentsList;
-    @Bind(R.id.comment)
-    EditText comment;
-    @Bind(R.id.send)
-    ImageButton send;
-    @Bind(R.id.sendText)
-    TextView sendText;
-    @Bind(R.id.popEmoji)
-    CheckBox popEmoji;
-    @Bind(R.id.sendmsg)
-    ImageButton sendmsg;
-    @Bind(R.id.viewPager)
-    ViewPager viewPager;
-    @Bind(R.id.emojiKeyboardIndicator)
-    LinearLayout emojiKeyboardIndicator;
-    @Bind(R.id.selectEmoji)
-    ImageView selectEmoji;
-    @Bind(R.id.emojiKeyboardLayout)
-    LinearLayout emojiKeyboardLayout;
 
-    private TweetInfo.TweetsEntity info;
+    private TweetInfo.TweetsEntity info = new TweetInfo.TweetsEntity();
     private static final String INFO = "info";
+
+    EnterEmojiLayout enterLayout;
+    EditText msgEdit;
+    private boolean mFirstFocus = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +71,118 @@ public class TweetDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_tweet_detail);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
+        info = getIntent().getParcelableExtra(INFO);
+        initEnter();
         GlobalUtils.setListViewHeightBasedOnChildren(commentsList);
 
+        likeCount.setText(Integer.toString(info.getUpvote_num()));
+        commentCount.setText(Integer.toString(info.getComment_num()));
+        content.setText(StringUtils.getEmotionContent(
+                YouJoinApplication.getAppContext(), content,
+                info.getTweets_content()));
+        time.setText(info.getTweets_time());
+        if(info.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO){
+            btnLike.setChecked(false);
+        }else {
+            btnLike.setChecked(true);
+        }
+
+//        viewHolder.btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+//                NetworkManager.postUpvoteTweet(Integer.toString(
+//                        YouJoinApplication.getCurrUser().getId()),
+//                        Integer.toString(dataList.get(location).getTweets_id()),
+//                        new ResponseListener<ResultInfo>() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError volleyError) {
+//                                LogUtils.e(TAG, volleyError.toString());
+//                            }
+//
+//                            @Override
+//                            public void onResponse(ResultInfo info) {
+//                                if(info.getResult().equals(NetworkManager.SUCCESS)){
+//                                    viewHolder.btnLike.setChecked(isChecked);
+//                                    int k = dataList.get(location).getUpvote_num();
+//                                    if(isChecked){
+//                                        k++;
+//                                    }else{
+//                                        k--;
+//                                    }
+//                                    dataList.get(location).setUpvote_num(k);
+//                                    viewHolder.likeCount.setText(Integer.toString(k));
+//                                }else{
+//                                    viewHolder.btnLike.setChecked(!isChecked);
+//                                }
+//                            }
+//                        });
+//
+//            }
+//        });
+
+        UserInfo userInfo = DataPresenter.requestUserInfoFromCache(info.getFriend_id());
+        if(userInfo.getResult().equals(NetworkManager.SUCCESS)
+                && userInfo.getImg_url() != null){
+            Picasso.with(YouJoinApplication.getAppContext())
+                    .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(avatar);
+            nickname.setText(userInfo.getNickname());
+        }else {
+            DataPresenter.requestUserInfoById(info.getFriend_id(), TweetDetailActivity.this);
+        }
+
+        List<String> urls = StringUtils.getPicUrlList(info.getTweets_img());
+        GridPhotoAdapter adapter = new GridPhotoAdapter(YouJoinApplication.getAppContext(), urls);
+        gridView.setAdapter(adapter);
+
     }
+
+    @Override
+    public void onGetUserInfo(UserInfo info){
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            Picasso.with(YouJoinApplication.getAppContext())
+                    .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(avatar);
+            nickname.setText(info.getNickname());
+        }
+    }
+
+    private void initEnter() {
+        enterLayout = new EnterEmojiLayout(this, null);
+        msgEdit = enterLayout.content;
+        enterLayout.content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enterLayout.popKeyboard();
+            }
+        });
+        enterLayout.content.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (mFirstFocus && hasFocus) {
+                    mFirstFocus = false;
+                    enterLayout.popKeyboard();
+                }
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStop() {
+        enterLayout.closeEnterPanel();
+        super.onStop();
+    }
+
+    @Override
+    public EnterLayout getEnterLayout() {
+        return enterLayout;
+    }
+
 
     public static void actionStart(Context context, TweetInfo.TweetsEntity info) {
         Intent intent = new Intent(context, TweetDetailActivity.class);
