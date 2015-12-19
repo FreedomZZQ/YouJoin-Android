@@ -99,6 +99,13 @@ public class NetworkManager {
 
     public static final String TAG = "YouJoin_Network";
 
+    /**获取与某用户的私信列表
+     * @param userId 当前用户id
+     * @param friendId 对方id
+     * @param type 时间类型，1表示比primsgId新，0表示比较旧
+     * @param primsgId 基准私信id
+     * @param listener ResponseListener
+     */
     public static void postRequestPrimsg(String userId, String friendId, String type, String primsgId,
                                          ResponseListener listener){
         Map<String, String> params = new HashMap<>();
@@ -111,6 +118,10 @@ public class NetworkManager {
         NetworkManager.getRequestQueue().add(request);
     }
 
+    /**获取某条动态的评论列表
+     * @param tweetId 该条动态的id
+     * @param listener ResponseListener
+     */
     public static void postRequestComments(String tweetId, ResponseListener listener){
         Map<String, String> params = new HashMap<>();
         params.put(TWEET_ID, tweetId);

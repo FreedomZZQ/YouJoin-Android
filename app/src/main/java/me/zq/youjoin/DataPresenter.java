@@ -7,6 +7,7 @@ import com.android.volley.VolleyError;
 import java.util.List;
 
 import me.zq.youjoin.db.DatabaseManager;
+import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PrimsgInfo;
@@ -261,6 +262,30 @@ public class DataPresenter {
                         }
                     }
                 });
+    }
+
+    public static void getCommentList(int tweetId, final GetCommentList q){
+
+        NetworkManager.postRequestComments(Integer.toString(tweetId),
+                new ResponseListener<CommentInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LogUtils.e(TAG, volleyError.toString());
+                CommentInfo info = new CommentInfo();
+                info.setResult(NetworkManager.FAILURE);
+                q.onGetCommentList(info);
+            }
+
+            @Override
+            public void onResponse(CommentInfo info) {
+                q.onGetCommentList(info);
+            }
+        });
+    }
+
+
+    public interface GetCommentList{
+        void onGetCommentList(CommentInfo info);
     }
 
     public interface GetPrimsgList{

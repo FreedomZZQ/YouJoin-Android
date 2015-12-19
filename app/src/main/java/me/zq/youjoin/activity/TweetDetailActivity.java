@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -21,19 +23,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.adapter.CommentsAdapter;
 import me.zq.youjoin.adapter.GridPhotoAdapter;
+import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.utils.GlobalUtils;
 import me.zq.youjoin.utils.StringUtils;
 import me.zq.youjoin.widget.enter.AutoHeightGridView;
 import me.zq.youjoin.widget.enter.EmojiFragment;
 import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
 
-public class TweetDetailActivity extends BaseActivity
-        implements EmojiFragment.EnterEmojiLayout, DataPresenter.GetUserInfo{
+public class TweetDetailActivity extends BaseActivity implements EmojiFragment.EnterEmojiLayout,
+        DataPresenter.GetUserInfo, DataPresenter.GetCommentList{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -58,8 +61,11 @@ public class TweetDetailActivity extends BaseActivity
     @Bind(R.id.comments_list)
     ListView commentsList;
 
-    private TweetInfo.TweetsEntity info = new TweetInfo.TweetsEntity();
+    private TweetInfo.TweetsEntity info;
     private static final String INFO = "info";
+
+    private List<CommentInfo.CommentsEntity> commentList = new ArrayList<>();
+    private CommentsAdapter adapter;
 
     EnterEmojiLayout enterLayout;
     EditText msgEdit;
@@ -70,22 +76,14 @@ public class TweetDetailActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_detail);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
         info = getIntent().getParcelableExtra(INFO);
-        initEnter();
-        GlobalUtils.setListViewHeightBasedOnChildren(commentsList);
 
-        likeCount.setText(Integer.toString(info.getUpvote_num()));
-        commentCount.setText(Integer.toString(info.getComment_num()));
-        content.setText(StringUtils.getEmotionContent(
-                YouJoinApplication.getAppContext(), content,
-                info.getTweets_content()));
-        time.setText(info.getTweets_time());
-        if(info.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO){
-            btnLike.setChecked(false);
-        }else {
-            btnLike.setChecked(true);
-        }
+        initViews();
+
+        //GlobalUtils.setListViewHeightBasedOnChildren(commentsList);
+        adapter = new CommentsAdapter(TweetDetailActivity.this, commentList);
+        commentsList.setAdapter(adapter);
+        DataPresenter.getCommentList(info.getTweets_id(), TweetDetailActivity.this);
 
 //        viewHolder.btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -139,6 +137,36 @@ public class TweetDetailActivity extends BaseActivity
 
     }
 
+    private void initViews() {
+        setSupportActionBar(toolbar);
+        likeCount.setText(Integer.toString(info.getUpvote_num()));
+        commentCount.setText(Integer.toString(info.getComment_num()));
+        content.setText(StringUtils.getEmotionContent(
+                YouJoinApplication.getAppContext(), content,
+                info.getTweets_content()));
+        time.setText(info.getTweets_time());
+        if(info.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO){
+            btnLike.setChecked(false);
+        }else {
+            btnLike.setChecked(true);
+        }
+
+        initEnter();
+    }
+
+    @Override
+    public void onGetCommentList(CommentInfo info){
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            commentList.clear();
+            for(CommentInfo.CommentsEntity entity : info.getComments()){
+                commentList.add(entity);
+            }
+            adapter.notifyDataSetChanged();
+        }else {
+            Toast.makeText(TweetDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onGetUserInfo(UserInfo info){
         if(info.getResult().equals(NetworkManager.SUCCESS)){
@@ -148,6 +176,8 @@ public class TweetDetailActivity extends BaseActivity
                     .centerCrop()
                     .into(avatar);
             nickname.setText(info.getNickname());
+        }else {
+            Toast.makeText(TweetDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
     }
 
