@@ -1,5 +1,8 @@
 package me.zq.youjoin.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -9,18 +12,19 @@ import java.util.List;
 public class TweetInfo {
     /**
      * result : success
-     * tweets : [{"friend_id":"16","tweets_id":"15","comment_num":"0","upvote_num":"0","upvote_status":"0","tweets_content":"haha i love mzz!","tweets_img":"http://192.168.0.103:8088/youjoin-server/upload/16/20151206033524_lufei.jpg;http://192.168.0.103:8088/youjoin-server;"}]
+     * tweets : [{"friend_id":"16","tweets_id":"14","comment_num":"4","upvote_num":"0","upvote_status":"0","tweets_content":"haha i love mzz!","tweets_img":"http://www.tekbroaden.com/youjoin-server/upload/16/20151206032335_lufei.jpg","tweets_time":"2015-12-06 03:23:35"},{"friend_id":"16","tweets_id":"25","comment_num":"0","upvote_num":"0","upvote_status":"0","tweets_content":"ahahah\n:smile::smile::smiley:","tweets_img":"","tweets_time":"2015-12-15 10:52:34"}]
      */
 
     private String result;
     /**
      * friend_id : 16
-     * tweets_id : 15
-     * comment_num : 0
+     * tweets_id : 14
+     * comment_num : 4
      * upvote_num : 0
      * upvote_status : 0
      * tweets_content : haha i love mzz!
-     * tweets_img : http://192.168.0.103:8088/youjoin-server/upload/16/20151206033524_lufei.jpg;http://192.168.0.103:8088/youjoin-server;
+     * tweets_img : http://www.tekbroaden.com/youjoin-server/upload/16/20151206032335_lufei.jpg
+     * tweets_time : 2015-12-06 03:23:35
      */
 
     private List<TweetsEntity> tweets;
@@ -41,7 +45,7 @@ public class TweetInfo {
         return tweets;
     }
 
-    public static class TweetsEntity {
+    public static class TweetsEntity implements Parcelable {
         private int friend_id;
         private int tweets_id;
         private int comment_num;
@@ -49,6 +53,7 @@ public class TweetInfo {
         private int upvote_status;
         private String tweets_content;
         private String tweets_img;
+        private String tweets_time;
 
         public void setFriend_id(int friend_id) {
             this.friend_id = friend_id;
@@ -78,6 +83,10 @@ public class TweetInfo {
             this.tweets_img = tweets_img;
         }
 
+        public void setTweets_time(String tweets_time) {
+            this.tweets_time = tweets_time;
+        }
+
         public int getFriend_id() {
             return friend_id;
         }
@@ -105,5 +114,50 @@ public class TweetInfo {
         public String getTweets_img() {
             return tweets_img;
         }
+
+        public String getTweets_time() {
+            return tweets_time;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.friend_id);
+            dest.writeInt(this.tweets_id);
+            dest.writeInt(this.comment_num);
+            dest.writeInt(this.upvote_num);
+            dest.writeInt(this.upvote_status);
+            dest.writeString(this.tweets_content);
+            dest.writeString(this.tweets_img);
+            dest.writeString(this.tweets_time);
+        }
+
+        public TweetsEntity() {
+        }
+
+        protected TweetsEntity(Parcel in) {
+            this.friend_id = in.readInt();
+            this.tweets_id = in.readInt();
+            this.comment_num = in.readInt();
+            this.upvote_num = in.readInt();
+            this.upvote_status = in.readInt();
+            this.tweets_content = in.readString();
+            this.tweets_img = in.readString();
+            this.tweets_time = in.readString();
+        }
+
+        public static final Parcelable.Creator<TweetsEntity> CREATOR = new Parcelable.Creator<TweetsEntity>() {
+            public TweetsEntity createFromParcel(Parcel source) {
+                return new TweetsEntity(source);
+            }
+
+            public TweetsEntity[] newArray(int size) {
+                return new TweetsEntity[size];
+            }
+        };
     }
 }

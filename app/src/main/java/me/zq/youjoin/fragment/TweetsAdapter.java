@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,7 +17,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
-import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -98,45 +96,45 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         viewHolder.tweetContent.setText(StringUtils.getEmotionContent(
                 YouJoinApplication.getAppContext(), viewHolder.tweetContent,
                 dataList.get(location).getTweets_content()));
-        viewHolder.time.setText("12:12");
+        viewHolder.time.setText(dataList.get(location).getTweets_time());
         if(dataList.get(location).getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO){
             viewHolder.btnLike.setChecked(false);
         }else {
             viewHolder.btnLike.setChecked(true);
         }
 
-        viewHolder.btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-                NetworkManager.postUpvoteTweet(Integer.toString(
-                        YouJoinApplication.getCurrUser().getId()),
-                        Integer.toString(dataList.get(location).getTweets_id()),
-                        new ResponseListener<ResultInfo>() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                LogUtils.e(TAG, volleyError.toString());
-                            }
-
-                            @Override
-                            public void onResponse(ResultInfo info) {
-                                if(info.getResult().equals(NetworkManager.SUCCESS)){
-                                    viewHolder.btnLike.setChecked(isChecked);
-                                    int k = dataList.get(location).getUpvote_num();
-                                    if(isChecked){
-                                        k++;
-                                    }else{
-                                        k--;
-                                    }
-                                    dataList.get(location).setUpvote_num(k);
-                                    viewHolder.likeCount.setText(Integer.toString(k));
-                                }else{
-                                    viewHolder.btnLike.setChecked(!isChecked);
-                                }
-                            }
-                        });
-
-            }
-        });
+//        viewHolder.btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+//                NetworkManager.postUpvoteTweet(Integer.toString(
+//                        YouJoinApplication.getCurrUser().getId()),
+//                        Integer.toString(dataList.get(location).getTweets_id()),
+//                        new ResponseListener<ResultInfo>() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError volleyError) {
+//                                LogUtils.e(TAG, volleyError.toString());
+//                            }
+//
+//                            @Override
+//                            public void onResponse(ResultInfo info) {
+//                                if(info.getResult().equals(NetworkManager.SUCCESS)){
+//                                    viewHolder.btnLike.setChecked(isChecked);
+//                                    int k = dataList.get(location).getUpvote_num();
+//                                    if(isChecked){
+//                                        k++;
+//                                    }else{
+//                                        k--;
+//                                    }
+//                                    dataList.get(location).setUpvote_num(k);
+//                                    viewHolder.likeCount.setText(Integer.toString(k));
+//                                }else{
+//                                    viewHolder.btnLike.setChecked(!isChecked);
+//                                }
+//                            }
+//                        });
+//
+//            }
+//        });
 
         UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(i).getFriend_id());
         if(info.getResult().equals(NetworkManager.SUCCESS)

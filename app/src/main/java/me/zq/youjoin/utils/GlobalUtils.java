@@ -3,7 +3,10 @@ package me.zq.youjoin.utils;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
@@ -32,5 +35,24 @@ public class GlobalUtils {
         int width = YouJoinApplication.getAppContext().getResources()
                 .getDimensionPixelSize(R.dimen.emoji_normal);
         drawable.setBounds(0, 0, width, width);
+    }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 }

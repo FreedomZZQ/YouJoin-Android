@@ -34,7 +34,7 @@
         android:transcriptMode="alwaysScroll"/>
 
     <include
-        layout="@layout/primsg_input_layout"/>
+        layout="@layout/bottom_input_layout"/>
 
 </LinearLayout>
 
