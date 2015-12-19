@@ -77,7 +77,7 @@ public class NetworkManager {
     /**
      * 服务器接口URL
      */
-//    public static final String BASE_API_URL = "http://192.168.0.103:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://192.168.0.101:8088/youjoin-server/controllers/";
     public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 //    public static final String BASE_API_URL = "http://110.65.7.154:8088/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";

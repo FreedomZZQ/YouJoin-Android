@@ -160,6 +160,38 @@ public class PostUploadRequest<T> extends Request<T> {
                 }
 
             }
+        }else{
+            StringBuilder sb= new StringBuilder() ;
+            /*第一行*/
+            //`"--" + BOUNDARY + "\r\n"`
+            sb.append("--"+BOUNDARY);
+            sb.append("\r\n") ;
+            /*第二行*/
+            //Content-Disposition: form-data; name="参数的名称"; filename="上传的文件名" + "\r\n"
+            sb.append("Content-Disposition: form-data;");
+            sb.append(" name=\"");
+            sb.append(PARAM + "[0]");
+            sb.append("\"") ;
+            //sb.append("; filename=\"") ;
+            //sb.append("null") ;
+            //sb.append("\"");
+            sb.append("\r\n") ;
+            /*第三行*/
+            //Content-Type: 文件的 mime 类型 + "\r\n"
+            //sb.append("Content-Type: ");
+            //sb.append("image/png") ;
+            //sb.append("\r\n") ;
+            /*第四行*/
+            //"\r\n"
+            sb.append("\r\n") ;
+            try {
+                bos.write(sb.toString().getBytes("utf-8"));
+                /*第五行*/
+                //文件的二进制数据 + "\r\n"
+                bos.write("\r\n".getBytes("utf-8"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         /*结尾行*/
