@@ -90,8 +90,11 @@ implements DataPresenter.GetTweets{
     public void onGetTweets(TweetInfo info){
         refresher.setRefreshing(false);
         if(info.getResult().equals(NetworkManager.SUCCESS)){
-            tweetsList = info.getTweets();
-            tweetsAdapter.setDataList(tweetsList);
+            tweetsList.clear();
+            for(TweetInfo.TweetsEntity entity : info.getTweets()){
+                tweetsList.add(entity);
+            }
+
             tweetsAdapter.notifyDataSetChanged();
         }
 
@@ -107,8 +110,10 @@ implements DataPresenter.GetTweets{
             new RecyclerItemClickListener.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    TweetDetailActivity.actionStart(getActivity(),
-                            tweetsList.get(tweetsList.size() - position - 1));
+                    int i = tweetsList.size() - position - 1;
+                    TweetInfo.TweetsEntity entity = tweetsList.get(i);
+                    entity.setTweets_img(tweetsList.get(i).getTweets_img());
+                    TweetDetailActivity.actionStart(getActivity(), entity);
                 }
             };
 

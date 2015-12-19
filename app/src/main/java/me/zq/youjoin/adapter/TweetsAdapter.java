@@ -35,10 +35,6 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     public OnItemClickListener itemClickListener;
 
-    public void setDataList(List<TweetInfo.TweetsEntity> dataList) {
-        this.dataList = dataList;
-    }
-
     private List<TweetInfo.TweetsEntity> dataList;
 
     public TweetsAdapter(List<TweetInfo.TweetsEntity> data){
@@ -136,7 +132,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 //            }
 //        });
 
-        UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(i).getFriend_id());
+        UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(location).getFriend_id());
         if(info.getResult().equals(NetworkManager.SUCCESS)
                 && info.getImg_url() != null){
             Picasso.with(YouJoinApplication.getAppContext())
@@ -146,7 +142,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     .into(viewHolder.avatar);
             viewHolder.nickname.setText(info.getNickname());
         }else {
-            NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(i).getFriend_id()),
+            NetworkManager.postRequestUserInfo(Integer.toString(dataList.get(location).getFriend_id()),
                     new ResponseListener<UserInfo>() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
@@ -165,7 +161,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                     });
         }
 
-        List<String> urls = StringUtils.getPicUrlList(dataList.get(i).getTweets_img());
+        List<String> urls = StringUtils.getPicUrlList(dataList.get(location).getTweets_img());
         GridPhotoAdapter adapter = new GridPhotoAdapter(YouJoinApplication.getAppContext(), urls);
         viewHolder.gridView.setAdapter(adapter);
     }
