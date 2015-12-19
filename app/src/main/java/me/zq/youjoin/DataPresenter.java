@@ -283,6 +283,28 @@ public class DataPresenter {
         });
     }
 
+    public static void sendComment(int userId, int tweetId, String commentContent, final SendComment q){
+
+        NetworkManager.postCommentTweet(Integer.toString(userId), Integer.toString(tweetId),
+                commentContent, new ResponseListener<ResultInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        LogUtils.e(TAG, volleyError.toString());
+                        ResultInfo info = new ResultInfo();
+                        info.setResult(NetworkManager.FAILURE);
+                        q.onSendComment(info);
+                    }
+
+                    @Override
+                    public void onResponse(ResultInfo info) {
+                        q.onSendComment(info);
+                    }
+                });
+    }
+
+    public interface SendComment{
+        void onSendComment(ResultInfo info);
+    }
 
     public interface GetCommentList{
         void onGetCommentList(CommentInfo info);

@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
@@ -26,6 +27,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.adapter.CommentsAdapter;
 import me.zq.youjoin.adapter.GridPhotoAdapter;
 import me.zq.youjoin.model.CommentInfo;
+import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -36,7 +38,7 @@ import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
 
 public class TweetDetailActivity extends BaseActivity implements EmojiFragment.EnterEmojiLayout,
-        DataPresenter.GetUserInfo, DataPresenter.GetCommentList{
+        DataPresenter.GetUserInfo, DataPresenter.GetCommentList, DataPresenter.SendComment {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -60,9 +62,11 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
     TextView commentCount;
     @Bind(R.id.comments_list)
     ListView commentsList;
+    @Bind(R.id.sendmsg)
+    ImageButton sendmsg;
 
-    private TweetInfo.TweetsEntity info;
-    private static final String INFO = "info";
+    private TweetInfo.TweetsEntity tweetsEntity;
+    private static final String INFO = "tweetsEntity";
 
     private List<CommentInfo.CommentsEntity> commentList = new ArrayList<>();
     private CommentsAdapter adapter;
@@ -76,14 +80,14 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_detail);
         ButterKnife.bind(this);
-        info = getIntent().getParcelableExtra(INFO);
+        tweetsEntity = getIntent().getParcelableExtra(INFO);
 
         initViews();
 
         //GlobalUtils.setListViewHeightBasedOnChildren(commentsList);
         adapter = new CommentsAdapter(TweetDetailActivity.this, commentList);
         commentsList.setAdapter(adapter);
-        DataPresenter.getCommentList(info.getTweets_id(), TweetDetailActivity.this);
+        DataPresenter.getCommentList(tweetsEntity.getTweets_id(), TweetDetailActivity.this);
 
 //        viewHolder.btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -98,8 +102,8 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
 //                            }
 //
 //                            @Override
-//                            public void onResponse(ResultInfo info) {
-//                                if(info.getResult().equals(NetworkManager.SUCCESS)){
+//                            public void onResponse(ResultInfo tweetsEntity) {
+//                                if(tweetsEntity.getResult().equals(NetworkManager.SUCCESS)){
 //                                    viewHolder.btnLike.setChecked(isChecked);
 //                                    int k = dataList.get(location).getUpvote_num();
 //                                    if(isChecked){
@@ -118,36 +122,51 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
 //            }
 //        });
 
-        UserInfo userInfo = DataPresenter.requestUserInfoFromCache(info.getFriend_id());
-        if(userInfo.getResult().equals(NetworkManager.SUCCESS)
-                && userInfo.getImg_url() != null){
+        UserInfo userInfo = DataPresenter.requestUserInfoFromCache(tweetsEntity.getFriend_id());
+        if (userInfo.getResult().equals(NetworkManager.SUCCESS)
+                && userInfo.getImg_url() != null) {
             Picasso.with(YouJoinApplication.getAppContext())
                     .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
                     .resize(200, 200)
                     .centerCrop()
                     .into(avatar);
             nickname.setText(userInfo.getNickname());
-        }else {
-            DataPresenter.requestUserInfoById(info.getFriend_id(), TweetDetailActivity.this);
+        } else {
+            DataPresenter.requestUserInfoById(tweetsEntity.getFriend_id(), TweetDetailActivity.this);
         }
 
-        List<String> urls = StringUtils.getPicUrlList(info.getTweets_img());
+        List<String> urls = StringUtils.getPicUrlList(tweetsEntity.getTweets_img());
         GridPhotoAdapter adapter = new GridPhotoAdapter(YouJoinApplication.getAppContext(), urls);
         gridView.setAdapter(adapter);
 
     }
 
+    @OnClick(R.id.sendmsg)
+    protected void sendComment(){
+        String content = msgEdit.getText().toString();
+        msgEdit.setText("");
+        DataPresenter.sendComment(YouJoinApplication.getCurrUser().getId(), tweetsEntity.getTweets_id(),
+                content, TweetDetailActivity.this);
+    }
+
+    @Override
+    public void onSendComment(ResultInfo info){
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            DataPresenter.getCommentList(tweetsEntity.getTweets_id(), TweetDetailActivity.this);
+        }
+    }
+
     private void initViews() {
         setSupportActionBar(toolbar);
-        likeCount.setText(Integer.toString(info.getUpvote_num()));
-        commentCount.setText(Integer.toString(info.getComment_num()));
+        likeCount.setText(Integer.toString(tweetsEntity.getUpvote_num()));
+        commentCount.setText(Integer.toString(tweetsEntity.getComment_num()));
         content.setText(StringUtils.getEmotionContent(
                 YouJoinApplication.getAppContext(), content,
-                info.getTweets_content()));
-        time.setText(info.getTweets_time());
-        if(info.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO){
+                tweetsEntity.getTweets_content()));
+        time.setText(tweetsEntity.getTweets_time());
+        if (tweetsEntity.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO) {
             btnLike.setChecked(false);
-        }else {
+        } else {
             btnLike.setChecked(true);
         }
 
@@ -155,28 +174,28 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
     }
 
     @Override
-    public void onGetCommentList(CommentInfo info){
-        if(info.getResult().equals(NetworkManager.SUCCESS)){
+    public void onGetCommentList(CommentInfo info) {
+        if (info.getResult().equals(NetworkManager.SUCCESS)) {
             commentList.clear();
-            for(CommentInfo.CommentsEntity entity : info.getComments()){
+            for (CommentInfo.CommentsEntity entity : info.getComments()) {
                 commentList.add(entity);
             }
             adapter.notifyDataSetChanged();
-        }else {
+        } else {
             Toast.makeText(TweetDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onGetUserInfo(UserInfo info){
-        if(info.getResult().equals(NetworkManager.SUCCESS)){
+    public void onGetUserInfo(UserInfo info) {
+        if (info.getResult().equals(NetworkManager.SUCCESS)) {
             Picasso.with(YouJoinApplication.getAppContext())
                     .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
                     .resize(200, 200)
                     .centerCrop()
                     .into(avatar);
             nickname.setText(info.getNickname());
-        }else {
+        } else {
             Toast.makeText(TweetDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
     }
