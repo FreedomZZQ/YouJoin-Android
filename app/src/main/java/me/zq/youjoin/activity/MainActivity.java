@@ -28,6 +28,8 @@ import me.zq.youjoin.fragment.MessageFragment;
 import me.zq.youjoin.fragment.TweetsFragment;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.pullrequest.PullManager;
+import me.zq.youjoin.pullrequest.PullService;
 import me.zq.youjoin.utils.StringUtils;
 
 public class MainActivity extends BaseActivity
@@ -65,6 +67,14 @@ implements DataPresenter.GetUserInfo{
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         }
+
+        PullManager.startPullService(MainActivity.this, 5, PullService.class, PullService.ACTION);
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        PullManager.stopPullService(MainActivity.this, PullService.class, PullService.ACTION);
     }
 
     @Override
