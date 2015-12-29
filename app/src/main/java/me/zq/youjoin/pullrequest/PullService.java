@@ -7,14 +7,28 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.MainActivity;
+import me.zq.youjoin.model.NewPrimsgInfo;
+import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.LogUtils;
 
-public class PullService extends Service {
+public class PullService extends Service implements DataPresenter.GetNewPrimsg{
 
     public static final String ACTION = "me.zq.youjoin.pullrequest.PullService";
     public static final String TAG = "YouJoinPullService";
+
+
+    /**
+     * 轮询时间间隔
+     */
+    public static final int PULL_TIME = 20;
 
     private Notification notification;
     private NotificationManager manager;
@@ -48,6 +62,17 @@ public class PullService extends Service {
         manager.notify(0, notification);
     }
 
+    @Override
+    public void onGetNewPrimsg(NewPrimsgInfo info){
+        if(info.getResult().equals(NetworkManager.SUCCESS)){
+            HashSet<Integer> h = new HashSet<>(info.getMessage());
+            List<Integer> msgFrom = new ArrayList<>();
+            msgFrom.addAll(h);
+            for(Integer i : msgFrom){
+                LogUtils.d(TAG, "New Primsg from: userid = " + i.toString());
+            }
+        }
+    }
 
     class PullThread extends Thread {
         @Override
@@ -59,9 +84,10 @@ public class PullService extends Service {
                     e.printStackTrace();
                 }
 
-                if(i % 20 == 0){
+                if(i % PULL_TIME == 0){
                     LogUtils.d(TAG, "Pulling...");
-                    showNotification();
+                    DataPresenter.requestNewPrimsg(YouJoinApplication.getCurrUser().getId(),
+                            PullService.this);
                 }
             }
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.ImageInfo;
+import me.zq.youjoin.model.NewPrimsgInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
@@ -163,18 +164,18 @@ public class NetworkManagerTest extends AndroidTestCase {
     }
 
     public void testReceivePrivatemsg(){
-        NetworkManager.postRequestMessage(testId2.toString(), new ResponseListener<PrimsgInfo>() {
+        NetworkManager.postRequestMessage(testId2.toString(), new ResponseListener<NewPrimsgInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LogUtils.e(TAG, volleyError.toString());
             }
 
             @Override
-            public void onResponse(PrimsgInfo info) {
+            public void onResponse(NewPrimsgInfo info) {
                 assertEquals(info.getResult(), SUCCESS);
-                List<PrimsgInfo.MessageEntity> infos = info.getMessage();
-                for( PrimsgInfo.MessageEntity i : infos){
-                    LogUtils.d(TAG, i.getContent());
+                List<Integer> infos = info.getMessage();
+                for( Integer i : infos){
+                    LogUtils.d(TAG, "New Primsg from: userid = " + i.toString());
                 }
 
             }

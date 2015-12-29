@@ -10,6 +10,7 @@ import me.zq.youjoin.db.DatabaseManager;
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
+import me.zq.youjoin.model.NewPrimsgInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
@@ -300,6 +301,26 @@ public class DataPresenter {
                         q.onSendComment(info);
                     }
                 });
+    }
+
+    public static void requestNewPrimsg(int userId, final GetNewPrimsg q){
+        NetworkManager.postRequestMessage(Integer.toString(userId), new ResponseListener<NewPrimsgInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                NewPrimsgInfo info = new NewPrimsgInfo();
+                info.setResult(NetworkManager.FAILURE);
+                q.onGetNewPrimsg(info);
+            }
+
+            @Override
+            public void onResponse(NewPrimsgInfo info) {
+                q.onGetNewPrimsg(info);
+            }
+        });
+    }
+
+    public interface GetNewPrimsg{
+        void onGetNewPrimsg(NewPrimsgInfo info);
     }
 
     public interface SendComment{

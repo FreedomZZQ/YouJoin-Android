@@ -17,6 +17,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
+import me.zq.youjoin.model.NewPrimsgInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
@@ -224,7 +225,7 @@ public class NetworkManager {
 //        params.put(TO_TIME, toTime);
         Request request = new PostObjectRequest(
                 API_RECEIVE_MESSAGE,
-                params, new TypeToken<PrimsgInfo>(){}.getType(),
+                params, new TypeToken<NewPrimsgInfo>(){}.getType(),
                 listener);
         NetworkManager.getRequestQueue().add(request);
     }
