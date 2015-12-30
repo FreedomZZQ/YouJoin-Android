@@ -41,4 +41,14 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile files('libs/systembartint-1.0.3.jar')
     compile 'com.borax12.materialdaterangepicker:library:1.2'
+
+
+    compile 'com.mikepenz:materialize:0.5.1@aar'
+    compile 'com.mikepenz:iconics-core:2.5.0@aar'
+    compile 'com.mikepenz:aboutlibraries:5.3.3@aar'
+    compile 'com.mikepenz:actionitembadge:2.5.5@aar'
+
+    compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.4.0.1@aar'
+    compile 'com.mikepenz:crossfader:1.3.2@aar'
 }

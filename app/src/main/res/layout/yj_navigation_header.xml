@@ -33,7 +33,7 @@
                 android:textSize="18sp"
                 android:gravity="center"
                 android:text="YouJoin"
-                android:textColor="@color/black"/>
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/navigation_email"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="ksudzhan@vip.qq.com"
-                android:textColor="@color/trans_black"
+                android:textColor="@color/trans_white"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
 
