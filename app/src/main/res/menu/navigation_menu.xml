@@ -13,8 +13,7 @@
             android:title="@string/navigation_friends" />
         <item
             android:id="@+id/navigation_item_messages"
-            android:title="@string/navigation_msg"
-            android:actionLayout="@layout/menu_badge" />
+            android:title="@string/navigation_msg" />
         <item
             android:id="@+id/navigation_item_tweets"
             android:title="@string/navigation_tweets" />
