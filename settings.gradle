@@ -1,1 +1,1 @@
-include ':app', ':multi-image-selector'
+include ':app', ':multi-image-selector', ':material-drawer-library'

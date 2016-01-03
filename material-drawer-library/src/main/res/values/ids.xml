@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <item name="material_drawer_menu_default_group" type="id" />
+    <item name="material_drawer_sticky_footer" type="id" />
+    <item name="material_drawer_sticky_header" type="id" />
+    <item name="material_drawer_animation" type="id" />
+    <item name="material_drawer_profile_header" type="id" />
+    <item name="material_drawer_slider_layout" type="id" />
+</resources>

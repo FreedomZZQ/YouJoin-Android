@@ -72,7 +72,10 @@
         <service
             android:name=".pullrequest.PullService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.AboutActivity"></activity>
     </application>
 
 </manifest>

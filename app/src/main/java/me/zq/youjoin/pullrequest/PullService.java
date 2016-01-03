@@ -84,10 +84,11 @@ public class PullService extends Service implements DataPresenter.GetNewPrimsg{
                     e.printStackTrace();
                 }
 
-                if(i % PULL_TIME == 0){
+                if(i % PULL_TIME == 0 && YouJoinApplication.getCurrUser() != null){
                     LogUtils.d(TAG, "Pulling...");
                     DataPresenter.requestNewPrimsg(YouJoinApplication.getCurrUser().getId(),
                             PullService.this);
+
                 }
             }
 

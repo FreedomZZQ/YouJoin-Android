@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3eb0ff</color>
-    <color name="colorPrimaryDark">#3ca2e9</color>
-    <color name="colorAccent">#888888</color>
+    <color name="colorPrimary">#3497cd</color>
+    <color name="colorPrimaryDark">#0083cb</color>
+    <color name="colorAccent">#757575</color>
 
     <!-- 基本颜色 -->
     <color name="white">#FFFFFF</color>
@@ -24,6 +24,6 @@
     <color name="login_text_bg">#05000000</color>
     <color name="login_text_color">#b4b4b4</color>
 
-    <color name="bg_grey">#e6e6e6</color>
+    <color name="bg_grey">#f0f0f0</color>
     <color name="yellow">#fac800</color>
 </resources>
