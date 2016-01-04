@@ -46,14 +46,6 @@ implements DataPresenter.GetUserInfo{
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-//    @Bind(R.id.navigation)
-//    NavigationView navigationView;
-//    @Bind(R.id.drawer_layout)
-//    DrawerLayout drawerLayout;
-
-//    ImageView ivUserPhoto;
-//    TextView tvUserName;
-//    TextView tvUserEmail;
 
     public static final int DRAWER_FRIEND = 1;
     public static final int DRAWER_MSG = 2;
@@ -64,7 +56,6 @@ implements DataPresenter.GetUserInfo{
 
     private AccountHeader drawerHeader = null;
     private Drawer drawer = null;
-    private boolean opened = false;
 
     private long exitTime = 0;
 
@@ -106,27 +97,6 @@ implements DataPresenter.GetUserInfo{
     }
 
     private void initView(Bundle savedInstanceState){
-//        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-//                this, drawerLayout, toolbar,
-//                R.string.drawer_open, R.string.drawer_close){
-//            public void onDrawerClosed(View view){
-//                super.onDrawerClosed(view);
-//            }
-//
-//            public void onDrawerOpened(View view){
-//                super.onDrawerOpened(view);
-//            }
-//        };
-//        actionBarDrawerToggle.syncState();
-//        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-//        setupNavigationAction(navigationView);
-//
-//        View navigationHeadView = navigationView.getHeaderView(0);
-//        if(navigationView == null) return;
-
-//        ivUserPhoto = (ImageView) navigationHeadView.findViewById(R.id.navigation_avatar);
-//        tvUserName = (TextView) navigationHeadView.findViewById(R.id.navigation_username);
-//        tvUserEmail = (TextView) navigationHeadView.findViewById(R.id.navigation_email);
 
         UserInfo userInfo = YouJoinApplication.getCurrUser();
 
@@ -162,6 +132,9 @@ implements DataPresenter.GetUserInfo{
                 .withHasStableIds(true)
                 .withAccountHeader(drawerHeader)
                 .addDrawerItems(
+                        new PrimaryDrawerItem().withName(getString(R.string.navigation_tweets))
+                                .withIcon(R.drawable.ic_home_black_48dp).withIdentifier(DRAWER_TWEETS)
+                                .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_friends))
                         .withIcon(R.drawable.ic_group_black_48dp).withIdentifier(DRAWER_FRIEND)
                         .withSelectable(true),
@@ -169,9 +142,6 @@ implements DataPresenter.GetUserInfo{
                         .withIcon(R.drawable.ic_textsms_black_48dp).withIdentifier(DRAWER_MSG)
                         .withSelectable(true).withBadgeStyle(new BadgeStyle()
                                 .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700)),
-                        new PrimaryDrawerItem().withName(getString(R.string.navigation_tweets))
-                        .withIcon(R.drawable.ic_home_black_48dp).withIdentifier(DRAWER_TWEETS)
-                        .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_plugin))
                         .withIcon(R.drawable.ic_apps_black_48dp).withIdentifier(DRAWER_PLUGIN)
                         .withSelectable(true),
@@ -219,14 +189,6 @@ implements DataPresenter.GetUserInfo{
 
         refreshUserInfo();
         drawer.updateBadge(DRAWER_MSG, new StringHolder(10 + ""));
-//        ivUserPhoto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UserInfoActivity.actionStart(MainActivity.this, UserInfoActivity.TYPE_CURR_USER,
-//                        YouJoinApplication.getCurrUser().getId());
-//            }
-//        });
-
     }
 
     private void refreshUserInfo() {
@@ -280,39 +242,6 @@ implements DataPresenter.GetUserInfo{
 //        tvUserEmail.setText(userInfo.getEmail());
     }
 
-
-//    private void setupNavigationAction(NavigationView navigationView){
-//        navigationView.setNavigationItemSelectedListener(
-//                new NavigationView.OnNavigationItemSelectedListener() {
-//                    @Override
-//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-//                        switch (menuItem.getItemId()) {
-//                            case R.id.navigation_item_friends:
-//                                switchToFriends();
-//                                break;
-//                            case R.id.navigation_item_messages:
-//                                switchToMessage();
-//                                break;
-//                            case R.id.navigation_item_tweets:
-//                                switchToTweets();
-//                                break;
-//                            case R.id.navigation_item_settings:
-//
-//                                break;
-//                            case R.id.navigation_item_exit:
-//                                ActivityManager.finishAll();
-//                                break;
-//
-//                            default:
-//                                break;
-//                        }
-//                        menuItem.setChecked(true);
-//                        drawerLayout.closeDrawers();
-//                        return true;
-//                    }
-//                });
-//    }
-
     private void switchToMessage() {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new MessageFragment()).commit();
         toolbar.setTitle(getString(R.string.title_message));
@@ -346,10 +275,10 @@ implements DataPresenter.GetUserInfo{
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode == KeyEvent.KEYCODE_BACK){
-//            if(drawerLayout.isDrawerOpen(navigationView)){
-//                drawerLayout.closeDrawers();
-//                return true;
-//            }
+            if(drawer != null && drawer.isDrawerOpen()){
+                drawer.closeDrawer();
+                return true;
+            }
             if((System.currentTimeMillis() - exitTime) > 2000){
 
                 Toast.makeText(MainActivity.this, getString(R.string.click_again_to_exit),
