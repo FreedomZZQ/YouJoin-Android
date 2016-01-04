@@ -33,6 +33,7 @@ import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.fragment.FriendFragment;
 import me.zq.youjoin.fragment.MessageFragment;
+import me.zq.youjoin.fragment.PluginFragment;
 import me.zq.youjoin.fragment.TweetsFragment;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -57,8 +58,9 @@ implements DataPresenter.GetUserInfo{
     public static final int DRAWER_FRIEND = 1;
     public static final int DRAWER_MSG = 2;
     public static final int DRAWER_TWEETS = 3;
-    public static final int DRAWER_SETTING = 4;
+    public static final int DRAWER_ABOUT = 4;
     public static final int DRAWER_EXIT = 5;
+    public static final int DRAWER_PLUGIN = 6;
 
     private AccountHeader drawerHeader = null;
     private Drawer drawer = null;
@@ -157,8 +159,11 @@ implements DataPresenter.GetUserInfo{
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_tweets))
                         .withIcon(R.drawable.ic_home_black_48dp).withIdentifier(DRAWER_TWEETS)
                         .withSelectable(true),
-                        new PrimaryDrawerItem().withName(getString(R.string.navigation_setting))
-                        .withIcon(R.drawable.ic_settings_black_48dp).withIdentifier(DRAWER_SETTING)
+                        new PrimaryDrawerItem().withName(getString(R.string.navigation_plugin))
+                        .withIcon(R.drawable.ic_apps_black_48dp).withIdentifier(DRAWER_PLUGIN)
+                        .withSelectable(true),
+                        new PrimaryDrawerItem().withName(getString(R.string.navigation_about))
+                        .withIcon(R.drawable.ic_settings_black_48dp).withIdentifier(DRAWER_ABOUT)
                         .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_exit))
                         .withIcon(R.drawable.ic_assignment_return_black_48dp).withIdentifier(DRAWER_EXIT)
@@ -178,8 +183,11 @@ implements DataPresenter.GetUserInfo{
                                 case DRAWER_TWEETS:
                                     switchToTweets();
                                     break;
-                                case DRAWER_SETTING:
-                                    switchToSetting();
+                                case DRAWER_PLUGIN:
+                                    switchToPlugin();
+                                    break;
+                                case DRAWER_ABOUT:
+                                    switchToAbout();
                                     break;
                                 case DRAWER_EXIT:
                                     ActivityManager.finishAll();
@@ -308,7 +316,12 @@ implements DataPresenter.GetUserInfo{
         toolbar.setTitle(getString(R.string.title_friends));
     }
 
-    private void switchToSetting(){
+    private void switchToPlugin(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new PluginFragment()).commit();
+        toolbar.setTitle(getString(R.string.title_plugin));
+    }
+
+    private void switchToAbout(){
         SettingActivity.actionStart(MainActivity.this);
     }
 

@@ -6,6 +6,7 @@
     <string name="title_mine">我的</string>
     <string name="title_friends">我关注的人</string>
     <string name="title_message">消息</string>
+    <string name="title_plugin">我的插件</string>
 
     <!-- Activity的标题-->
     <string name="title_activity_main">YouJoin</string>
@@ -20,9 +21,12 @@
     <string name="navigation_setting">设置</string>
     <string name="navigation_about">关于</string>
     <string name="navigation_exit">退出</string>
+    <string name="navigation_plugin">插件</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
+    <string name="hint_nodata">还没有数据哦~</string>
 
     <!-- Strings related to personal center-->
     <string name="hint_work">职业</string>
@@ -70,5 +74,8 @@
     <string name="title_activity_choose_location">选择地区</string>
     <string name="title_activity_tweet_detail">动态详情</string>
     <string name="click_again_to_exit">再按一次返回键退出YouJoin</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

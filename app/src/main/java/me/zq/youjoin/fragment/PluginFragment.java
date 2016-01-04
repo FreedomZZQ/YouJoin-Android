@@ -17,15 +17,15 @@ import me.zq.youjoin.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessageFragment extends BaseFragment {
+public class PluginFragment extends BaseFragment {
 
 
-    @Bind(R.id.sessionlist)
-    ListView sessionlist;
-    @Bind(R.id.add_msg_fab)
-    FloatingActionButton addMsgFab;
+    @Bind(R.id.plugin_list)
+    ListView pluginList;
+    @Bind(R.id.add_plugin_fab)
+    FloatingActionButton addPluginFab;
 
-    public MessageFragment() {
+    public PluginFragment() {
         // Required empty public constructor
     }
 
@@ -34,22 +34,14 @@ public class MessageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_plugin, container, false);
         ButterKnife.bind(this, view);
-
-        addMsgFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         TextView emptyView = new TextView(getActivity());
         emptyView.setText(getString(R.string.hint_nodata));
-        ViewGroup parentView = (ViewGroup) sessionlist.getParent();
+        ViewGroup parentView = (ViewGroup) pluginList.getParent();
         parentView.addView(emptyView, 2);
-        sessionlist.setEmptyView(emptyView);
-
+        pluginList.setEmptyView(emptyView);
         return view;
     }
 
