@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.activity.PluginActivity;
+import me.zq.youjoin.activity.PluginDownloadActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,11 +26,12 @@ public class PluginFragment extends BaseFragment {
     ListView pluginList;
     @Bind(R.id.add_plugin_fab)
     FloatingActionButton addPluginFab;
+    @Bind(R.id.start)
+    Button startButton;
 
     public PluginFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,11 +40,26 @@ public class PluginFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_plugin, container, false);
         ButterKnife.bind(this, view);
 
-        TextView emptyView = new TextView(getActivity());
-        emptyView.setText(getString(R.string.hint_nodata));
-        ViewGroup parentView = (ViewGroup) pluginList.getParent();
-        parentView.addView(emptyView, 2);
-        pluginList.setEmptyView(emptyView);
+//        TextView emptyView = new TextView(getActivity());
+//        emptyView.setText(getString(R.string.hint_nodata));
+//        ViewGroup parentView = (ViewGroup) pluginList.getParent();
+//        parentView.addView(emptyView, 2);
+//        pluginList.setEmptyView(emptyView);
+
+        addPluginFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PluginDownloadActivity.actionStart(getActivity());
+            }
+        });
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PluginActivity.actionStart(getActivity());
+            }
+        });
+
         return view;
     }
 

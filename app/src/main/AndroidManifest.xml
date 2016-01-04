@@ -75,7 +75,9 @@
             android:exported="true" />
 
         <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.AboutActivity"></activity>
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.PluginDownloadActivity" />
+        <activity android:name=".activity.PluginActivity"></activity>
     </application>
 
 </manifest>
