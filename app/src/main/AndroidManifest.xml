@@ -49,16 +49,13 @@
         <activity
             android:name=".activity.SearchUserActivity"
             android:label="@string/title_activity_search_friend"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".activity.UserInfoActivity"
-            android:label="@string/title_activity_user_info"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_user_info" />
         <activity
             android:name=".activity.MessageActivity"
             android:label="@string/title_activity_message"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".activity.ChooseLocationActivity"
@@ -74,10 +71,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.PluginDownloadActivity" />
-        <activity android:name=".activity.PluginActivity"></activity>
+        <activity android:name=".activity.PluginActivity" />
     </application>
 
 </manifest>

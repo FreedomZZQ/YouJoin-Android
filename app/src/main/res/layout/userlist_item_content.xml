@@ -20,7 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:text="Medium Text"
+        tools:text="Medium Text"
+        android:textSize="12sp"
+        android:textColor="@color/grey"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <!--<CheckBox-->

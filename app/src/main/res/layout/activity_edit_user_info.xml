@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activity.EditUserInfoActivity">
+    tools:context=".activity.EditUserInfoActivity"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,11 +14,15 @@
         android:showDividers="middle"
         android:divider="@drawable/dividershape"
         android:dividerPadding="1dp"
-        android:id="@+id/edit_container">
+        android:id="@+id/edit_container"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/edit_userinfo_item_height"
             android:orientation="horizontal"
             android:id="@+id/edit_avatar"
             android:background="@drawable/linearlayoutclick">
@@ -30,6 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_avatar"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
             <View
@@ -56,6 +59,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_username"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
             <View
@@ -68,6 +73,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="YouJoin"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
@@ -82,6 +89,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_email"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
             <View
@@ -94,6 +103,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="ksudzhan@vip.qq.com"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
@@ -108,6 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_nickname"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
             <View
@@ -121,7 +134,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_nickname"
                 tools:text="吃桔子的攻城狮"
-                android:layout_gravity="center_vertical" />
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
+                android:gravity="end"
+                android:layout_gravity="center_vertical"
+                android:background="@null"/>
 
         </LinearLayout>
 
@@ -135,6 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_sign"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
             <View
@@ -147,8 +166,12 @@
                 android:layout_width="@dimen/edit_userinfo_item_width"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_sign"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 tools:text=""
-                android:layout_gravity="center_vertical" />
+                android:gravity="end"
+                android:layout_gravity="center_vertical"
+                android:background="@null"/>
 
         </LinearLayout>
 
@@ -164,6 +187,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hint_sex"
                 android:layout_gravity="center_vertical"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:background="@drawable/linearlayoutclick"/>
 
             <View
@@ -176,6 +201,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="男"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical" />
 
         </LinearLayout>
@@ -190,6 +217,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hint_work"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical"/>
 
             <View
@@ -203,7 +232,11 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_work"
                 tools:text="程序员"
-                android:layout_gravity="center_vertical" />
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
+                android:gravity="end"
+                android:layout_gravity="center_vertical"
+                android:background="@null"/>
 
         </LinearLayout>
 
@@ -219,6 +252,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hint_location"
                 android:layout_gravity="center_vertical"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:background="@drawable/linearlayoutclick"/>
 
             <View
@@ -231,6 +266,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="广东 广州"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical" />
 
         </LinearLayout>
@@ -247,6 +284,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hint_birth"
                 android:layout_gravity="center_vertical"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:background="@drawable/linearlayoutclick"/>
 
             <View
@@ -259,6 +298,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="1995-03-13"
+                android:textSize="@dimen/edit_userinfo"
+                android:textColor="@color/grey"
                 android:layout_gravity="center_vertical" />
 
         </LinearLayout>

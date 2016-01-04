@@ -18,7 +18,7 @@
         android:id="@+id/text_out"
         android:background="#79c81d"
         android:gravity="start"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:textColor="@color/white"
         tools:text="hello!hello!hello!hello!hello!hello!hello!hello!hello!hello!hello!"
         android:maxWidth="200dp"
@@ -29,8 +29,7 @@
         android:id="@+id/icon_out"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@mipmap/ic_account_circle_white_48dp"
-        android:layout_marginEnd="10dp"/>
+        android:src="@mipmap/ic_account_circle_white_48dp"/>
 
 
 

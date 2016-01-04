@@ -15,11 +15,8 @@ import me.zq.youjoin.utils.MimeUtils;
  */
 public class ImageInfo {
 
-    //文件名
     private String fileName ;
-    //文件的 mime，需要根据文档查询
     private String mime ;
-    //文件的路径
     private String imagePath;
 
     public ImageInfo(String filePath){
@@ -27,8 +24,6 @@ public class ImageInfo {
         this.fileName = FileUtils.getFileName(filePath);
         this.mime = MimeUtils.guessMimeTypeFromExtension(FileUtils.getFileExtension(filePath));
     }
-
-    //对图片进行二进制转换
     public byte[] getValue() {
         if(imagePath == null){
             return new ByteArrayOutputStream().toByteArray();

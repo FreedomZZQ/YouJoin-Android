@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +28,6 @@ import me.zq.youjoin.network.NetworkManager;
 public class SearchUserActivity extends BaseActivity
 implements DataPresenter.GetUserInfo{
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.search_user_fab)
     FloatingActionButton searchUserFab;
     @Bind(R.id.search_content)
@@ -46,7 +43,6 @@ implements DataPresenter.GetUserInfo{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
 
         adapter = new SearchResultAdapter(SearchUserActivity.this);
         searchResultList.setAdapter(adapter);

@@ -2,11 +2,8 @@ package me.zq.youjoin.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -33,8 +30,6 @@ import me.zq.youjoin.widget.enter.EnterLayout;
 public class MessageActivity extends BaseActivity
         implements EmojiFragment.EnterEmojiLayout, DataPresenter.SendPrimsg, DataPresenter.GetPrimsgList{
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.sendmsg)
     ImageButton sendmsg;
     @Bind(R.id.msg_List)
@@ -57,20 +52,12 @@ public class MessageActivity extends BaseActivity
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
         receiver = getIntent().getParcelableExtra(RECEIVER);
-        setSupportActionBar(toolbar);
 
         initEnter();
 
         adapter = new MessageListAdapter(MessageActivity.this, dataList);
         msgList.setAdapter(adapter);
         DataPresenter.getPrimsgList(receiver.getId(), MessageActivity.this);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-
-        }
 
     }
 

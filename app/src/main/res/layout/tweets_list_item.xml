@@ -43,7 +43,7 @@
                     tools:text="youjoin"
                     android:id="@+id/username"
                     android:textColor="@color/font_black_9"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
                     android:layout_gravity="center_vertical"
                     android:id="@+id/time"
                     android:textColor="@color/font_black_9"
-                    android:textSize="12sp"
+                    android:textSize="8sp"
                     tools:text="12:12"/>
 
             </LinearLayout>
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
-                android:layout_gravity="center">
+                android:layout_gravity="center_vertical">
                 <!--android:inAnimation="@anim/slide_in_likes_counter"
                                     android:outAnimation="@anim/slide_out_likes_counter"-->
                 <TextView
@@ -116,18 +116,21 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/like_count"
                     tools:text="13"
+                    android:textSize="10sp"
                     android:textColor="@color/grey"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/grey"
+                    android:textSize="10sp"/>
             </TextSwitcher>
 
             <ImageButton
                 android:id="@+id/btnComments"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_comment_black"/>
 
             <TextView
@@ -136,7 +139,8 @@
                 android:id="@+id/comment_count"
                 tools:text="23"
                 android:textColor="@color/grey"
-                android:layout_gravity="center"
+                android:textSize="10sp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"/>
 
             <!--<LinearLayout-->

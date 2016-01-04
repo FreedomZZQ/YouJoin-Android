@@ -6,48 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/container_toolbar"
-        android:layout_alignParentTop="true">
+        android:id="@+id/search_content"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:hint="@string/hint_search_content"
+        android:layout_margin="16dp"
+        android:background="@null"
+        android:textSize="12sp"
+        android:textColor="@color/grey"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/container_edittext"
-        android:layout_below="@id/container_toolbar"
-        android:padding="16dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/search_content"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:hint="@string/hint_search_content" />
-
-    </android.support.design.widget.TextInputLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/search_result_list"
-        android:layout_below="@id/container_edittext"
+        android:layout_below="@id/search_content"
+        android:divider="@null"
         android:padding="16dp"/>
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/search_user_fab"
@@ -55,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_send" />
+        android:layout_margin="10dp"
+        android:src="@mipmap/ic_send_white_48dp"
+        app:backgroundTint="@color/yellow" />
 </RelativeLayout>

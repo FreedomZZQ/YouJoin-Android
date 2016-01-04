@@ -8,7 +8,8 @@
     android:visibility="visible"
     android:focusable="true"
     android:clickable="true"
-    tools:showIn="@layout/common_enter_emoji">
+    tools:showIn="@layout/common_enter_emoji"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"

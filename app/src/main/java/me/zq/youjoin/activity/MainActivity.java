@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.fragment.AboutFragment;
 import me.zq.youjoin.fragment.FriendFragment;
 import me.zq.youjoin.fragment.MessageFragment;
 import me.zq.youjoin.fragment.PluginFragment;
@@ -264,7 +265,8 @@ implements DataPresenter.GetUserInfo{
     }
 
     private void switchToAbout(){
-        SettingActivity.actionStart(MainActivity.this);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new AboutFragment()).commit();
+        toolbar.setTitle(getString(R.string.title_about));
     }
 
     public static void actionStart(Context context) {

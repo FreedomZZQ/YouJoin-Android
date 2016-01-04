@@ -7,6 +7,7 @@
     <string name="title_friends">我关注的人</string>
     <string name="title_message">消息</string>
     <string name="title_plugin">我的插件</string>
+    <string name="title_about">关于</string>
 
     <!-- Activity的标题-->
     <string name="title_activity_main">YouJoin</string>
