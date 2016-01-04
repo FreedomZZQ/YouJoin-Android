@@ -7,9 +7,9 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginTop="8dp"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    card_view:cardCornerRadius="8dp"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2dp">
 
     <LinearLayout
