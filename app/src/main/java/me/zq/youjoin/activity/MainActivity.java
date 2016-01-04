@@ -140,6 +140,19 @@ implements DataPresenter.GetUserInfo{
                 .withActivity(MainActivity.this)
                 .withHeaderBackground(R.drawable.header2)
                 .addProfiles(profile)
+                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
+                    @Override
+                    public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
+                        UserInfoActivity.actionStart(MainActivity.this, UserInfoActivity.TYPE_CURR_USER,
+                        YouJoinApplication.getCurrUser().getId());
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onProfileImageLongClick(View view, IProfile profile, boolean current) {
+                        return false;
+                    }
+                })
                 .withSavedInstance(savedInstanceState)
                 .build();
 
