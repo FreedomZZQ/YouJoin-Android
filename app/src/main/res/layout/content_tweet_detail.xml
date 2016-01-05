@@ -39,7 +39,7 @@
                 tools:text="youjoin"
                 android:id="@+id/username"
                 android:textColor="@color/font_black_9"
-                android:textSize="13sp"
+                android:textSize="10sp"
                 android:layout_marginStart="@dimen/general_margin"/>
 
             <View
@@ -52,7 +52,7 @@
                 android:layout_gravity="center_vertical"
                 android:id="@+id/time"
                 android:textColor="@color/font_black_9"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 tools:text="12:12"/>
 
         </LinearLayout>
@@ -110,6 +110,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/like_count"
+                    android:textSize="10sp"
+                    android:layout_gravity="center_vertical"
                     tools:text="13"
                     android:textColor="@color/grey"/>
 
@@ -123,6 +125,7 @@
                 android:id="@+id/btnComments"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_comment_black"/>
 
             <TextView
@@ -130,8 +133,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/comment_count"
                 tools:text="23"
+                android:textSize="10sp"
                 android:textColor="@color/grey"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="5dp"/>
 
         </LinearLayout>

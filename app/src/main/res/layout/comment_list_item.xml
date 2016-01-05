@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
     android:paddingTop="5dp"
@@ -30,7 +30,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/nickname"
-                tools:text="吃桔子的攻城狮"/>
+                tools:text="吃桔子的攻城狮"
+                android:textColor="@color/font_black_9"
+                android:textSize="10sp"/>
 
             <View
                 android:layout_width="0dp"
@@ -41,7 +43,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/time"
-                tools:text="2015-12-18 10:27:19"/>
+                tools:text="2015-12-18 10:27:19"
+                android:textColor="@color/font_black_9"
+                android:textSize="10sp"/>
 
         </LinearLayout>
 
@@ -49,7 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/comment_content"
-            android:textSize="15sp"
+            android:textSize="10sp"
+
             tools:text="hahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehe" />
 
     </LinearLayout>

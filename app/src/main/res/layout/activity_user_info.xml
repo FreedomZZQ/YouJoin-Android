@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="230dp"
         android:id="@+id/userinfo_header"
         android:orientation="vertical"
         android:background="@drawable/user_info_header">
@@ -17,7 +17,7 @@
             android:id="@+id/avatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16.5dp"
             android:background="@mipmap/ic_account_circle_white_48dp"
             android:layout_gravity="center_horizontal"/>
 

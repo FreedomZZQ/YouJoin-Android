@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.zq.youjoin.activity.AboutActivity"
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="16dp">
 
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@drawable/logoshow"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/welcome_viewpager3"
         android:layout_gravity="center_horizontal"/>
 
     <View
@@ -23,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:textColor="@color/grey"
         android:text="Copyright 2016 YouJoin Inc. All rights reserved."/>
 

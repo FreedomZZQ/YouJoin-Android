@@ -46,6 +46,7 @@ public class MessageFragment extends BaseFragment {
 
         TextView emptyView = new TextView(getActivity());
         emptyView.setText(getString(R.string.hint_nodata));
+        emptyView.setPadding(20, 20, 0, 0);
         ViewGroup parentView = (ViewGroup) sessionlist.getParent();
         parentView.addView(emptyView, 2);
         sessionlist.setEmptyView(emptyView);

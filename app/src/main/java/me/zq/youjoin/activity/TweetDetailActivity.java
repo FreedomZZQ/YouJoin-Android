@@ -182,7 +182,7 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
             }
             adapter.notifyDataSetChanged();
         } else {
-            Toast.makeText(TweetDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(TweetDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
     }
 
