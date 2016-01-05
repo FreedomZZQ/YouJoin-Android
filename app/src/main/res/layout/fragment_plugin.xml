@@ -8,7 +8,8 @@
     <ListView
         android:id="@+id/plugin_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -46,6 +47,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="10dp"
         android:src="@drawable/ic_add_white_36dp"
-        app:backgroundTint="@color/yellow" />
+        app:backgroundTint="@color/yellow"
+        android:visibility="gone"/>
 
 </FrameLayout>

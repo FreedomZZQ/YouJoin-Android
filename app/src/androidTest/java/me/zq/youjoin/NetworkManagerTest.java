@@ -10,6 +10,7 @@ import java.util.List;
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.NewPrimsgInfo;
+import me.zq.youjoin.model.PluginInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
@@ -317,6 +318,20 @@ public class NetworkManagerTest extends AndroidTestCase {
 
             @Override
             public void onResponse(PrimsgInfo o) {
+
+            }
+        });
+    }
+
+    public void testRequestPluginList(){
+        NetworkManager.postRequestPlugin(testId.toString(), new ResponseListener<PluginInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LogUtils.e(TAG, volleyError.toString());
+            }
+
+            @Override
+            public void onResponse(PluginInfo info) {
 
             }
         });

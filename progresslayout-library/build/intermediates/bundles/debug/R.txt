@@ -1,0 +1,9 @@
+int attr autoProgress 0x7f010003
+int attr emptyColor 0x7f010000
+int attr loadedColor 0x7f010001
+int attr maxProgress 0x7f010002
+int[] styleable progressLayout { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003 }
+int styleable progressLayout_autoProgress 3
+int styleable progressLayout_emptyColor 0
+int styleable progressLayout_loadedColor 1
+int styleable progressLayout_maxProgress 2

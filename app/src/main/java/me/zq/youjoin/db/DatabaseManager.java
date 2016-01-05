@@ -6,7 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.FriendsInfo;
@@ -22,6 +24,110 @@ import me.zq.youjoin.utils.StringUtils;
  */
 public class DatabaseManager {
 
+
+    /**
+     * 获取特定URI的每条线程已经下载的文件长度
+     * threadid：代表线程的id
+     * downlength:代表线程下载的最后位置
+     * downpath:代表当前线程下载的资源
+     * @param path
+     * @return
+     */
+    public static Map<Integer, Integer> getDataDownload(String path)
+    {
+        //获取可读取的数据库句柄，一般情况下在该操作的内部实现中，其返回的其实是可写的数据库句柄
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        //建立一个哈希表用于存放每条线程的已经下载的文件长度
+        Map<Integer, Integer> data=new HashMap<Integer, Integer>();
+        if(db.isOpen()){
+
+            //根据下载路径查询所有线程下载数据，返回的Cursor指向第一条记录之前
+            Cursor cursor = db.rawQuery("select " + DatabaseHelper.DOWNLOAD_THREADID + " , "
+                    + DatabaseHelper.DOWNLOAD_DOWNLENGTH + " from "
+                    + DatabaseHelper.TABLE_DOWNLOAD + " where "
+                    + DatabaseHelper.DOWNLOAD_PATH + "=?",new String[]{ path });
+
+
+            //从第一条记录开始开始遍历Cursor对象
+            while(cursor.moveToNext())
+            {
+                //把线程ID和该线程已下载的长度设置进data哈希表中
+                data.put(cursor.getInt(0), cursor.getInt(1));
+                data.put(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.DOWNLOAD_THREADID)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.DOWNLOAD_DOWNLENGTH)));
+            }
+            cursor.close();
+            db.close();
+        }
+
+        return data;
+    }
+    /**
+     * 保存每条线程已经下载的文件长度
+     * @param path 下载的路径
+     * @param map 现在的ID和已经下载的长度的集合
+     */
+    public static void saveDownload(String path,Map<Integer, Integer> map){
+        //获取可写的数据库句柄
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        if(db.isOpen()){
+            //开始食物，因为此处要插入多批数据
+            db.beginTransaction();
+            try{
+                for(Map.Entry<Integer, Integer> entry:map.entrySet())
+                {
+                    //采用for-each的方式遍历数据集合
+                    //插入特定下载路径，特定线程ID,已经下载的数据
+                    db.execSQL("insert into " + DatabaseHelper.TABLE_DOWNLOAD
+                                    + " (" + DatabaseHelper.DOWNLOAD_PATH
+                                    + " ," + DatabaseHelper.DOWNLOAD_THREADID
+                                    + " ," + DatabaseHelper.DOWNLOAD_DOWNLENGTH
+                                    + ") values(?,?,?)",
+                            new Object[]{path, entry.getKey(), entry.getValue()});
+                }
+                db.setTransactionSuccessful();
+            }finally{
+                db.endTransaction();
+            }
+            db.close();
+        }
+
+    }
+
+    /**
+     * 实时更新每条线程已经下载的文件长度
+     * @param path
+     * @param threadId
+     * @param pos
+     */
+    public static void updateDownload(String path,int threadId,int pos){
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        if(db.isOpen()){
+            //更新特定下载路径，特定线程，已经下载的文件长度
+            db.execSQL("update " + DatabaseHelper.TABLE_DOWNLOAD
+                    + " set " + DatabaseHelper.DOWNLOAD_DOWNLENGTH
+                    + " =? where " + DatabaseHelper.DOWNLOAD_PATH + " =? "
+                    + "and " + DatabaseHelper.DOWNLOAD_THREADID + " =? ",new Object[]{pos,path,threadId});
+            db.close();
+        }
+
+    }
+
+    /**
+     * 当文件下载完成后，删除对应的下载记录
+     * @param path
+     */
+    public static void deleteDownload(String path)
+    {
+        SQLiteDatabase db = DatabaseHelper.getInstance(YouJoinApplication.getAppContext());
+        if(db.isOpen()){
+            db.execSQL("delete from " + DatabaseHelper.TABLE_DOWNLOAD
+                            + " where " + DatabaseHelper.DOWNLOAD_PATH + " =?",
+                    new Object[]{path});
+            db.close();
+        }
+
+    }
 
     /**向数据库添加多条私信
      * @param info 要添加的私信

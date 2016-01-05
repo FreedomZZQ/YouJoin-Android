@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+<html manifest="manifest.mf">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>3D拼图</title> 
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<style>
+body { margin: 0; padding: 0; background: #000;}
+canvas {
+	display: block;
+	margin: 0 auto;
+	background: #000;
+	overflow: hidden;
+	image-rendering: optimizeSpeed;
+	-ms-interpolation-mode: nearest-neighbor;
+	-webkit-optimize-contrast;
+	/* Disable longpress */
+	-webkit-touch-callout: none;
+}
+#loader_screen
+{
+	position:absolute;
+	visibility:visible;
+	width:200px;
+	height:200px;
+	margin: auto;
+	z-index:10;
+	top:50%;
+	left:50%;
+	margin-top:-100px;
+	margin-left:-100px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<canvas id="byt_game" style="display: block; margin: 0px auto;" width="320" height="420"></canvas>        
+
+<div id="loader_screen" style="display: none;"><img src="assets/loader-anim.gif" style="padding:0;margin:0;border:0;"></div>
+
+<script src="js/a.js" type="text/javascript"></script>
+<script src="js/Tween.js" type="text/javascript"></script>
+<script src="js/store2.js" type="text/javascript"></script>
+<script src="js/Three.min.js" type="text/javascript"></script>
+
+
+<script src="js/bytmain.js" type="text/javascript"></script>
+
+<script> 
+window.addEventListener( 'load', function(e) {
+	setTimeout( function() { GAME.load(); }, 1000 );
+});
+</script>
+<div style="text-align:center;">
+<p>来源:<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
+</div>
+
+
+</body>
+</html>

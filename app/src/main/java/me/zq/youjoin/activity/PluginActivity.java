@@ -32,7 +32,8 @@ public class PluginActivity extends BaseActivity {
             }
         });
 
-        webView.loadUrl("file:///mnt/sdcard/YouJoinFiles/pintu/demo.html");
+//        webView.loadUrl("file:///mnt/sdcard/YouJoinFiles/pintu/demo.html");
+        webView.loadUrl("file:///android_asset/pintu/demo.html");
     }
 
     public static void actionStart(Context context) {

@@ -18,6 +18,7 @@ import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.NewPrimsgInfo;
+import me.zq.youjoin.model.PluginInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
@@ -95,10 +96,22 @@ public class NetworkManager {
     public static final String API_REQUEST_FRIEND_LIST = BASE_API_URL + "get_friendlist.php";
     public static final String API_REQUEST_COMMENTS = BASE_API_URL + "get_comments.php";
     public static final String API_REQUEST_PRIMSG_LOG = BASE_API_URL + "chat_log.php";
+    public static final String API_REQUEST_PLUGIN = BASE_API_URL + "get_plugin.php";
 
     private static RequestQueue mRequestQueue ;
 
     public static final String TAG = "YouJoin_Network";
+
+    /**获取插件列表
+     * @param listener ResponseListener
+     */
+    public static void postRequestPlugin(String userId, ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        Request request = new PostObjectRequest(API_REQUEST_PLUGIN,
+                params, new TypeToken<PluginInfo>(){}.getType(), listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
 
     /**获取与某用户的私信列表
      * @param userId 当前用户id

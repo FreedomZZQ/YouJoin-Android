@@ -11,7 +11,7 @@
         android:layout_height="240dp"
         android:id="@+id/userinfo_header"
         android:orientation="vertical"
-        android:background="@drawable/header2">
+        android:background="@drawable/user_info_header">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"

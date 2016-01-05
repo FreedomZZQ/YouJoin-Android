@@ -11,6 +11,7 @@ import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.NewPrimsgInfo;
+import me.zq.youjoin.model.PluginInfo;
 import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
@@ -27,6 +28,8 @@ import me.zq.youjoin.utils.LogUtils;
 public class DataPresenter {
 
     public static final String TAG = "YouJoin";
+
+
 
     public static UserInfo requestUserInfoFromCache(int userId){
         return DatabaseManager.getUserInfoById(userId);
@@ -317,6 +320,28 @@ public class DataPresenter {
                 q.onGetNewPrimsg(info);
             }
         });
+    }
+
+    public static void requestPluginList(int userId, final GetPluginList q){
+
+        NetworkManager.postRequestPlugin(Integer.toString(userId), new ResponseListener<PluginInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                PluginInfo info = new PluginInfo();
+                info.setResult(NetworkManager.FAILURE);
+                q.onGetPluginList(info);
+            }
+
+            @Override
+            public void onResponse(PluginInfo info) {
+                q.onGetPluginList(info);
+            }
+        });
+
+    }
+
+    public interface GetPluginList{
+        void onGetPluginList(PluginInfo info);
     }
 
     public interface GetNewPrimsg{

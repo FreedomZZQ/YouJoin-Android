@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="progressLayout"><attr format="color" name="emptyColor"/><attr format="color" name="loadedColor"/><attr format="integer" name="maxProgress"/><attr format="boolean" name="autoProgress"/></declare-styleable>
+</resources>

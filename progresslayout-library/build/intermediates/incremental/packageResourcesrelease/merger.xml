@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\Projects\Android\ProgressLayout\library\res"><file path="D:\Projects\Android\ProgressLayout\library\res\values\attrs.xml" qualifiers=""><declare-styleable name="progressLayout">
+        <attr format="color" name="emptyColor"/>
+        <attr format="color" name="loadedColor"/>
+        <attr format="integer" name="maxProgress"/>
+        <attr format="boolean" name="autoProgress"/>
+    </declare-styleable></file></source><source path="D:\Projects\Android\ProgressLayout\library\build\generated\res\rs\release"/><source path="D:\Projects\Android\ProgressLayout\library\build\generated\res\resValues\release"/></dataSet><dataSet config="release"><source path="D:\Projects\Android\ProgressLayout\library\src\release\res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="progressLayout"><attr format="color" name="emptyColor"/><attr format="color" name="loadedColor"/><attr format="integer" name="maxProgress"/><attr format="boolean" name="autoProgress"/></declare-styleable></configuration></mergedItems></merger>

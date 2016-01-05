@@ -14,11 +14,24 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     public static final String DB_NAME = "youjoin_db";
     public static final int DB_VERSION = 1;
+    public static final String DROP_TABLE = "drop table if exists ";
 
     public static final String TABLE_USER_INFO = "yj_user_info";
     public static final String TABLE_FRIEND = "yj_friend";
     public static final String TABLE_TWEETS = "yj_tweets";
     public static final String TABLE_PRIMSG = "yj_primsg";
+    public static final String TABLE_DOWNLOAD = "yj_download";
+
+    public static final String DOWNLOAD_ID = "id";
+    public static final String DOWNLOAD_PATH = "path";
+    public static final String DOWNLOAD_THREADID = "thread_id";
+    public static final String DOWNLOAD_DOWNLENGTH = "downlength";
+    private static final String CREATE_TABLE_DOWNLOAD = "create table if not exists "
+            + TABLE_DOWNLOAD
+            + " (" + DOWNLOAD_ID + " integer primary key autoincrement, "
+            + DOWNLOAD_PATH + " varchar(100), "
+            + DOWNLOAD_THREADID + " integer, "
+            + DOWNLOAD_DOWNLENGTH + " integer)";
 
     public static final String USER_ID = "user_id";
     public static final String USER_NAME = "user_name";
@@ -33,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String FOCUS_NUM = "focus_num";
     public static final String FOLLOW_NUM = "follow_num";
 
-    private static final String CREATE_TABLE_USER_INFO = "create table "
+    private static final String CREATE_TABLE_USER_INFO = "create table if not exists "
             + TABLE_USER_INFO
             + " (" + USER_ID + " integer primary key, "
             + USER_NAME + " text not null, "
@@ -53,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String USER2_ID = "user2_id";
     public static final String FRIEND_TIME = "friend_time";
 
-    private static final String CREATE_TABLE_FRIEND = "create table "
+    private static final String CREATE_TABLE_FRIEND = "create table if not exists "
             + TABLE_FRIEND
             + " (" + FRIEND_ID + " integer primary key autoincrement, "
             + USER1_ID + " integer not null, "
@@ -68,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String UPVOTE_NUM = "upvote_num";
     public static final String UPVOTE_STATUS = "upvote_status";
 
-    private static final String CREATE_TABLE_TWEETS = "create table "
+    private static final String CREATE_TABLE_TWEETS = "create table if not exists "
             + TABLE_TWEETS
             + " (" + TWEETS_ID + " integer primary key, "
             + USER_ID + " integer not null, "
@@ -86,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public static final String PRIMSG_STATUS = "primsg_status";
     public static final String PRIMSG_CONTENT = "primsg_content";
 
-    private static final String CREATE_TABLE_PRIMSG = "create table "
+    private static final String CREATE_TABLE_PRIMSG = "create table if not exists "
             + TABLE_PRIMSG
             + " (" + PRIMSG_ID + " integer primary key, "
             + SENDER_ID + " integer not null, "
@@ -124,6 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_TABLE_FRIEND);
         db.execSQL(CREATE_TABLE_PRIMSG);
         db.execSQL(CREATE_TABLE_TWEETS);
+        db.execSQL(CREATE_TABLE_DOWNLOAD);
 
 //        ContentValues contentValues = new ContentValues();
 //        contentValues.put(KEY_LISTNAME, MusicApp.getContext().getString(R.string.favorite_list_name));
@@ -132,7 +146,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-
+        db.execSQL(DROP_TABLE + TABLE_DOWNLOAD);
+        db.execSQL(DROP_TABLE + TABLE_PRIMSG);
+        db.execSQL(DROP_TABLE + TABLE_FRIEND);
+        db.execSQL(DROP_TABLE + TABLE_TWEETS);
+        db.execSQL(DROP_TABLE + TABLE_USER_INFO);
+        onCreate(db);
     }
 
     public void deleteTables(Context context){
@@ -141,5 +160,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
         db.delete(TABLE_PRIMSG, null, null);
         db.delete(TABLE_FRIEND, null, null);
         db.delete(TABLE_USER_INFO, null, null);
+        db.delete(TABLE_DOWNLOAD, null, null);
     }
 }
