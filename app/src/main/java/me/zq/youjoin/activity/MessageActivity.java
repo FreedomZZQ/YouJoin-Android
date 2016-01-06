@@ -3,6 +3,7 @@ package me.zq.youjoin.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -59,6 +60,22 @@ public class MessageActivity extends BaseActivity
         msgList.setAdapter(adapter);
         DataPresenter.getPrimsgList(receiver.getId(), MessageActivity.this);
 
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+//                this.finish();
+            default:
+                this.finish();
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @OnClick(R.id.sendmsg)

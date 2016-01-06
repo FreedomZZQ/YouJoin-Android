@@ -3,6 +3,7 @@ package me.zq.youjoin.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -34,6 +35,22 @@ public class PluginActivity extends BaseActivity {
 
 //        webView.loadUrl("file:///mnt/sdcard/YouJoinFiles/pintu/demo.html");
         webView.loadUrl("file:///android_asset/pintu/demo.html");
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+//                this.finish();
+            default:
+                this.finish();
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public static void actionStart(Context context) {

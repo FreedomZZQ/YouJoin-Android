@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -139,6 +140,22 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
         GridPhotoAdapter adapter = new GridPhotoAdapter(YouJoinApplication.getAppContext(), urls);
         gridView.setAdapter(adapter);
 
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+//                this.finish();
+            default:
+                this.finish();
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @OnClick(R.id.sendmsg)

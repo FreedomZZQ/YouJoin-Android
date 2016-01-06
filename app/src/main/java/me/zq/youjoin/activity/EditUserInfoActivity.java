@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -117,6 +118,22 @@ public class EditUserInfoActivity extends BaseActivity
                 dpd.show(getFragmentManager(), "Datepickerdialog");
             }
         });
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+//                this.finish();
+            default:
+                this.finish();
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
