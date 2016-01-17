@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3464af"
+    android:background="#1e8cc8"
     android:orientation="vertical">
 
     <ImageView
@@ -37,7 +37,7 @@
         android:paddingRight="10dp"
         android:paddingTop="5dp"
         android:text="发送"
-        android:textColor="@color/default_text_color"
+        android:textColor="@android:color/white"
         android:textSize="18sp" />
 
 </RelativeLayout>
