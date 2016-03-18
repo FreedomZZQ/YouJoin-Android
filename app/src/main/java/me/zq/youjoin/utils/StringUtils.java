@@ -74,6 +74,13 @@ public class StringUtils {
 
         Collections.addAll(picUrlList, picArray);
 
+        if(picUrlList.isEmpty()){
+            picUrlList.add("http://www.tekbroaden.com/youjoin-server/upload/ic_account_default.png");
+        }else if(picUrlList.get(0).equals("")){
+            picUrlList.remove(0);
+            picUrlList.add("http://www.tekbroaden.com/youjoin-server/upload/ic_account_default.png");
+        }
+
         return picUrlList;
     }
 

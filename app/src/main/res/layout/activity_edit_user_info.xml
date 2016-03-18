@@ -52,8 +52,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_userinfo_item_height"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,8 +81,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_userinfo_item_height"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,8 +110,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_userinfo_item_height"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -145,8 +142,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_userinfo_item_height"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -210,8 +206,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_userinfo_item_height"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
