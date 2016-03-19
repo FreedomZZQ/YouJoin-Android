@@ -11,13 +11,13 @@
         private String plugin;
         private String issue_time;
         private String introduce;-->
-    <co.mobiwise.library.ProgressLayout
-        android:id="@+id/progressLayout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:maxProgress="100"
-        app:autoProgress="true"
-        app:emptyColor="#152430"/>
+    <!--<co.mobiwise.library.ProgressLayout-->
+        <!--android:id="@+id/progressLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="60dp"-->
+        <!--app:maxProgress="100"-->
+        <!--app:autoProgress="true"-->
+        <!--app:emptyColor="#152430"/>-->
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="50dp"

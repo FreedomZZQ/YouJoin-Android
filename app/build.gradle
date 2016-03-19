@@ -42,5 +42,4 @@ dependencies {
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.borax12.materialdaterangepicker:library:1.2'
-    compile project(':progresslayout-library')
 }

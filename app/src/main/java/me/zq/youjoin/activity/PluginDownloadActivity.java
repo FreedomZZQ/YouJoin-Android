@@ -26,8 +26,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import co.mobiwise.library.ProgressLayout;
-import co.mobiwise.library.ProgressLayoutListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
@@ -284,7 +282,7 @@ public class PluginDownloadActivity extends BaseActivity
                 holder.name = (TextView) convertView.findViewById(R.id.plugin_name);
                 holder.version = (TextView) convertView.findViewById(R.id.plugin_version);
                 holder.introduce = (TextView) convertView.findViewById(R.id.plugin_introduce);
-                holder.progressLayout = (ProgressLayout) convertView.findViewById(R.id.progressLayout);
+                //holder.progressLayout = (ProgressLayout) convertView.findViewById(R.id.progressLayout);
                 holder.downloadAction = (ImageView) convertView.findViewById(R.id.download_action);
 
                 convertView.setTag(holder);
@@ -306,34 +304,34 @@ public class PluginDownloadActivity extends BaseActivity
             holder.version.setText(dataList.get(position).getVision());
             holder.introduce.setText(dataList.get(position).getIntroduce());
 
-            holder.progressLayout.setCurrentProgress(currentSize / totalSize * 100);
+            //holder.progressLayout.setCurrentProgress(currentSize / totalSize * 100);
 
-            if (!holder.progressLayout.isPlaying()) {
+//            if (!holder.progressLayout.isPlaying()) {
+//
+//                holder.progressLayout.start();
+//                holder.downloadAction.setBackgroundResource(R.drawable.pause);
+//                notifyDataSetChanged();
+//
+//            } else {
+//                holder.progressLayout.stop();
+//                holder.downloadAction.setBackgroundResource(R.drawable.play);
+//                notifyDataSetChanged();
+//            }
 
-                holder.progressLayout.start();
-                holder.downloadAction.setBackgroundResource(R.drawable.pause);
-                notifyDataSetChanged();
-
-            } else {
-                holder.progressLayout.stop();
-                holder.downloadAction.setBackgroundResource(R.drawable.play);
-                notifyDataSetChanged();
-            }
 
 
-
-            holder.progressLayout.setProgressLayoutListener(new ProgressLayoutListener() {
-                @Override public void onProgressCompleted() {
-                    holder.downloadAction.setBackgroundResource(R.drawable.play);
-                    Toast.makeText(PluginDownloadActivity.this, R.string.download_finished,
-                            Toast.LENGTH_LONG).show();
-                    doZipExtractorWork();
-                }
-
-                @Override public void onProgressChanged(int seconds) {
-                    //holder.textViewDuration.setText(calculateSongDuration(seconds));
-                }
-            });
+//            holder.progressLayout.setProgressLayoutListener(new ProgressLayoutListener() {
+//                @Override public void onProgressCompleted() {
+//                    holder.downloadAction.setBackgroundResource(R.drawable.play);
+//                    Toast.makeText(PluginDownloadActivity.this, R.string.download_finished,
+//                            Toast.LENGTH_LONG).show();
+//                    doZipExtractorWork();
+//                }
+//
+//                @Override public void onProgressChanged(int seconds) {
+//                    //holder.textViewDuration.setText(calculateSongDuration(seconds));
+//                }
+//            });
 
             return convertView;
         }
@@ -343,7 +341,7 @@ public class PluginDownloadActivity extends BaseActivity
             public TextView name;
             public TextView version;
             public TextView introduce;
-            public ProgressLayout progressLayout;
+//            public ProgressLayout progressLayout;
             public ImageView downloadAction;
         }
     }
