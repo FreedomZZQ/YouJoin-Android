@@ -144,6 +144,8 @@ public class UserInfoActivity extends BaseActivity
             btnFollow.setVisibility(View.VISIBLE);
         }
 
+        // TODO: 2016/4/20 添加显示当前是否已关注的逻辑
+
         currUserFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,11 +164,12 @@ public class UserInfoActivity extends BaseActivity
 
     @OnClick(R.id.btn_follow)
     protected void followUser() {
-
+        DataPresenter.addFriend(info.getId(), UserInfoActivity.this);
     }
 
     @Override
     public void onAddFriend(ResultInfo info) {
+        // TODO: 2016/4/20 添加是否成功的显示逻辑
         if (info.getResult().equals(NetworkManager.SUCCESS)) {
             Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
                     Toast.LENGTH_SHORT).show();
