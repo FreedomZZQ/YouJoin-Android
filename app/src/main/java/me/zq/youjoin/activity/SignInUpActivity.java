@@ -21,11 +21,16 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.event.SigninSuccessEvent;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.StringUtils;
@@ -65,6 +70,8 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yj_activity_signin);
         ButterKnife.bind(this);
+
+        EventBus.getDefault().register(this);
         // Set up the login form.
 
         isSignIn = getIntent().getBooleanExtra("isSignIn", false);
@@ -101,6 +108,12 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void attemptSign() {
@@ -182,17 +195,22 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
 
     @Override
     public void onSign(UserInfo info){
-        showProgress(false);
+
         if(info.getResult().equals(NetworkManager.SUCCESS)){
             YouJoinApplication.setCurrUser(info);
-            MainActivity.actionStart(SignInUpActivity.this);
-            SignInUpActivity.this.finish();
-            welcomeActivity.finish();
         }else{
             //passwordEdit.setError(getString(R.string.error_incorrect_password));
             passwordEdit.setError(getString(R.string.error_network));
             passwordEdit.requestFocus();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SigninSuccessEvent event){
+        showProgress(false);
+        MainActivity.actionStart(SignInUpActivity.this);
+        SignInUpActivity.this.finish();
+        welcomeActivity.finish();
     }
 
     private boolean isUsernameValid(String username) {
@@ -212,9 +230,7 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -236,8 +252,6 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
             loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
         }

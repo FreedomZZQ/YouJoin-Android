@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,7 +19,6 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.BadgeStyle;
-import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -38,8 +38,6 @@ import me.zq.youjoin.fragment.PluginFragment;
 import me.zq.youjoin.fragment.TweetsFragment;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.pullrequest.PullManager;
-import me.zq.youjoin.pullrequest.PullService;
 import me.zq.youjoin.utils.StringUtils;
 
 public class MainActivity extends BaseActivity
@@ -80,13 +78,14 @@ implements DataPresenter.GetUserInfo{
 
         }
 
-        PullManager.startPullService(MainActivity.this, 5, PullService.class, PullService.ACTION);
+        //PullManager.startPullService(MainActivity.this, 5, PullService.class, PullService.ACTION);
+        Log.d(TAG, "onCreate");
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        PullManager.stopPullService(MainActivity.this, PullService.class, PullService.ACTION);
+        //PullManager.stopPullService(MainActivity.this, PullService.class, PullService.ACTION);
     }
 
     @Override
@@ -189,7 +188,8 @@ implements DataPresenter.GetUserInfo{
                 .build();
 
         refreshUserInfo();
-        drawer.updateBadge(DRAWER_MSG, new StringHolder(10 + ""));
+        // TODO: 2016/4/20  
+        //drawer.updateBadge(DRAWER_MSG, new StringHolder(10 + ""));
     }
 
     private void refreshUserInfo() {

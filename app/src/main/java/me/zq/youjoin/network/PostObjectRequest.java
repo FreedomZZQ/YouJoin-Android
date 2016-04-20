@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -46,6 +47,8 @@ public class PostObjectRequest<T> extends Request<T> {
                     HttpHeaderParser.parseCacheHeaders(response));
         }catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
+        }catch (JsonSyntaxException e){
+            return Response.error(new JsonSyntaxError(e));
         }
     }
 

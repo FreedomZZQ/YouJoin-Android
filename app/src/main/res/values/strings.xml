@@ -62,7 +62,7 @@
 
     <string name="title_activity_message">私信</string>
 
-    <string name="error_network">连接服务器失败，请检查网络连接</string>
+    <string name="error_network">啊呀，失败啦！</string>
     <string name="send_tweet_success">动态发送成功</string>
     <string name="update_success">更新用户信息成功</string>
 
@@ -82,5 +82,8 @@
     <string name="download_finished">下载完成</string>
     <string name="download_failure">下载失败</string>
     <string name="download_sdcarderr">SD卡不存在</string>
+
+    <string name="text_focus">关注了</string>
+    <string name="text_follow">粉丝</string>
 
 </resources>

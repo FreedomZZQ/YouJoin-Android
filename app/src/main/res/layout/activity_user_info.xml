@@ -66,10 +66,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="关注他的"
+                android:text="@string/text_follow"
                 android:textColor="@color/trans_white"
                 android:textSize="@dimen/user_detail_text_size"
-                android:layout_marginEnd="5dp" />
+                android:layout_marginEnd="5dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,12 +78,12 @@
                 tools:text="123"
                 android:textColor="@color/trans_white"
                 android:textSize="@dimen/user_detail_text_size"
-                android:layout_marginEnd="10dp"
-                />
+                android:layout_marginEnd="10dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="他关注的"
+                android:text="@string/text_focus"
                 android:textColor="@color/trans_white"
                 android:textSize="@dimen/user_detail_text_size"
                 android:layout_marginEnd="5dp"/>

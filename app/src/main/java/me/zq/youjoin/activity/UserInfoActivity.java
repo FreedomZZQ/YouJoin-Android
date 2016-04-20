@@ -70,7 +70,6 @@ public class UserInfoActivity extends BaseActivity
         ButterKnife.bind(this);
         initView();
 
-
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -139,8 +138,10 @@ public class UserInfoActivity extends BaseActivity
 
         if (type == TYPE_CURR_USER) {
             currUserFab.setVisibility(View.VISIBLE);
+            btnFollow.setVisibility(View.GONE);
         } else if (type == TYPE_OTHER_USER) {
             otherUserFab.setVisibility(View.VISIBLE);
+            btnFollow.setVisibility(View.VISIBLE);
         }
 
         currUserFab.setOnClickListener(new View.OnClickListener() {

@@ -17,6 +17,7 @@ import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
+import me.zq.youjoin.network.JsonSyntaxError;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.network.ResponseListener;
 import me.zq.youjoin.utils.LogUtils;
@@ -97,6 +98,7 @@ public class DataPresenter {
                 new ResponseListener<FriendsInfo>() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
+                        if(volleyError.getClass() == JsonSyntaxError.class) return;
                         LogUtils.e(TAG, volleyError.toString());
                         FriendsInfo info = new FriendsInfo();
                         info.setResult(NetworkManager.FAILURE);
