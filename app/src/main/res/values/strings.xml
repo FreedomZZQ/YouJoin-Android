@@ -76,9 +76,6 @@
     <string name="title_activity_tweet_detail">动态详情</string>
     <string name="click_again_to_exit">再按一次返回键退出YouJoin</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="download_finished">下载完成</string>
     <string name="download_failure">下载失败</string>
     <string name="download_sdcarderr">SD卡不存在</string>

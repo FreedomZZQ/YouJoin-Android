@@ -127,6 +127,7 @@ public class StringUtils {
     }
 
     public static String getFirstLetters(String chinese){
+        if(chinese == null) return "";
         StringBuilder pysb = new StringBuilder();
         char[] arr = chinese.toCharArray();
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();

@@ -41,6 +41,7 @@ public class YouJoinApplication extends Application {
 
         AVOSCloud.initialize(this, "hmUYX9LRCEa7Of6kQrDVrzes-gzGzoHsz", "NdwBtQEQOmhwftwXMt0I9vn4");
         AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler());
+        AVIMClient.setOfflineMessagePush(true);
     }
 
     public static Context getAppContext(){

@@ -9,6 +9,7 @@
     <color name="black">#000000</color>
 
     <color name="grey">#777777</color>
+    <color name="red">#ec4b2e</color>
 
     <!-- 透明色-->
     <color name="trans_white">#88FFFFFF</color>

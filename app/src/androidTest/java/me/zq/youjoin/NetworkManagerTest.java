@@ -29,9 +29,55 @@ public class NetworkManagerTest extends AndroidTestCase {
     public static final Integer testId = 16;
     public static final Integer testId2 = 17;
     public static final Integer testTweetId = 14;
-    public static final String picPath = "/storage/emulated/0/Download/lufei.jpg";
+    public static final String picPath = "/storage/emulated/0/Tencent/QQfile_recv/default6.jpg";
     public static final String TAG = "YouJoinTest";
     public static final String SUCCESS = "success";
+
+    public void testGenerateUserInfoData(){
+
+        ArrayList<UserInfo> mData = new ArrayList<>();
+
+        int id = 18;
+        for(int i = 0; i < 26; i++){
+            if(id > 173) break;
+            for(int j = 0; j < 6; j++){
+                if(id > 173) break;
+                UserInfo info = new UserInfo();
+                char [] name = {(char)('A' + i), (char)('A' + i), (char)('1' + j)};
+                info.setId(id++);
+                info.setBirth("950313");
+                info.setLocation("qd");
+                info.setWork("学生");
+                info.setSex("1");
+                info.setUsersign("我是要成为海贼王的男人");
+                info.setNickname(new String(name));
+                mData.add(info);
+            }
+
+        }
+
+        for(UserInfo userInfo : mData){
+            try {
+                Thread.currentThread().sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            NetworkManager.postUpdateUserInfo(userInfo, picPath,
+                    new ResponseListener<UpdateUserInfoResult>() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            assertEquals(true, false);
+                        }
+
+                        @Override
+                        public void onResponse(UpdateUserInfoResult info) {
+                            assertEquals(info.getResult(), "success");
+                        }
+                    });
+        }
+
+    }
 
     /**
      * 测试个人资料更新API工作是否正常

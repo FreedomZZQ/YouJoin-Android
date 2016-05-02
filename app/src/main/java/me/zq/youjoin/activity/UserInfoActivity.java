@@ -102,7 +102,7 @@ public class UserInfoActivity extends BaseActivity
         birth.setText(info.getBirth());
         followNum.setText(Integer.toString(info.getFollow_num()));
         focusNum.setText(Integer.toString(info.getFocus_num()));
-        btnFollow.setChecked(false);
+        btnFollow.setChecked(true);
 
         if (info.getSex().equals("0")) {
             sex.setBackground(getResources().getDrawable(R.drawable.ic_sex_boy));

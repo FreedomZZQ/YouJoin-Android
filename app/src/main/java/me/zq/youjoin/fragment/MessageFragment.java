@@ -10,9 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMConversationQuery;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
+
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +61,33 @@ public class MessageFragment extends BaseFragment {
         parentView.addView(emptyView, 2);
         sessionlist.setEmptyView(emptyView);
 
+        getConversation();
+
         return view;
+    }
+
+    private void getConversation(){
+        AVIMClient tom = AVIMClient.getInstance(YouJoinApplication.getCurrUser().getUsername());
+        tom.open(new AVIMClientCallback(){
+
+            @Override
+            public void done(AVIMClient client,AVIMException e){
+                if(e==null){
+                    //登录成功
+                    AVIMConversationQuery query = client.getQuery();
+                    query.limit(20);
+                    query.findInBackground(new AVIMConversationQueryCallback(){
+                        @Override
+                        public void done(List<AVIMConversation> convs, AVIMException e){
+                            if(e==null){
+                                //convs就是获取到的conversation列表
+                                //注意：按每个对话的最后更新日期（收到最后一条消息的时间）倒序排列
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override

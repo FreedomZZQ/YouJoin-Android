@@ -89,10 +89,11 @@ public class DataPresenter {
 
     public static void requestFriendList(int userId, final GetFriendList q){
 
-        FriendsInfo cookieInfo = DatabaseManager.getFriendList(userId);
-        if(cookieInfo.getResult().equals(NetworkManager.SUCCESS)){
-            q.onGetFriendList(cookieInfo);
-        }
+        // TODO: 2016/5/1 这里有严重bug！！！
+//        FriendsInfo cookieInfo = DatabaseManager.getFriendList(userId);
+//        if(cookieInfo.getResult().equals(NetworkManager.SUCCESS)){
+//            q.onGetFriendList(cookieInfo);
+//        }
 
         NetworkManager.postRequestFriendList(Integer.toString(YouJoinApplication.getCurrUser().getId()),
                 new ResponseListener<FriendsInfo>() {

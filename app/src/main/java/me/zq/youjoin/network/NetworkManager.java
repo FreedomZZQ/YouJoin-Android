@@ -6,7 +6,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.reflect.TypeToken;
-import com.squareup.okhttp.OkHttpClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -381,8 +380,8 @@ public class NetworkManager {
         if (mRequestQueue == null){
             synchronized (NetworkManager.class){
                 if (mRequestQueue == null){
-                    mRequestQueue =
-                            Volley.newRequestQueue(context, new OkHttpStack(new OkHttpClient()));
+                    mRequestQueue = Volley.newRequestQueue(context);
+                    //mRequestQueue = Volley.newRequestQueue(context, new OkHttpStack(new OkHttpClient()));
                 }
             }
         }
