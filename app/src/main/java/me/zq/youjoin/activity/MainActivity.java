@@ -19,6 +19,7 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.BadgeStyle;
+import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -26,11 +27,16 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.event.ImTypeMessageEvent;
 import me.zq.youjoin.fragment.AboutFragment;
 import me.zq.youjoin.fragment.FriendFragment;
 import me.zq.youjoin.fragment.MessageFragment;
@@ -63,6 +69,7 @@ implements DataPresenter.GetUserInfo{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yj_activity_main);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         setSupportActionBar(toolbar);
         initView(savedInstanceState);
@@ -82,9 +89,15 @@ implements DataPresenter.GetUserInfo{
         Log.d(TAG, "onCreate");
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ImTypeMessageEvent event){
+        drawer.updateBadge(DRAWER_MSG, new StringHolder(1 + ""));
+    }
+
     @Override
     public void onDestroy(){
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         //PullManager.stopPullService(MainActivity.this, PullService.class, PullService.ACTION);
     }
 

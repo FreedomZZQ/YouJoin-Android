@@ -40,8 +40,8 @@ public class YouJoinApplication extends Application {
         sHeightPix = getResources().getDisplayMetrics().heightPixels;
 
         AVOSCloud.initialize(this, "hmUYX9LRCEa7Of6kQrDVrzes-gzGzoHsz", "NdwBtQEQOmhwftwXMt0I9vn4");
-        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler());
         AVIMClient.setOfflineMessagePush(true);
+        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler());
     }
 
     public static Context getAppContext(){
