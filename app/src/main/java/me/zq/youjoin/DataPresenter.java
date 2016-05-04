@@ -36,6 +36,10 @@ public class DataPresenter {
         return DatabaseManager.getUserInfoById(userId);
     }
 
+    public static UserInfo requestUserInfoFromCache(String username){
+        return DatabaseManager.getUserInfoByUserName(username);
+    }
+
     public static void requestUserInfoAuto(String param, final GetUserInfo q){
         UserInfo cookieInfo = DatabaseManager.getUserInfoAuto(param);
         if(cookieInfo.getResult().equals(NetworkManager.SUCCESS)){
