@@ -11,6 +11,7 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMSingleMessageQueryCallback;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.LogUtils;
@@ -74,26 +76,37 @@ public class SessionListAdapter extends BaseAdapter {
         }
         // TODO: 2016/5/5 这里有两点。第一，members顺序不固定；第二，获取用户信息不能只通过本地缓存。
         String username = dataList.get(position).getMembers().get(0);
-        UserInfo info = DataPresenter.requestUserInfoFromCache(username);
-        if(info.getResult().equals(NetworkManager.SUCCESS)
-                && info.getImg_url() != null){
-            Picasso.with(context)
-                    .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
-                    .resize(200, 200)
-                    .centerCrop()
-                    .into(holder.avatar);
-        }else {
-            LogUtils.e(TAG, "MessageListAdapter get pic failure");
+        if(username.equals(YouJoinApplication.getCurrUser().getUsername())){
+            username = dataList.get(position).getMembers().get(1);
         }
+        DataPresenter.requestUserInfoAuto(username, new DataPresenter.GetUserInfo() {
+            @Override
+            public void onGetUserInfo(UserInfo info) {
+                if(info.getResult().equals(NetworkManager.SUCCESS)
+                        && info.getImg_url() != null){
+                    Picasso.with(context)
+                            .load(StringUtils.getPicUrlList(info.getImg_url()).get(0))
+                            .resize(200, 200)
+                            .centerCrop()
+                            .into(holder.avatar);
+                }else {
+                    LogUtils.e(TAG, "MessageListAdapter get pic failure");
+                }
 
-        holder.nickname.setText(info.getNickname());
+                holder.nickname.setText(info.getNickname());
+            }
+        });
+
 //        holder.content.setText(StringUtils.getEmotionContent(
 //                YouJoinApplication.getAppContext(), holder.content,
 //                dataList.get(position).getComment_content()));
         dataList.get(position).getLastMessage(new AVIMSingleMessageQueryCallback() {
             @Override
             public void done(AVIMMessage avimMessage, AVIMException e) {
-                holder.content.setText(avimMessage.getContent());
+
+                holder.content.setText(((AVIMTextMessage) avimMessage).getText());
+
+
             }
         });
         return convertView;
