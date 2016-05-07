@@ -8,6 +8,7 @@
     <string name="title_message">消息</string>
     <string name="title_plugin">我的插件</string>
     <string name="title_about">关于</string>
+    <string name="title_around">附近</string>
 
     <!-- Activity的标题-->
     <string name="title_activity_main">YouJoin</string>
@@ -23,6 +24,7 @@
     <string name="navigation_about">关于</string>
     <string name="navigation_exit">退出</string>
     <string name="navigation_plugin">插件</string>
+    <string name="navigation_around">附近</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -82,5 +84,8 @@
 
     <string name="text_focus">关注了</string>
     <string name="text_follow">粉丝</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -38,6 +38,7 @@ import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.event.ImTypeMessageEvent;
 import me.zq.youjoin.fragment.AboutFragment;
+import me.zq.youjoin.fragment.AroundFragment;
 import me.zq.youjoin.fragment.FriendFragment;
 import me.zq.youjoin.fragment.MessageFragment;
 import me.zq.youjoin.fragment.PluginFragment;
@@ -58,6 +59,7 @@ implements DataPresenter.GetUserInfo{
     public static final int DRAWER_ABOUT = 4;
     public static final int DRAWER_EXIT = 5;
     public static final int DRAWER_PLUGIN = 6;
+    public static final int DRAWER_AROUND = 7;
 
     private AccountHeader drawerHeader = null;
     private Drawer drawer = null;
@@ -155,6 +157,9 @@ implements DataPresenter.GetUserInfo{
                         .withIcon(R.drawable.ic_textsms_black_48dp).withIdentifier(DRAWER_MSG)
                         .withSelectable(true).withBadgeStyle(new BadgeStyle()
                                 .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700)),
+                        new PrimaryDrawerItem().withName(getString(R.string.navigation_around))
+                        .withIcon(R.drawable.ic_location_on_black_48dp).withIdentifier(DRAWER_AROUND)
+                        .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_plugin))
                         .withIcon(R.drawable.ic_apps_black_48dp).withIdentifier(DRAWER_PLUGIN)
                         .withSelectable(true),
@@ -178,6 +183,9 @@ implements DataPresenter.GetUserInfo{
                                     break;
                                 case DRAWER_TWEETS:
                                     switchToTweets();
+                                    break;
+                                case DRAWER_AROUND:
+                                    switchToAround();
                                     break;
                                 case DRAWER_PLUGIN:
                                     switchToPlugin();
@@ -260,6 +268,11 @@ implements DataPresenter.GetUserInfo{
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new MessageFragment()).commit();
         toolbar.setTitle(getString(R.string.title_message));
         drawer.updateBadge(DRAWER_MSG, null);
+    }
+
+    private void switchToAround(){
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new AroundFragment()).commit();
+        toolbar.setTitle(getString(R.string.title_around));
     }
 
     private void switchToTweets(){
