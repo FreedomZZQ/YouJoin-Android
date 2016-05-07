@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.activity.MessageActivity;
 import me.zq.youjoin.adapter.SessionListAdapter;
 import me.zq.youjoin.event.ImTypeMessageEvent;
 
@@ -75,6 +77,16 @@ public class MessageFragment extends BaseFragment {
 
         adapter = new SessionListAdapter(getActivity(), sessionData);
         sessionlist.setAdapter(adapter);
+        sessionlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String username = sessionData.get(position).getMembers().get(0);
+                if(username.equals(YouJoinApplication.getCurrUser().getUsername())){
+                    username = sessionData.get(position).getMembers().get(1);
+                }
+                MessageActivity.actionStart(getActivity(), username);
+            }
+        });
 
         getConversation();
 

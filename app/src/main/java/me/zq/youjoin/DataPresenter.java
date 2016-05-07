@@ -10,9 +10,7 @@ import me.zq.youjoin.db.DatabaseManager;
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
-import me.zq.youjoin.model.NewPrimsgInfo;
 import me.zq.youjoin.model.PluginInfo;
-import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
@@ -206,27 +204,6 @@ public class DataPresenter {
         });
     }
 
-    public static void sendPrimsg(int receiverId, String content, final SendPrimsg q){
-
-        NetworkManager.postSendMessage(Integer.toString(YouJoinApplication.getCurrUser().getId()),
-                Integer.toString(receiverId), content,
-                new ResponseListener<ResultInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        LogUtils.e(TAG, volleyError.toString());
-                        ResultInfo info = new ResultInfo();
-                        info.setResult(NetworkManager.FAILURE);
-                        q.onSendPrimsg(info);
-                    }
-
-                    @Override
-                    public void onResponse(ResultInfo info) {
-                        q.onSendPrimsg(info);
-                    }
-                });
-
-    }
-
     public static void addFriend(final int friendId, final AddFriend q){
         NetworkManager.postAddFriend(Integer.toString(YouJoinApplication.getCurrUser().getId()),
                 Integer.toString(friendId), new ResponseListener<ResultInfo>() {
@@ -243,33 +220,6 @@ public class DataPresenter {
                         q.onAddFriend(info);
                         if(info.getResult().equals(NetworkManager.SUCCESS)){
                             DatabaseManager.addFriendInfo(friendId);
-                        }
-                    }
-                });
-    }
-
-    public static void getPrimsgList(int friendId, final GetPrimsgList q){
-        PrimsgInfo cookieInfo = DatabaseManager.getPrimsgList(friendId);
-        if(cookieInfo.getResult().equals(NetworkManager.SUCCESS)){
-            q.onGetPrimsgList(cookieInfo);
-        }
-
-        NetworkManager.postRequestPrimsg(Integer.toString(YouJoinApplication.getCurrUser().getId()),
-                Integer.toString(friendId), NetworkManager.TIME_OLD, "99999999",
-                new ResponseListener<PrimsgInfo>() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        LogUtils.e(TAG, volleyError.toString());
-                        PrimsgInfo info = new PrimsgInfo();
-                        info.setResult(NetworkManager.FAILURE);
-                        q.onGetPrimsgList(info);
-                    }
-
-                    @Override
-                    public void onResponse(PrimsgInfo info) {
-                        q.onGetPrimsgList(info);
-                        if(info.getResult().equals(NetworkManager.SUCCESS)){
-                            DatabaseManager.addPrimsgList(info);
                         }
                     }
                 });
@@ -313,22 +263,6 @@ public class DataPresenter {
                 });
     }
 
-    public static void requestNewPrimsg(int userId, final GetNewPrimsg q){
-        NetworkManager.postRequestMessage(Integer.toString(userId), new ResponseListener<NewPrimsgInfo>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                NewPrimsgInfo info = new NewPrimsgInfo();
-                info.setResult(NetworkManager.FAILURE);
-                q.onGetNewPrimsg(info);
-            }
-
-            @Override
-            public void onResponse(NewPrimsgInfo info) {
-                q.onGetNewPrimsg(info);
-            }
-        });
-    }
-
     public static void requestPluginList(int userId, final GetPluginList q){
 
         NetworkManager.postRequestPlugin(Integer.toString(userId), new ResponseListener<PluginInfo>() {
@@ -351,10 +285,6 @@ public class DataPresenter {
         void onGetPluginList(PluginInfo info);
     }
 
-    public interface GetNewPrimsg{
-        void onGetNewPrimsg(NewPrimsgInfo info);
-    }
-
     public interface SendComment{
         void onSendComment(ResultInfo info);
     }
@@ -363,16 +293,8 @@ public class DataPresenter {
         void onGetCommentList(CommentInfo info);
     }
 
-    public interface GetPrimsgList{
-        void onGetPrimsgList(PrimsgInfo info);
-    }
-
     public interface AddFriend{
         void onAddFriend(ResultInfo info);
-    }
-
-    public interface SendPrimsg{
-        void onSendPrimsg(ResultInfo info);
     }
 
     public interface GetUserInfo{

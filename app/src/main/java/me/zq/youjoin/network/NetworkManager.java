@@ -16,9 +16,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
-import me.zq.youjoin.model.NewPrimsgInfo;
 import me.zq.youjoin.model.PluginInfo;
-import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
@@ -109,25 +107,6 @@ public class NetworkManager {
         params.put(USER_ID, userId);
         Request request = new PostObjectRequest(API_REQUEST_PLUGIN,
                 params, new TypeToken<PluginInfo>(){}.getType(), listener);
-        NetworkManager.getRequestQueue().add(request);
-    }
-
-    /**获取与某用户的私信列表
-     * @param userId 当前用户id
-     * @param friendId 对方id
-     * @param type 时间类型，1表示比primsgId新，0表示比较旧
-     * @param primsgId 基准私信id
-     * @param listener ResponseListener
-     */
-    public static void postRequestPrimsg(String userId, String friendId, String type, String primsgId,
-                                         ResponseListener listener){
-        Map<String, String> params = new HashMap<>();
-        params.put(USER_ID, userId);
-        params.put(FRIEND_ID, friendId);
-        params.put(TIME_TYPE, type);
-        params.put(PRIMSG_ID, primsgId);
-        Request request = new PostObjectRequest(API_REQUEST_PRIMSG_LOG,
-                params, new TypeToken<PrimsgInfo>(){}.getType(), listener);
         NetworkManager.getRequestQueue().add(request);
     }
 
@@ -222,42 +201,6 @@ public class NetworkManager {
         params.put(TWEETS_CONTNET, content);
         Request request = new PostUploadRequest(API_SEND_TWEET, images, params,
                 new TypeToken<ResultInfo>(){}.getType(), listener);
-        NetworkManager.getRequestQueue().add(request);
-    }
-
-    /**
-     * 获取私信接口
-     * @param listener ResponseListener
-     */
-    public static void postRequestMessage(String userId, ResponseListener listener){
-        Map<String, String> params = new HashMap<>();
-//        params.put(USER_ID, YouJoinApplication.getCurrUser().getId());
-        params.put(USER_ID, userId);
-//        params.put(FROM_TIME, fromTime);
-//        params.put(TO_TIME, toTime);
-        Request request = new PostObjectRequest(
-                API_RECEIVE_MESSAGE,
-                params, new TypeToken<NewPrimsgInfo>(){}.getType(),
-                listener);
-        NetworkManager.getRequestQueue().add(request);
-    }
-
-    /**
-     * 发送私信接口
-     * @param receiveUserId 接收方用户id
-     * @param content 私信内容
-     * @param listener ResponseListener
-     */
-    public static void postSendMessage(String userId, String receiveUserId, String content,
-                                       ResponseListener listener){
-        Map<String, String> params = new HashMap<>();
-        params.put(SEND_USERID, userId);
-        params.put(RECEIVE_USERID, receiveUserId);
-        params.put(MESSAGE_CONTENT, content);
-        Request request = new PostObjectRequest(
-                API_SEND_MESSAGE,
-                params, new TypeToken<ResultInfo>(){}.getType(),
-                listener);
         NetworkManager.getRequestQueue().add(request);
     }
 

@@ -157,7 +157,7 @@ public class UserInfoActivity extends BaseActivity
         otherUserFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MessageActivity.actionStart(UserInfoActivity.this, info);
+                MessageActivity.actionStart(UserInfoActivity.this, info.getUsername());
             }
         });
     }

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -15,7 +17,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
-import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.LogUtils;
@@ -32,11 +33,11 @@ public class MessageListAdapter extends BaseAdapter {
 
     public static final String TAG = "YouJoin";
 
-    private List<PrimsgInfo.MessageEntity> dataList;
+    private List<AVIMMessage> dataList;
     private LayoutInflater inflater;
     private Context context;
 
-    public MessageListAdapter(Context context, List<PrimsgInfo.MessageEntity> dataList){
+    public MessageListAdapter(Context context, List<AVIMMessage> dataList){
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
@@ -59,8 +60,8 @@ public class MessageListAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position){
-        PrimsgInfo.MessageEntity msg = dataList.get(position);
-        if(msg.getSender_id() == YouJoinApplication.getCurrUser().getId()){
+        AVIMMessage msg = dataList.get(position);
+        if(msg.getFrom().equals(YouJoinApplication.getCurrUser().getUsername())){
             return TYPE_OUT;
         }else{
             return TYPE_IN;
@@ -92,7 +93,7 @@ public class MessageListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(position).getSender_id());
+        UserInfo info = DataPresenter.requestUserInfoFromCache(dataList.get(position).getFrom());
         if(info.getResult().equals(NetworkManager.SUCCESS)
                 && info.getImg_url() != null){
             Picasso.with(context)
@@ -106,7 +107,7 @@ public class MessageListAdapter extends BaseAdapter {
 
         holder.text.setText(StringUtils.getEmotionContent(
                 YouJoinApplication.getAppContext(), holder.text,
-                dataList.get(position).getContent()));
+                ((AVIMTextMessage)dataList.get(position)).getText()));
         return convertView;
     }
 
