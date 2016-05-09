@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1e8cc8</color>
-    <color name="colorPrimaryDark">#176b98</color>
+    <color name="colorPrimary">#1e95e5</color>
+    <color name="colorPrimaryDark">#1771ae</color>
     <color name="colorAccent">#757575</color>
 
     <!-- 基本颜色 -->
