@@ -73,11 +73,13 @@ public class NetworkManager {
     public static final String FAILURE = "failure";
     public static final String FAILURE_SERVER_BUSY = "";
 
+    public static final String PARAM_LOCATION_CHANGED = "location_changed";
+    public static final String PARAM_LOCATION_PRE = "location_";
     /**
      * 服务器接口URL
      */
-//    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
-    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 //    public static final String BASE_API_URL = "http://110.65.7.154:8088/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
@@ -94,10 +96,39 @@ public class NetworkManager {
     public static final String API_REQUEST_COMMENTS = BASE_API_URL + "get_comments.php";
     public static final String API_REQUEST_PRIMSG_LOG = BASE_API_URL + "chat_log.php";
     public static final String API_REQUEST_PLUGIN = BASE_API_URL + "get_plugin.php";
+    public static final String API_REQUEST_AROUND = BASE_API_URL + "get_aroundlist.php";
 
     private static RequestQueue mRequestQueue ;
 
     public static final String TAG = "YouJoin_Network";
+
+
+    /**
+     * 获取附近的人
+     * @param userId 用户ID
+     * @param locationChanged 当前用户地理位置是否发生了变更
+     * @param keyList 若发生变更，该列表包含四个位置特征点；若未变更，该列表可为空
+     * @param listener ResponseListener
+     */
+    public static void postRequestAround(String userId, boolean locationChanged, List<Integer> keyList,
+                                         ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, userId);
+
+        if(locationChanged){
+            params.put(PARAM_LOCATION_CHANGED, "true");
+            for(int i = 0; i < 4; i++){
+                params.put(PARAM_LOCATION_PRE + (i + 1), "" + keyList.get(i));
+            }
+
+        }else{
+            params.put(PARAM_LOCATION_CHANGED, "false");
+        }
+
+        Request request = new PostObjectRequest(API_REQUEST_AROUND,
+                params, new TypeToken<ResultInfo>(){}.getType(), listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
 
     /**获取插件列表
      * @param listener ResponseListener
@@ -286,7 +317,7 @@ public class NetworkManager {
                                   ResponseListener listener){
         Map<String, String> param = new HashMap<>();
         param.put(USER_USERNAME, username);
-        param.put(USER_PASSWORD, Md5Utils.getMd5(password));
+        param.put(USER_PASSWORD, Md5Utils.MD5_secure(password));
         Request request = new PostObjectRequest(
                 API_SIGN_IN,
                 param,
@@ -306,7 +337,7 @@ public class NetworkManager {
                                   ResponseListener listener){
         Map<String, String> param = new HashMap<>();
         param.put(USER_USERNAME, username);
-        param.put(USER_PASSWORD, Md5Utils.getMd5(password));
+        param.put(USER_PASSWORD, Md5Utils.MD5_secure(password));
         param.put(USER_EMAIL, email);
         Request request = new PostObjectRequest(
                 API_SIGN_UP,
