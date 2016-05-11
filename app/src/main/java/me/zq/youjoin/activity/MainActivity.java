@@ -123,7 +123,7 @@ implements DataPresenter.GetUserInfo{
 
         drawerHeader = new AccountHeaderBuilder()
                 .withActivity(MainActivity.this)
-                .withHeaderBackground(R.drawable.header2)
+                .withHeaderBackground(R.drawable.header)
                 .addProfiles(profile)
                 .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
                     @Override

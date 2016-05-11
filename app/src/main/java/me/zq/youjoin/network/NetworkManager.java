@@ -78,8 +78,8 @@ public class NetworkManager {
     /**
      * 服务器接口URL
      */
-    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
-//    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
+//    public static final String BASE_API_URL = "http://192.168.0.102:8088/youjoin-server/controllers/";
+    public static final String BASE_API_URL = "http://www.tekbroaden.com/youjoin-server/controllers/";
 //    public static final String BASE_API_URL = "http://110.65.7.154:8088/youjoin-server/controllers/";
     public static final String API_SIGN_IN = BASE_API_URL + "signin.php";
     public static final String API_SIGN_UP = BASE_API_URL + "signup.php";
@@ -110,7 +110,7 @@ public class NetworkManager {
      * @param keyList 若发生变更，该列表包含四个位置特征点；若未变更，该列表可为空
      * @param listener ResponseListener
      */
-    public static void postRequestAround(String userId, boolean locationChanged, List<Integer> keyList,
+    public static void postRequestAround(String userId, boolean locationChanged, List<String> keyList,
                                          ResponseListener listener){
         Map<String, String> params = new HashMap<>();
         params.put(USER_ID, userId);
@@ -118,7 +118,7 @@ public class NetworkManager {
         if(locationChanged){
             params.put(PARAM_LOCATION_CHANGED, "true");
             for(int i = 0; i < 4; i++){
-                params.put(PARAM_LOCATION_PRE + (i + 1), "" + keyList.get(i));
+                params.put(PARAM_LOCATION_PRE + (i + 1), keyList.get(i));
             }
 
         }else{

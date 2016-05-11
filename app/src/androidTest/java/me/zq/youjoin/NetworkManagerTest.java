@@ -1,6 +1,7 @@
 package me.zq.youjoin;
 
 import android.test.AndroidTestCase;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 
@@ -9,9 +10,7 @@ import java.util.List;
 
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.ImageInfo;
-import me.zq.youjoin.model.NewPrimsgInfo;
 import me.zq.youjoin.model.PluginInfo;
-import me.zq.youjoin.model.PrimsgInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UpdateUserInfoResult;
@@ -32,6 +31,21 @@ public class NetworkManagerTest extends AndroidTestCase {
     public static final String picPath = "/storage/emulated/0/Tencent/QQfile_recv/default6.jpg";
     public static final String TAG = "YouJoinTest";
     public static final String SUCCESS = "success";
+
+    public void testRequestAroundList(){
+
+        NetworkManager.postRequestAround(testId.toString(), false, null, new ResponseListener<ResultInfo>() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(ResultInfo o) {
+                Log.d(TAG, o.getResult());
+            }
+        });
+    }
 
     public void testGenerateUserInfoData(){
 
@@ -195,39 +209,39 @@ public class NetworkManagerTest extends AndroidTestCase {
         });
     }
 
-    public void testSendPrivateMsg(){
-        NetworkManager.postSendMessage(testId.toString(), testId2.toString(),
-                "first msg", new ResponseListener<ResultInfo>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-
-            @Override
-            public void onResponse(ResultInfo info) {
-                assertEquals(info.getResult(), SUCCESS);
-            }
-        });
-    }
-
-    public void testReceivePrivatemsg(){
-        NetworkManager.postRequestMessage(testId2.toString(), new ResponseListener<NewPrimsgInfo>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                LogUtils.e(TAG, volleyError.toString());
-            }
-
-            @Override
-            public void onResponse(NewPrimsgInfo info) {
-                assertEquals(info.getResult(), SUCCESS);
-                List<Integer> infos = info.getMessage();
-                for( Integer i : infos){
-                    LogUtils.d(TAG, "New Primsg from: userid = " + i.toString());
-                }
-
-            }
-        });
-    }
+//    public void testSendPrivateMsg(){
+//        NetworkManager.postSendMessage(testId.toString(), testId2.toString(),
+//                "first msg", new ResponseListener<ResultInfo>() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(ResultInfo info) {
+//                assertEquals(info.getResult(), SUCCESS);
+//            }
+//        });
+//    }
+//
+//    public void testReceivePrivatemsg(){
+//        NetworkManager.postRequestMessage(testId2.toString(), new ResponseListener<NewPrimsgInfo>() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                LogUtils.e(TAG, volleyError.toString());
+//            }
+//
+//            @Override
+//            public void onResponse(NewPrimsgInfo info) {
+//                assertEquals(info.getResult(), SUCCESS);
+//                List<Integer> infos = info.getMessage();
+//                for( Integer i : infos){
+//                    LogUtils.d(TAG, "New Primsg from: userid = " + i.toString());
+//                }
+//
+//            }
+//        });
+//    }
 
     public void testAddFriend(){
 
@@ -354,20 +368,20 @@ public class NetworkManagerTest extends AndroidTestCase {
         });
     }
 
-    public void testRequestPrimsgLog(){
-        NetworkManager.postRequestPrimsg(testId.toString(), testId2.toString(),
-                NetworkManager.TIME_OLD, "9999", new ResponseListener<PrimsgInfo>() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                LogUtils.e(TAG, volleyError.toString());
-            }
-
-            @Override
-            public void onResponse(PrimsgInfo o) {
-
-            }
-        });
-    }
+//    public void testRequestPrimsgLog(){
+//        NetworkManager.postRequestPrimsg(testId.toString(), testId2.toString(),
+//                NetworkManager.TIME_OLD, "9999", new ResponseListener<PrimsgInfo>() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                LogUtils.e(TAG, volleyError.toString());
+//            }
+//
+//            @Override
+//            public void onResponse(PrimsgInfo o) {
+//
+//            }
+//        });
+//    }
 
     public void testRequestPluginList(){
         NetworkManager.postRequestPlugin(testId.toString(), new ResponseListener<PluginInfo>() {
