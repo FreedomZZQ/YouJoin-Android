@@ -11,6 +11,16 @@ import me.zq.youjoin.utils.StringUtils;
  * Created by ZQ on 2015/11/19.
  */
 public class StringUtilsTest extends AndroidTestCase {
+
+    /**
+     * 测试double转String
+     */
+    public void testDouble2String(){
+        double test = 113.25666;
+        String result = StringUtils.double2String(test, 3);
+        assertEquals(result, "113.256");
+    }
+
     /**
      * 测试Json字符串修复
      */

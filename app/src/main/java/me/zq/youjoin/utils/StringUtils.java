@@ -30,6 +30,17 @@ import me.zq.youjoin.widget.enter.MyImageGetter;
  */
 public class StringUtils {
 
+    /**
+     * 将double转换为String，截取小数点后指定位数，不进行四舍五入
+     * @param d 要转换的double
+     * @param len 小数点后几位
+     * @return 转换后的String
+     */
+    public static String double2String(double d, int len) {
+        String temp =  Double.toString(d);
+        return temp.substring(0, temp.indexOf(".") + len + 1);
+    }
+
     /**将纯string转换为支持表情显示的SpannableString
      * @param context 程序上下文
      * @param tv 用于获取textview的行高从而设置图片的大小

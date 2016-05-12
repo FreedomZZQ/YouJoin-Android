@@ -126,7 +126,7 @@ public class NetworkManager {
         }
 
         Request request = new PostObjectRequest(API_REQUEST_AROUND,
-                params, new TypeToken<ResultInfo>(){}.getType(), listener);
+                params, new TypeToken<FriendsInfo>(){}.getType(), listener);
         NetworkManager.getRequestQueue().add(request);
     }
 

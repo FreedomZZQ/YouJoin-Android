@@ -13,9 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import me.zq.youjoin.R;
+import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.model.FriendsInfo;
+import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.network.ResponseListener;
+import me.zq.youjoin.utils.Md5Utils;
+import me.zq.youjoin.utils.StringUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +33,11 @@ public class AroundFragment extends BaseFragment {
 
     private LocationManager locationManager;
     private String provider;
+
+    private static String baseLocation = "";
+    private static double size = 0.001;
+    private static int len = 3;
+
 
     public AroundFragment() {
         // Required empty public constructor
@@ -94,6 +108,38 @@ public class AroundFragment extends BaseFragment {
         String currentLocation = "latitude is : " + location.getLatitude() + "\n"
                 + "longitude is : " + location.getLongitude();
         Log.d(TAG, currentLocation);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+
+        String [] locationString = {
+                StringUtils.double2String(longitude, len) + StringUtils.double2String(latitude, len),
+                StringUtils.double2String(longitude + size, len) + StringUtils.double2String(latitude, len),
+                StringUtils.double2String(longitude, len) + StringUtils.double2String(latitude + size, len),
+                StringUtils.double2String(longitude + size, len) + StringUtils.double2String(latitude + size, len)
+        };
+
+        if(locationString[0].equals(baseLocation)) return;
+
+        List<String> locationKeyList = new ArrayList<>();
+        for(String s : locationString){
+            locationKeyList.add(Md5Utils.MD5_secure(s));
+        }
+
+        NetworkManager.postRequestAround(Integer.toString(YouJoinApplication.getCurrUser().getId()),
+                true,
+                locationKeyList,
+                new ResponseListener<FriendsInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+
+                    @Override
+                    public void onResponse(FriendsInfo info) {
+                        Log.d(TAG, info.getResult());
+                    }
+                });
+
     }
 
 }
