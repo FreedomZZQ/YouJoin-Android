@@ -217,17 +217,21 @@ public class AroundFragment extends BaseFragment implements SideBar.OnTouchingLe
                     new ResponseListener<FriendsInfo>() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                            refresher.setRefreshing(false);
+                            if(refresher != null){
+                                refresher.setRefreshing(false);
+                            }
                         }
 
                         @Override
                         public void onResponse(FriendsInfo info) {
-                            refresher.setRefreshing(false);
-                            Log.d(TAG, info.getResult());
-                            dataList.clear();
-                            dataList.addAll(info.getFriends());
-                            adapter.refresh(dataList);
-                            searchInput.setText("");
+                            if(refresher != null){
+                                refresher.setRefreshing(false);
+                                Log.d(TAG, info.getResult());
+                                dataList.clear();
+                                dataList.addAll(info.getFriends());
+                                adapter.refresh(dataList);
+                                searchInput.setText("");
+                            }
                         }
                     });
         }

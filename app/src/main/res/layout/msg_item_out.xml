@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_out"
-        android:background="#79c81d"
+        android:background="@drawable/msg_item_out_bg"
         android:gravity="start"
         android:textSize="12sp"
         android:textColor="@color/white"

@@ -7,10 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginTop="8dp"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="2dp">
+    card_view:cardCornerRadius="0dp"
+    card_view:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +40,7 @@
                     android:layout_height="wrap_content"
                     tools:text="youjoin"
                     android:id="@+id/username"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/name_font_black"
                     android:textSize="10sp" />
 
                 <TextView
@@ -50,7 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/time"
-                    android:textColor="@color/font_black_9"
+                    android:textColor="@color/time_font_black"
+                    android:layout_marginTop="3dp"
                     android:textSize="8sp"
                     tools:text="12:12"/>
 
@@ -63,9 +62,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/content"
             tools:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentc"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"/>
+            android:layout_marginEnd="13dp"
+            android:textColor="@color/content_font_black"/>
 
         <me.zq.youjoin.widget.enter.AutoHeightGridView
             android:id="@+id/gridView"
@@ -74,24 +74,29 @@
             android:layout_margin="12dp"
             android:columnWidth="100dp"
             android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:numColumns="3"
             android:stretchMode="none"/>
         <!--<ImageView-->
-            <!--android:id="@+id/ivFeedBottom"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
+        <!--android:id="@+id/ivFeedBottom"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_grey"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="13dp">
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
 
             <CheckBox
                 android:id="@+id/btnLike"
@@ -100,14 +105,22 @@
                 android:button="@null"
                 android:background="@drawable/checkbox_upvote"
                 android:checked="true"/>
-<!--android:background="@drawable/btn_feed_action"-->
+            <!--android:background="@drawable/btn_feed_action"-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="喜欢"
+                android:textSize="10sp"
+                android:textColor="@color/grey"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"/>
 
             <TextSwitcher
                 android:id="@+id/tsLikesCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
                 android:layout_gravity="center_vertical">
                 <!--android:inAnimation="@anim/slide_in_likes_counter"
                                     android:outAnimation="@anim/slide_out_likes_counter"-->
@@ -126,12 +139,32 @@
                     android:textSize="10sp"/>
             </TextSwitcher>
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/bg_grey"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_gravity="center_vertical"/>
+
+
             <ImageButton
                 android:id="@+id/btnComments"
                 android:layout_width="@dimen/tweets_list_item_button_size"
                 android:layout_height="@dimen/tweets_list_item_button_size"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_comment_black"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评论"
+                android:textSize="10sp"
+                android:textColor="@color/grey"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -144,11 +177,11 @@
                 android:layout_marginStart="5dp"/>
 
             <!--<LinearLayout-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical|right">-->
-                <!---->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center_vertical|right">-->
+            <!---->
             <!--</LinearLayout>-->
         </LinearLayout>
 

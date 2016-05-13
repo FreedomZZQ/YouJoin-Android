@@ -19,12 +19,20 @@
     <color name="divide_line">#ffdddddd</color>
     <color name="font_black_9">#999999</color>
 
+    <!-- tweets detail color -->
+    <color name="time_font_black">#dddddd</color>
+    <color name="content_font_black">#737373</color>
+    <color name="name_font_black">#a3a3a3</color>
+
+    <!--chat bg-->
+    <color name="msg_item_in_bg">#dcdcdc</color>
+
     <color name="emoji_line">#ffcbc9ca</color>
 
     <color name="login_orange">#ff8d27</color>
     <color name="login_text_bg">#05000000</color>
     <color name="login_text_color">#b4b4b4</color>
 
-    <color name="bg_grey">#ebebeb</color>
+    <color name="bg_grey">#f5f5f5</color>
     <color name="yellow">#fac800</color>
 </resources>

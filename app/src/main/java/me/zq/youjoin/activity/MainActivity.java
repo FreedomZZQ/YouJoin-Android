@@ -126,7 +126,7 @@ implements DataPresenter.GetUserInfo{
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(profile)
                 .withDividerBelowHeader(false)
-                .withPaddingBelowHeader(false)
+                .withPaddingBelowHeader(true)
                 .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
                     @Override
                     public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
@@ -149,30 +149,30 @@ implements DataPresenter.GetUserInfo{
                 .withHasStableIds(true)
                 .withAccountHeader(drawerHeader)
                 .withHeaderDivider(false)
-                .withHeaderPadding(false)
+                .withHeaderPadding(true)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_tweets))
                                 .withIcon(R.drawable.ic_home_black_48dp).withIdentifier(DRAWER_TWEETS)
                                 .withSelectable(true),
-                        new PrimaryDrawerItem().withName(getString(R.string.navigation_friends))
-                        .withIcon(R.drawable.ic_group_black_48dp).withIdentifier(DRAWER_FRIEND)
-                        .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_msg))
-                        .withIcon(R.drawable.ic_textsms_black_48dp).withIdentifier(DRAWER_MSG)
-                        .withSelectable(true).withBadgeStyle(new BadgeStyle()
+                                .withIcon(R.drawable.ic_textsms_black_48dp).withIdentifier(DRAWER_MSG)
+                                .withSelectable(true).withBadgeStyle(new BadgeStyle()
                                 .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700)),
+                        new PrimaryDrawerItem().withName(getString(R.string.navigation_friends))
+                                .withIcon(R.drawable.ic_group_black_48dp).withIdentifier(DRAWER_FRIEND)
+                                .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_around))
-                        .withIcon(R.drawable.ic_location_on_black_48dp).withIdentifier(DRAWER_AROUND)
-                        .withSelectable(true),
+                                .withIcon(R.drawable.ic_location_on_black_48dp).withIdentifier(DRAWER_AROUND)
+                                .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_plugin))
-                        .withIcon(R.drawable.ic_apps_black_48dp).withIdentifier(DRAWER_PLUGIN)
-                        .withSelectable(true),
+                                .withIcon(R.drawable.ic_apps_black_48dp).withIdentifier(DRAWER_PLUGIN)
+                                .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_about))
-                        .withIcon(R.drawable.ic_settings_black_48dp).withIdentifier(DRAWER_ABOUT)
-                        .withSelectable(true),
+                                .withIcon(R.drawable.ic_settings_black_48dp).withIdentifier(DRAWER_ABOUT)
+                                .withSelectable(true),
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_exit))
-                        .withIcon(R.drawable.ic_assignment_return_black_48dp).withIdentifier(DRAWER_EXIT)
-                        .withSelectable(false)
+                                .withIcon(R.drawable.ic_assignment_return_black_48dp).withIdentifier(DRAWER_EXIT)
+                                .withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener(){
                     @Override

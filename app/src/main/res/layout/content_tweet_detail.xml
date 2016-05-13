@@ -31,28 +31,33 @@
                 android:src="@mipmap/ic_account_circle_white_48dp"
                 android:layout_gravity="center_vertical"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                tools:text="youjoin"
-                android:id="@+id/username"
-                android:textColor="@color/font_black_9"
-                android:textSize="10sp"
-                android:layout_marginStart="@dimen/general_margin"/>
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/general_margin"
+                android:layout_gravity="center_vertical">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/time"
-                android:textColor="@color/font_black_9"
-                android:textSize="10sp"
-                tools:text="12:12"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="youjoin"
+                    android:id="@+id/username"
+                    android:textColor="@color/name_font_black"
+                    android:textSize="10sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:id="@+id/time"
+                    android:textColor="@color/time_font_black"
+                    android:textSize="10sp"
+                    tools:text="12:12"/>
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -61,7 +66,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/content"
             tools:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentc"
-            android:textSize="15sp"
+            android:textSize="13sp"
+            android:textColor="@color/content_font_black"
             android:layout_marginStart="13dp"
             android:layout_marginEnd="13dp"/>
 
@@ -152,7 +158,8 @@
         android:id="@+id/inputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"/>
 </RelativeLayout>
 
 

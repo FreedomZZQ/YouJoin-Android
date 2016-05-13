@@ -72,10 +72,10 @@
             android:label="@string/title_activity_tweet_detail"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".pullrequest.PullService"
-            android:enabled="true"
-            android:exported="true" />
+        <!--<service-->
+            <!--android:name=".pullrequest.PullService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true" />-->
 
         <activity android:name=".activity.PluginDownloadActivity" />
         <activity android:name=".activity.PluginActivity" />

@@ -56,11 +56,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/action_sign_in"
-            style="?android:attr/buttonBarStyle"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/signin_button_bg"
             android:textColor="@color/white"
             android:layout_weight="1"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             />
 
         <Button
@@ -68,9 +68,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/action_sign_up"
-            style="?android:attr/buttonBarStyle"
-            android:background="@color/colorAccent"
+            android:background="@drawable/signup_button_bg"
             android:textColor="@color/white"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"/>
 
     </LinearLayout>

@@ -140,6 +140,8 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
         GridPhotoAdapter adapter = new GridPhotoAdapter(YouJoinApplication.getAppContext(), urls);
         gridView.setAdapter(adapter);
 
+        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -161,6 +163,7 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
     @OnClick(R.id.sendmsg)
     protected void sendComment(){
         String content = msgEdit.getText().toString();
+        if(content.equals("")) return;
         msgEdit.setText("");
         DataPresenter.sendComment(YouJoinApplication.getCurrUser().getId(), tweetsEntity.getTweets_id(),
                 content, TweetDetailActivity.this);

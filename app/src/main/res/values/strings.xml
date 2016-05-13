@@ -2,11 +2,11 @@
     <string name="app_name">YouJoin</string>
 
     <!-- 切换Fragment时的标题-->
-    <string name="title_tweets">新鲜事</string>
-    <string name="title_mine">我的</string>
-    <string name="title_friends">我关注的人</string>
+    <string name="title_tweets">动态</string>
+    <!--<string name="title_mine">我的</string>-->
+    <string name="title_friends">朋友</string>
     <string name="title_message">消息</string>
-    <string name="title_plugin">我的插件</string>
+    <string name="title_plugin">插件</string>
     <string name="title_about">关于</string>
     <string name="title_around">附近</string>
 

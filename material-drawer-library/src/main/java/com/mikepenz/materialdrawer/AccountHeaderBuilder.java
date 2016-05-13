@@ -842,7 +842,7 @@ public class AccountHeaderBuilder {
         }
 
         mCurrentProfileName.setTextColor(textColor);
-        mCurrentProfileEmail.setTextColor(textColor);
+        //mCurrentProfileEmail.setTextColor(textColor);
 
         mProfileFirstView = (BezelImageView) mAccountHeader.findViewById(R.id.material_drawer_account_header_small_first);
         mProfileSecondView = (BezelImageView) mAccountHeader.findViewById(R.id.material_drawer_account_header_small_second);

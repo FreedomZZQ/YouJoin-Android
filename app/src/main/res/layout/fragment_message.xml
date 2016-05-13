@@ -8,8 +8,10 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fastScrollEnabled="true"
-        android:fastScrollAlwaysVisible="true"
+        android:fastScrollEnabled="false"
+        android:fastScrollAlwaysVisible="false"
+        android:scrollbars="none"
+        android:listSelector="@android:color/transparent"
         android:id="@+id/sessionlist"/>
 
     <android.support.design.widget.FloatingActionButton
