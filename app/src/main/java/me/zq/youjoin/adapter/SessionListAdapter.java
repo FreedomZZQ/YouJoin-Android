@@ -100,15 +100,18 @@ public class SessionListAdapter extends BaseAdapter {
 //        holder.content.setText(StringUtils.getEmotionContent(
 //                YouJoinApplication.getAppContext(), holder.content,
 //                dataList.get(position).getComment_content()));
-        dataList.get(position).getLastMessage(new AVIMSingleMessageQueryCallback() {
-            @Override
-            public void done(AVIMMessage avimMessage, AVIMException e) {
+        AVIMConversation conversation = dataList.get(position);
+        if(conversation != null){
+            conversation.getLastMessage(new AVIMSingleMessageQueryCallback() {
+                @Override
+                public void done(AVIMMessage avimMessage, AVIMException e) {
+                    if(e == null && avimMessage != null && holder != null){
+                        holder.content.setText(((AVIMTextMessage) avimMessage).getText());
+                    }
+                }
+            });
+        }
 
-                holder.content.setText(((AVIMTextMessage) avimMessage).getText());
-
-
-            }
-        });
         return convertView;
     }
 

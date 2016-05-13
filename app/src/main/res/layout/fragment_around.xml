@@ -1,21 +1,72 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="me.zq.youjoin.fragment.AroundFragment">
 
+    <me.zq.youjoin.widget.sidebar.CustomEditText
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/bg_search_input"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawableRight="@drawable/ic_edit_text_delbtn"
+        android:drawablePadding="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp"
+        android:freezesText="true"
+        android:gravity="center_vertical"
+        android:hint="搜索"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:textColor="@android:color/black"
+        android:textColorHint="#ffb5b5b5"
+        android:textSize="14sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentTop="true"/>
+
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/refresher">
+        android:id="@+id/refresher"
+        android:layout_below="@id/search_input">
 
-        <me.zq.youjoin.widget.sidebar.IndexableListView
+        <ListView
+            android:id="@+id/friend_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fastScrollEnabled="true"
-            android:fastScrollAlwaysVisible="true"
-            android:id="@+id/userlist"/>
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/dividershape"
+            android:dividerHeight="1px"
+            android:fadingEdge="none"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/friend_dialog"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:background="@drawable/contact_select_pinyin_bg"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white"
+        android:textSize="45sp"
+        android:visibility="gone"/>
+
+    <me.zq.youjoin.widget.sidebar.SideBar
+        android:id="@+id/friend_sidebar"
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/search_input"/>
+
+</RelativeLayout>

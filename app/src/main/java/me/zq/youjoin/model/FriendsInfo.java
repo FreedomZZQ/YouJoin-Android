@@ -1,5 +1,7 @@
 package me.zq.youjoin.model;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 import me.zq.youjoin.utils.StringUtils;
@@ -39,7 +41,7 @@ public class FriendsInfo {
         return friends;
     }
 
-    public static class FriendsEntity {
+    public static class FriendsEntity implements Comparable<FriendsEntity>{
         private int id;
         private String nickname;
         private String img_url;
@@ -48,8 +50,28 @@ public class FriendsInfo {
             String letter = StringUtils.getFirstLetters(nickname).toUpperCase().substring(0, 1);
             if(0 <= letter.compareTo("A") && letter.compareTo("Z") <= 0){
                 return letter;
+            }else{
+                return "#";
             }
-            return "#";
+
+        }
+
+        public char getFirstChar() {
+            String letter = StringUtils.getFirstLetters(nickname).toUpperCase().substring(0, 1);
+            if(0 <= letter.compareTo("A") && letter.compareTo("Z") <= 0){
+                return letter.charAt(0);
+            }else{
+                return '#';
+            }
+        }
+
+        public String getPinyin(){
+            return StringUtils.Ch2PinYin(nickname);
+        }
+
+        @Override
+        public int compareTo(@NonNull FriendsEntity another){
+            return getFirstLetter().compareTo(another.getFirstLetter());
         }
 
         public void setId(int id) {

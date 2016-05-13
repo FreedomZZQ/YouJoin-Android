@@ -4,17 +4,15 @@ package me.zq.youjoin.fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.SectionIndexer;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,29 +24,31 @@ import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.SearchUserActivity;
 import me.zq.youjoin.activity.UserInfoActivity;
+import me.zq.youjoin.adapter.FriendListAdapter;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.network.NetworkManager;
-import me.zq.youjoin.utils.StringUtils;
-import me.zq.youjoin.widget.sidebar.IndexableListView;
-import me.zq.youjoin.widget.sidebar.StringMatcher;
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+import me.zq.youjoin.widget.sidebar.CustomEditText;
+import me.zq.youjoin.widget.sidebar.SideBar;
 
 
 public class FriendFragment extends BaseFragment
-implements DataPresenter.GetFriendList{
+        implements DataPresenter.GetFriendList, SideBar.OnTouchingLetterChangedListener, TextWatcher{
 
+    private FriendListAdapter adapter;
+    private List<FriendsInfo.FriendsEntity> dataList = new ArrayList<>();
 
-    List<FriendsInfo.FriendsEntity> mData = new ArrayList<>();
-    //ArrayList<UserInfo> mSearchData = new ArrayList<>();
-
-    @Bind(R.id.userlist)
-    IndexableListView userlist;
-
-    UserAdapter adapter = new UserAdapter();
     @Bind(R.id.add_friend_fab)
     FloatingActionButton addFriendFab;
     @Bind(R.id.refresher)
     SwipeRefreshLayout refresher;
+    @Bind(R.id.search_input)
+    CustomEditText searchInput;
+    @Bind(R.id.friend_list)
+    ListView friendList;
+    @Bind(R.id.friend_dialog)
+    TextView friendDialog;
+    @Bind(R.id.friend_sidebar)
+    SideBar friendSidebar;
 
     public FriendFragment() {
         // Required empty public constructor
@@ -80,23 +80,27 @@ implements DataPresenter.GetFriendList{
             }
         });
 
-        initUserList();
+        initView();
 
         return view;
     }
 
-    private void initUserList() {
+    private void initView() {
 
-        adapter.initSection();
+        friendSidebar.setTextView(friendDialog);
+        friendSidebar.setOnTouchingLetterChangedListener(this);
 
-        userlist.setFastScrollEnabled(true);
-        userlist.setFastScrollAlwaysVisible(true);
-        userlist.setAdapter(adapter);
-        userlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        searchInput.addTextChangedListener(this);
+        
+        adapter = new FriendListAdapter(friendList, dataList);
+        friendList.setAdapter(adapter);
+
+        friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserInfoActivity.actionStart(getActivity(),
-                        UserInfoActivity.TYPE_OTHER_USER, mData.get(position).getId());
+                        UserInfoActivity.TYPE_OTHER_USER, dataList.get(position).getId());
+
             }
         });
 
@@ -112,9 +116,11 @@ implements DataPresenter.GetFriendList{
     public void onGetFriendList(FriendsInfo info) {
         refresher.setRefreshing(false);
         if (info.getResult().equals(NetworkManager.SUCCESS)) {
-            mData = info.getFriends();
-            adapter.notifyDataSetChanged();
-        }else {
+            dataList.clear();
+            dataList.addAll(info.getFriends());
+            adapter.refresh(dataList);
+            searchInput.setText("");
+        } else {
             Toast.makeText(getActivity(), getActivity().getString(R.string.error_network),
                     Toast.LENGTH_SHORT).show();
         }
@@ -126,189 +132,45 @@ implements DataPresenter.GetFriendList{
         ButterKnife.unbind(this);
     }
 
-    static class ViewHolder {
-        ImageView icon;
-        TextView name;
-        //CheckBox mutual;
-        TextView divideTitle;
+    @Override
+    public void onTouchingLetterChanged(String s){
+        int position = 0;
+        //该字母首次出现的位置
+        if(adapter != null){
+            position = adapter.getPositionForSection(s.charAt(0));
+        }
+        if(position != -1){
+            friendList.setSelection(position);
+        }else if(s.contains("#")){
+            friendList.setSelection(0);
+        }
     }
 
-    class UserAdapter extends BaseAdapter implements SectionIndexer, StickyListHeadersAdapter {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        private String mSections = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private ArrayList<String> mSectionTitle = new ArrayList<>();
-        private ArrayList<Integer> mSectionId = new ArrayList<>();
+    }
 
-        public void initSection() {
-            mSectionTitle.clear();
-            mSectionId.clear();
-
-            if (mData.size() > 0) {
-                String lastLetter = "";
-
-                for (int i = 0; i < mData.size(); ++i) {
-                    FriendsInfo.FriendsEntity item = mData.get(i);
-                    if (!item.getFirstLetter().equals(lastLetter)) {
-                        lastLetter = item.getFirstLetter();
-                        mSectionTitle.add(item.getFirstLetter());
-                        mSectionId.add(i);
-                    }
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        List<FriendsInfo.FriendsEntity> temp = new ArrayList<>();
+        temp.addAll(dataList);
+        if(!searchInput.getText().toString().equals("")){
+            for (FriendsInfo.FriendsEntity data : dataList) {
+                if (data.getNickname().contains(s) || data.getPinyin().contains(s)) {
+                } else {
+                    temp.remove(data);
                 }
             }
         }
 
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            final ViewHolder holder;
-            if (convertView == null) {
-                LayoutInflater mInflater = getActivity().getLayoutInflater();
-                convertView = mInflater.inflate(R.layout.userlist_item, parent, false);
-                holder = new ViewHolder();
-                holder.name = (TextView) convertView.findViewById(R.id.name);
-                holder.icon = (ImageView) convertView.findViewById(R.id.icon);
-//                holder.mutual = (CheckBox) convertView.findViewById(R.id.followMutual);
-//                if (hideFollowButton) {
-//                    holder.mutual.setVisibility(View.INVISIBLE);
-//                }
-                holder.divideTitle = (TextView) convertView.findViewById(R.id.divideTitle);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            final FriendsInfo.FriendsEntity data = mData.get(position);
-
-            if (isSection(position)) {
-                holder.divideTitle.setVisibility(View.VISIBLE);
-                holder.divideTitle.setText(data.getFirstLetter());
-            } else {
-                holder.divideTitle.setVisibility(View.GONE);
-            }
-
-            holder.name.setText(data.getNickname());
-            //iconfromNetwork(holder.icon, data.getImg_url());
-            holder.icon.setImageResource(R.mipmap.ic_account_circle_white_48dp);
-
-            Picasso.with(getActivity())
-                    .load(StringUtils.getPicUrlList(data.getImg_url()).get(0))
-                    .resize(200, 200)
-                    .centerCrop()
-                    .into(holder.icon);
-
-//            if (!hideFollowButton) {
-//                int drawableId = data.follow ? R.drawable.checkbox_fans : R.drawable.checkbox_follow;
-//                holder.mutual.setButtonDrawable(drawableId);
-//                holder.mutual.setChecked(data.followed);
-//                holder.mutual.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        RequestParams params = new RequestParams();
-//                        params.put("users", data.global_key);
-//                        if (((CheckBox) v).isChecked()) {
-//                            postNetwork(HOST_FOLLOW, params, HOST_FOLLOW, position, null);
-//                        } else {
-//                            postNetwork(HOST_UNFOLLOW, params, HOST_UNFOLLOW, position, null);
-//                        }
-//                    }
-//                });
-//            }
-
-            return convertView;
-        }
-
-        @Override
-        public void notifyDataSetChanged() {
-            super.notifyDataSetChanged();
-            initSection();
-        }
-
-        private boolean isSection(int pos) {
-            if (getCount() == 0) {
-                return true;
-            }
-
-            if (pos == 0) {
-                return true;
-            }
-
-            String currentItem = mData.get(pos).getFirstLetter();
-            String preItem = mData.get(pos - 1).getFirstLetter();
-            return !currentItem.equals(preItem);
-        }
-
-        @Override
-        public int getPositionForSection(int section) {
-            // If there is no item for current section, previous section will be selected
-            for (int i = section; i >= 0; i--) {
-                for (int j = 0; j < getCount(); j++) {
-                    if (i == 0) {
-                        // For numeric section
-                        for (int k = 0; k <= 9; k++) {
-                            if (StringMatcher.match(((FriendsInfo.FriendsEntity)
-                                    getItem(j)).getFirstLetter().toUpperCase(), String.valueOf(k)))
-                                return j;
-                        }
-                    } else {
-                        if (StringMatcher.match(((FriendsInfo.FriendsEntity)
-                                getItem(j)).getFirstLetter().toUpperCase(), String.valueOf(mSections.charAt(i))))
-                            return j;
-                    }
-                }
-            }
-            return 0;
-        }
-
-        @Override
-        public int getSectionForPosition(int position) {
-            return 0;
-        }
-
-        @Override
-        public Object[] getSections() {
-            String[] sections = new String[mSections.length()];
-            for (int i = 0; i < mSections.length(); i++)
-                sections[i] = String.valueOf(mSections.charAt(i));
-            return sections;
-        }
-
-        @Override
-        public View getHeaderView(int position, View convertView, ViewGroup parent) {
-            HeaderViewHolder holder;
-            if (convertView == null) {
-                holder = new HeaderViewHolder();
-                convertView = getActivity().getLayoutInflater()
-                        .inflate(R.layout.dynamic_list_head, parent, false);
-                holder.mHead = (TextView) convertView.findViewById(R.id.head);
-                convertView.setTag(holder);
-            } else {
-                holder = (HeaderViewHolder) convertView.getTag();
-            }
-
-            holder.mHead.setText(mSectionTitle.get(getSectionForPosition(position)));
-            return convertView;
-        }
-
-        @Override
-        public long getHeaderId(int i) {
-            return getSectionForPosition(i);
-        }
-
-        class HeaderViewHolder {
-            TextView mHead;
+        if (adapter != null) {
+            adapter.refresh(temp);
         }
     }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+    }
+
 }

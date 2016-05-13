@@ -161,7 +161,39 @@ public class StringUtils {
         return pysb.toString().replaceAll("\\W", "").trim();
     }
 
+    public static String getCharacterPinYin(char c) {
+        String []pinyin = null;
+        HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
+        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
 
+        try {
+            pinyin = PinyinHelper.toHanyuPinyinStringArray(c, format);
+        } catch(BadHanyuPinyinOutputFormatCombination e) {
+            e.printStackTrace();
+        }
+        // 如果c不是汉字，toHanyuPinyinStringArray会返回null
+        if(pinyin == null) return null;
+
+        // 只取一个发音，如果是多音字，仅取第一个发音
+        return pinyin[0];
+    }
+
+    public static String Ch2PinYin(String str){
+        StringBuilder sb = new StringBuilder();
+        String tempPinyin;
+
+        for(int i = 0; i < str.length(); ++i) {
+            tempPinyin =getCharacterPinYin(str.charAt(i));
+            if(tempPinyin == null) {
+                // 如果str.charAt(i)非汉字，则保持原样
+                sb.append(str.charAt(i));
+            }
+            else {
+                sb.append(tempPinyin);
+            }
+        }
+        return sb.toString();
+    }
 
     private StringUtils(){}
 }

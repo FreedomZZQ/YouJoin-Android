@@ -125,6 +125,8 @@ implements DataPresenter.GetUserInfo{
                 .withActivity(MainActivity.this)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(profile)
+                .withDividerBelowHeader(false)
+                .withPaddingBelowHeader(false)
                 .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
                     @Override
                     public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
@@ -146,6 +148,8 @@ implements DataPresenter.GetUserInfo{
                 .withToolbar(toolbar)
                 .withHasStableIds(true)
                 .withAccountHeader(drawerHeader)
+                .withHeaderDivider(false)
+                .withHeaderPadding(false)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getString(R.string.navigation_tweets))
                                 .withIcon(R.drawable.ic_home_black_48dp).withIdentifier(DRAWER_TWEETS)

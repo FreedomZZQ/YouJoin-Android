@@ -63,21 +63,19 @@
         <LinearLayout
             android:id="@+id/material_drawer_account_header_text_section"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
+            android:layout_height="64dp"
             android:layout_marginBottom="@dimen/material_drawer_padding"
-            android:layout_toLeftOf="@+id/material_drawer_account_header_text_switcher"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingRight="56dp">
+            android:layout_marginRight="@dimen/material_drawer_vertical_padding"
+            android:layout_toRightOf="@id/material_drawer_account_header_current"
+            android:layout_marginLeft="@dimen/material_drawer_vertical_padding"
+            android:layout_marginTop="@dimen/material_drawer_account_header_horizontal_top">
 
             <TextView
                 android:id="@+id/material_drawer_account_header_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/material_drawer_vertical_padding"
                 android:fontFamily="sans-serif-medium"
                 android:lines="1"
                 android:singleLine="true"
@@ -87,11 +85,12 @@
                 android:id="@+id/material_drawer_account_header_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/material_drawer_vertical_padding"
+                android:layout_marginTop="10dp"
                 android:fontFamily="sans-serif"
                 android:lines="1"
                 android:singleLine="true"
-                android:textSize="@dimen/material_drawer_account_header_text" />
+                android:textSize="@dimen/material_drawer_account_header_text_small"
+                android:textColor="@color/material_drawer_header_email_text"/>
 
         </LinearLayout>
 
@@ -102,7 +101,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/material_drawer_account_header_dropdown_margin_bottom"
-            android:layout_marginRight="@dimen/material_drawer_vertical_padding" />
+            android:layout_marginRight="@dimen/material_drawer_vertical_padding"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 </FrameLayout>
