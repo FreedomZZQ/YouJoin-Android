@@ -14,6 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.SearchUserActivity;
 import me.zq.youjoin.activity.UserInfoActivity;
 import me.zq.youjoin.adapter.FriendListAdapter;
+import me.zq.youjoin.event.FriendUpdateEvent;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.widget.sidebar.CustomEditText;
@@ -61,6 +66,7 @@ public class FriendFragment extends BaseFragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
 
         addFriendFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,10 +132,16 @@ public class FriendFragment extends BaseFragment
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FriendUpdateEvent event){
+        refreshData();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

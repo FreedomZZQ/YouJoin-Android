@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
+import me.zq.youjoin.event.FriendUpdateEvent;
 import me.zq.youjoin.event.UserInfoUpdateEvent;
 import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ResultInfo;
@@ -212,11 +213,12 @@ public class UserInfoActivity extends BaseActivity
 
     @Override
     public void onAddFriend(ResultInfo info) {
-        if (info.getResult().equals(NetworkManager.SUCCESS)) {
+        if (info.getResult() != null && info.getResult().equals(NetworkManager.SUCCESS)) {
             Toast.makeText(UserInfoActivity.this, "操作成功!",
                     Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new FriendUpdateEvent());
         } else {
-            Toast.makeText(UserInfoActivity.this, "操作成功!",
+            Toast.makeText(UserInfoActivity.this, "操作失败!",
                     Toast.LENGTH_SHORT).show();
         }
     }
