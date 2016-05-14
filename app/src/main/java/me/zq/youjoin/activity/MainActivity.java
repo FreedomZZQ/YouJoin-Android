@@ -111,7 +111,6 @@ implements DataPresenter.GetUserInfo{
     public void onDestroy(){
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        //PullManager.stopPullService(MainActivity.this, PullService.class, PullService.ACTION);
     }
 
     @Override

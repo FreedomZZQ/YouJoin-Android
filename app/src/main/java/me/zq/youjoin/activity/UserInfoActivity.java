@@ -24,13 +24,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.event.UserInfoUpdateEvent;
+import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.utils.StringUtils;
 
 public class UserInfoActivity extends BaseActivity
-        implements DataPresenter.GetUserInfo, DataPresenter.AddFriend {
+        implements DataPresenter.GetUserInfo, DataPresenter.AddFriend, DataPresenter.GetFriendList {
 
     public static final int TYPE_CURR_USER = 0;
     public static final int TYPE_OTHER_USER = 1;
@@ -120,6 +121,22 @@ public class UserInfoActivity extends BaseActivity
         refreshView();
     }
 
+    @Override
+    public void onGetFriendList(FriendsInfo friendsInfo){
+        if (info.getResult() != null && info.getResult().equals(NetworkManager.SUCCESS)) {
+
+            for(FriendsInfo.FriendsEntity e : friendsInfo.getFriends()){
+                if(e.getId() == info.getId()){
+                    btnFollow.setChecked(true);
+                    return;
+                }
+            }
+
+        }
+
+        btnFollow.setChecked(false);
+    }
+
     private void refreshView(){
         nickname.setText(info.getNickname());
         email.setText(info.getEmail());
@@ -128,7 +145,7 @@ public class UserInfoActivity extends BaseActivity
         birth.setText(info.getBirth());
         followNum.setText(Integer.toString(info.getFollow_num()));
         focusNum.setText(Integer.toString(info.getFocus_num()));
-        btnFollow.setChecked(true);
+//        btnFollow.setChecked(true);
 
         if (info.getSex().equals("0")) {
             sex.setBackground(getResources().getDrawable(R.drawable.ic_sex_boy));
@@ -158,9 +175,10 @@ public class UserInfoActivity extends BaseActivity
         location.setText("");
         followNum.setText("");
         focusNum.setText("");
-        btnFollow.setChecked(false);
+
 
         DataPresenter.requestUserInfoById(info.getId(), UserInfoActivity.this);
+
 
         if (type == TYPE_CURR_USER) {
             currUserFab.setVisibility(View.VISIBLE);
@@ -168,9 +186,8 @@ public class UserInfoActivity extends BaseActivity
         } else if (type == TYPE_OTHER_USER) {
             otherUserFab.setVisibility(View.VISIBLE);
             btnFollow.setVisibility(View.VISIBLE);
+            DataPresenter.requestFriendList(info.getId(), UserInfoActivity.this);
         }
-
-        // TODO: 2016/4/20 添加显示当前是否已关注的逻辑
 
         currUserFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,12 +212,11 @@ public class UserInfoActivity extends BaseActivity
 
     @Override
     public void onAddFriend(ResultInfo info) {
-        // TODO: 2016/4/20 添加是否成功的显示逻辑
         if (info.getResult().equals(NetworkManager.SUCCESS)) {
-            Toast.makeText(UserInfoActivity.this, "Add Friend Success!",
+            Toast.makeText(UserInfoActivity.this, "操作成功!",
                     Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(UserInfoActivity.this, "Add Friend Failure!",
+            Toast.makeText(UserInfoActivity.this, "操作成功!",
                     Toast.LENGTH_SHORT).show();
         }
     }
