@@ -35,6 +35,7 @@ public class YouJoinApplication extends Application {
         context = getApplicationContext();
 
         NetworkManager.initialize(context);
+//        Fresco.initialize(this);
 
         sScale = getResources().getDisplayMetrics().density;
         sHeightPix = getResources().getDisplayMetrics().heightPixels;

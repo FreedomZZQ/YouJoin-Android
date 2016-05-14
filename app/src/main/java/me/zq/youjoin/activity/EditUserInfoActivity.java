@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,6 +30,7 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.event.UserInfoUpdateEvent;
 import me.zq.youjoin.model.UpdateUserInfoResult;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -222,9 +225,13 @@ public class EditUserInfoActivity extends BaseActivity
     @Override
     public void onUpdateUserInfo(UpdateUserInfoResult result) {
         if (result.getResult().equals(NetworkManager.SUCCESS)) {
-            userInfo.setImg_url(result.getImg_url());
             Toast.makeText(EditUserInfoActivity.this, getString(R.string.update_success)
                     , Toast.LENGTH_SHORT).show();
+            if(!result.getImg_url().equals("")){
+                userInfo.setImg_url(result.getImg_url());
+            }
+            YouJoinApplication.setCurrUser(userInfo);
+            EventBus.getDefault().post(new UserInfoUpdateEvent(userInfo));
             EditUserInfoActivity.this.finish();
         } else {
             Toast.makeText(EditUserInfoActivity.this, getString(R.string.error_network)

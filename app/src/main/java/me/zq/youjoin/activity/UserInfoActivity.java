@@ -13,12 +13,17 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
+import me.zq.youjoin.event.UserInfoUpdateEvent;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -68,6 +73,7 @@ public class UserInfoActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initView();
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -75,6 +81,22 @@ public class UserInfoActivity extends BaseActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(UserInfoUpdateEvent event){
+        if(type == TYPE_CURR_USER){
+            this.info = event.userInfo;
+            refreshView();
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,6 +117,10 @@ public class UserInfoActivity extends BaseActivity
             return;
         }
         this.info = userInfo;
+        refreshView();
+    }
+
+    private void refreshView(){
         nickname.setText(info.getNickname());
         email.setText(info.getEmail());
         work.setText(info.getWork());

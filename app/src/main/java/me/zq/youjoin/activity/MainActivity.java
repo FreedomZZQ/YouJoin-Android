@@ -2,9 +2,7 @@ package me.zq.youjoin.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -25,7 +24,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -37,6 +35,8 @@ import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.event.ImTypeMessageEvent;
+import me.zq.youjoin.event.ProfileUpdateEvent;
+import me.zq.youjoin.event.UserInfoUpdateEvent;
 import me.zq.youjoin.fragment.AboutFragment;
 import me.zq.youjoin.fragment.AroundFragment;
 import me.zq.youjoin.fragment.FriendFragment;
@@ -73,6 +73,7 @@ implements DataPresenter.GetUserInfo{
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
 
+
         setSupportActionBar(toolbar);
         initView(savedInstanceState);
 
@@ -87,13 +88,23 @@ implements DataPresenter.GetUserInfo{
 
         }
 
-        //PullManager.startPullService(MainActivity.this, 5, PullService.class, PullService.ACTION);
         Log.d(TAG, "onCreate");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ImTypeMessageEvent event){
         drawer.updateBadge(DRAWER_MSG, new StringHolder(1 + ""));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(UserInfoUpdateEvent event){
+        DataPresenter.requestUserInfoById(YouJoinApplication.getCurrUser().getId(), MainActivity.this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ProfileUpdateEvent event){
+        IProfile p = event.profile;
+        drawerHeader.updateProfile(p);
     }
 
     @Override
@@ -107,7 +118,7 @@ implements DataPresenter.GetUserInfo{
     public void onGetUserInfo(UserInfo info){
         if(info.getResult().equals(NetworkManager.SUCCESS)){
             YouJoinApplication.setCurrUser(info);
-            refreshUserInfo();
+            refreshUserInfo(info);
         }
     }
 
@@ -131,7 +142,7 @@ implements DataPresenter.GetUserInfo{
                     @Override
                     public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
                         UserInfoActivity.actionStart(MainActivity.this, UserInfoActivity.TYPE_CURR_USER,
-                        YouJoinApplication.getCurrUser().getId());
+                                YouJoinApplication.getCurrUser().getId());
                         return false;
                     }
 
@@ -212,60 +223,42 @@ implements DataPresenter.GetUserInfo{
                 .withShowDrawerOnFirstLaunch(true)
                 .build();
 
-        refreshUserInfo();
+//        refreshUserInfo();
         // TODO: 2016/4/20  
         //drawer.updateBadge(DRAWER_MSG, new StringHolder(10 + ""));
     }
 
-    private void refreshUserInfo() {
-        final UserInfo userInfo = YouJoinApplication.getCurrUser();
+    private void refreshUserInfo(UserInfo userInfo) {
 
+        IProfile p;
+        if(userInfo.getImg_url() != null && !userInfo.getImg_url().equals("")){
 
+            String url = StringUtils.getPicUrlList(userInfo.getImg_url()).get(0);
 
-        if(userInfo.getImg_url() != null){
+            p = new ProfileDrawerItem()
+                    .withName(userInfo.getNickname())
+                    .withEmail(userInfo.getEmail())
+                    .withIcon(url)
+                    .withIdentifier(100);
+
+            drawerHeader.updateProfile(p);
+            ImageView view = (ImageView) drawerHeader.getView().findViewById(R.id.material_drawer_account_header_current);
             Picasso.with(MainActivity.this)
-                    .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
-                    .into(new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            IProfile profile = new ProfileDrawerItem()
-                                    .withName(userInfo.getNickname())
-                                    .withEmail(userInfo.getEmail())
-                                    .withIcon(bitmap)
-                                    .withIdentifier(100);
-                            drawerHeader.updateProfile(profile);
-                        }
+                    .load(url)
+                    .resize(200, 200)
+                    .centerCrop()
+                    .into(view);
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    });
         }else{
-            IProfile profile = new ProfileDrawerItem()
+            p = new ProfileDrawerItem()
                     .withName(userInfo.getNickname())
                     .withEmail(userInfo.getEmail())
                     .withIcon(R.mipmap.ic_account_circle_white_48dp)
                     .withIdentifier(100);
-            drawerHeader.updateProfile(profile);
+            drawerHeader.updateProfile(p);
         }
 
 
-
-//        if(userInfo.getImg_url() != null && !userInfo.getImg_url().equals("")){
-//            Picasso.with(MainActivity.this)
-//                    .load(StringUtils.getPicUrlList(userInfo.getImg_url()).get(0))
-//                    .resize(200, 200)
-//                    .centerCrop()
-//                    .into(ivUserPhoto);
-//        }
-//        tvUserName.setText(userInfo.getUsername());
-//        tvUserEmail.setText(userInfo.getEmail());
     }
 
     private void switchToMessage() {
