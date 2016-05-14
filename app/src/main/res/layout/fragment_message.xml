@@ -14,14 +14,4 @@
         android:listSelector="@android:color/transparent"
         android:id="@+id/sessionlist"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_msg_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_add_white_36dp"
-        app:backgroundTint="@color/yellow"
-        />
-
 </FrameLayout>

@@ -2,7 +2,6 @@ package me.zq.youjoin.fragment;
 
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +41,6 @@ public class MessageFragment extends BaseFragment {
 
     @Bind(R.id.sessionlist)
     ListView sessionlist;
-    @Bind(R.id.add_msg_fab)
-    FloatingActionButton addMsgFab;
 
     private List<AVIMConversation> sessionData = new ArrayList<>();
     private SessionListAdapter adapter;
@@ -61,18 +58,11 @@ public class MessageFragment extends BaseFragment {
 
         EventBus.getDefault().register(this);
 
-        addMsgFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         TextView emptyView = new TextView(getActivity());
         emptyView.setText(getString(R.string.hint_nodata));
         emptyView.setPadding(20, 20, 0, 0);
         ViewGroup parentView = (ViewGroup) sessionlist.getParent();
-        parentView.addView(emptyView, 2);
+        parentView.addView(emptyView, 1);
         sessionlist.setEmptyView(emptyView);
 
         adapter = new SessionListAdapter(getActivity(), sessionData);
