@@ -10,6 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +25,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.PublishActivity;
 import me.zq.youjoin.activity.TweetDetailActivity;
 import me.zq.youjoin.adapter.TweetsAdapter;
+import me.zq.youjoin.event.SendTweetEvent;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.network.NetworkManager;
 import me.zq.youjoin.widget.recycler.RecyclerItemClickListener;
@@ -43,10 +48,9 @@ implements DataPresenter.GetTweets{
     }
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SendTweetEvent event){
+        refreshData();
     }
 
     @Override
@@ -55,7 +59,7 @@ implements DataPresenter.GetTweets{
         View view = inflater.inflate(R.layout.yj_fragment_tweets, container, false);
 
         ButterKnife.bind(this, view);
-
+        EventBus.getDefault().register(this);
         addTweetsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,6 +125,7 @@ implements DataPresenter.GetTweets{
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
     }
 
 }

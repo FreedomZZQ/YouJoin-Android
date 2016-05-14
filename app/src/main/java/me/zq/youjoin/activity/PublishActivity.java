@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
+import me.zq.youjoin.event.SendTweetEvent;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.network.NetworkManager;
@@ -64,6 +67,10 @@ public class PublishActivity extends BaseActivity
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(msgEdit.getText().toString().equals("")){
+                    Toast.makeText(PublishActivity.this, "请说点什么吧~", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 DataPresenter.sendTweet(YouJoinApplication.getCurrUser().getId(),
                         msgEdit.getText().toString(), mData, PublishActivity.this);
             }
@@ -91,13 +98,14 @@ public class PublishActivity extends BaseActivity
 
     @Override
     public void onSendTweet(ResultInfo info){
-        if(info.getResult().equals(NetworkManager.SUCCESS)){
+        if(info.getResult() != null && info.getResult().equals(NetworkManager.SUCCESS)){
             msgEdit.setText("");
             mData.clear();
             layPhotoContainer.removeAllViews();
             GlobalUtils.popSoftkeyboard(PublishActivity.this, msgEdit, false);
             Toast.makeText(PublishActivity.this, getString(R.string.send_tweet_success)
                     , Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new SendTweetEvent());
             PublishActivity.this.finish();
         }else{
             Toast.makeText(PublishActivity.this, getString(R.string.error_network)
