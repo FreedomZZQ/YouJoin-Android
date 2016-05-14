@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.utils.StringUtils;
 
 public class SearchUserActivity extends BaseActivity
 implements DataPresenter.GetUserInfo{
@@ -85,6 +88,7 @@ implements DataPresenter.GetUserInfo{
     @Override
     public void onGetUserInfo(UserInfo userInfo){
         if(userInfo.getResult().equals(NetworkManager.SUCCESS)){
+            searchResult.clear();
             searchResult.add(userInfo);
             adapter.notifyDataSetChanged();
         }else{
@@ -144,8 +148,20 @@ implements DataPresenter.GetUserInfo{
                 holder = (ViewHolder) convertView.getTag();
             }
             //设置布局中控件要显示的视图
-            holder.img.setBackgroundResource(R.mipmap.ic_account_circle_white_48dp);
-            holder.name.setText(searchResult.get(pos).getUsername());
+            UserInfo info = searchResult.get(pos);
+
+            holder.name.setText(info.getUsername());
+            if(info.getImg_url() != null && !info.getImg_url().equals("")){
+                Picasso.with(SearchUserActivity.this)
+                        .load(StringUtils.getPicUrlList(searchResult.get(pos).getImg_url()).get(0))
+                        .resize(200, 200)
+                        .centerCrop()
+                        .into(holder.img);
+            }else{
+                holder.img.setBackgroundResource(R.mipmap.ic_account_circle_white_48dp);
+            }
+
+
             return convertView;
         }
 
