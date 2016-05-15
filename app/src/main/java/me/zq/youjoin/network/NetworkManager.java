@@ -97,11 +97,28 @@ public class NetworkManager {
     public static final String API_REQUEST_PRIMSG_LOG = BASE_API_URL + "chat_log.php";
     public static final String API_REQUEST_PLUGIN = BASE_API_URL + "get_plugin.php";
     public static final String API_REQUEST_AROUND = BASE_API_URL + "get_aroundlist.php";
+    public static final String API_REQUEST_IS_UPVOTE = BASE_API_URL + "isupvote_tweet.php";
 
     private static RequestQueue mRequestQueue ;
 
     public static final String TAG = "YouJoin_Network";
 
+    /**
+     * 获取当前用户是否赞了某条动态
+     * @param userId 当前用户id
+     * @param tweetId 动态id
+     * @param listener ResponseListener
+     */
+    public static void postRequestIsUpvote(String userId, String tweetId,
+                                           ResponseListener listener){
+        Map<String, String> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        params.put(TWEET_ID, tweetId);
+
+        Request request = new PostObjectRequest(API_REQUEST_IS_UPVOTE,
+                params, new TypeToken<ResultInfo>(){}.getType(), listener);
+        NetworkManager.getRequestQueue().add(request);
+    }
 
     /**
      * 获取附近的人

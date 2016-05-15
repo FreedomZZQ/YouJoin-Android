@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.zq.youjoin.model.CommentInfo;
+import me.zq.youjoin.model.FriendsInfo;
 import me.zq.youjoin.model.ImageInfo;
 import me.zq.youjoin.model.PluginInfo;
 import me.zq.youjoin.model.ResultInfo;
@@ -27,21 +28,36 @@ public class NetworkManagerTest extends AndroidTestCase {
 
     public static final Integer testId = 16;
     public static final Integer testId2 = 17;
-    public static final Integer testTweetId = 14;
+    public static final Integer testTweetId = 221;
     public static final String picPath = "/storage/emulated/0/Tencent/QQfile_recv/default6.jpg";
     public static final String TAG = "YouJoinTest";
     public static final String SUCCESS = "success";
 
+    public void testRequestIsUpvote(){
+        NetworkManager.postRequestIsUpvote(testId.toString(), testTweetId.toString(),
+                new ResponseListener<ResultInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ResultInfo info) {
+                        Log.d(TAG, info.getResult());
+                    }
+                });
+    }
+
     public void testRequestAroundList(){
 
-        NetworkManager.postRequestAround(testId.toString(), false, null, new ResponseListener<ResultInfo>() {
+        NetworkManager.postRequestAround(testId.toString(), false, null, new ResponseListener<FriendsInfo>() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
             }
 
             @Override
-            public void onResponse(ResultInfo o) {
+            public void onResponse(FriendsInfo o) {
                 Log.d(TAG, o.getResult());
             }
         });

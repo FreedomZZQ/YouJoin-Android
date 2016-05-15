@@ -13,7 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +32,13 @@ import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.adapter.CommentsAdapter;
 import me.zq.youjoin.adapter.GridPhotoAdapter;
+import me.zq.youjoin.event.RefreshLikeEvent;
 import me.zq.youjoin.model.CommentInfo;
 import me.zq.youjoin.model.ResultInfo;
 import me.zq.youjoin.model.TweetInfo;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.network.ResponseListener;
 import me.zq.youjoin.utils.StringUtils;
 import me.zq.youjoin.widget.enter.AutoHeightGridView;
 import me.zq.youjoin.widget.enter.EmojiFragment;
@@ -81,6 +88,7 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet_detail);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         tweetsEntity = getIntent().getParcelableExtra(INFO);
 
         initViews();
@@ -184,13 +192,76 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
                 YouJoinApplication.getAppContext(), content,
                 tweetsEntity.getTweets_content()));
         time.setText(tweetsEntity.getTweets_time());
-        if (tweetsEntity.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO) {
-            btnLike.setChecked(false);
-        } else {
-            btnLike.setChecked(true);
-        }
+//        if (tweetsEntity.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO) {
+//            btnLike.setChecked(false);
+//        } else {
+//            btnLike.setChecked(true);
+//        }
+
+        EventBus.getDefault().post(new RefreshLikeEvent(RefreshLikeEvent.TYPE_INIT));
+
+        btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int type;
+                if(btnLike.isChecked()){
+                    type = RefreshLikeEvent.TYPE_UNUPVOTE;
+                }else{
+                    type = RefreshLikeEvent.TYPE_UPVOTE;
+                }
+                NetworkManager.postUpvoteTweet(Integer.toString(YouJoinApplication.getCurrUser().getId()),
+                        Integer.toString(tweetsEntity.getTweets_id()), new ResponseListener<ResultInfo>() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+
+                            }
+
+                            @Override
+                            public void onResponse(ResultInfo o) {
+                                if (o.getResult().equals(NetworkManager.SUCCESS)) {
+                                    EventBus.getDefault().post(new RefreshLikeEvent(type));
+                                }else{
+                                    Toast.makeText(TweetDetailActivity.this, getText(R.string.error_network), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
 
         initEnter();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final RefreshLikeEvent event){
+        NetworkManager.postRequestIsUpvote(Integer.toString(YouJoinApplication.getCurrUser().getId()),
+                Integer.toString(tweetsEntity.getTweets_id()), new ResponseListener<ResultInfo>() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+
+                    @Override
+                    public void onResponse(ResultInfo o) {
+                        if (o.getResult().equals(NetworkManager.SUCCESS)) {
+                            btnLike.setChecked(true);
+                            if(event.type != RefreshLikeEvent.TYPE_INIT){
+                                int num = tweetsEntity.getUpvote_num();
+                                num++;
+                                tweetsEntity.setUpvote_num(num);
+                                likeCount.setText(Integer.toString(num));
+
+                            }
+                        }else{
+                            btnLike.setChecked(false);
+                            if(event.type != RefreshLikeEvent.TYPE_INIT){
+                                int num = tweetsEntity.getUpvote_num();
+                                num--;
+                                tweetsEntity.setUpvote_num(num);
+                                likeCount.setText(Integer.toString(num));
+                            }
+                        }
+                    }
+                });
     }
 
     @Override
@@ -247,6 +318,12 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
         super.onStop();
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        ButterKnife.unbind(this);
+    }
     @Override
     public EnterLayout getEnterLayout() {
         return enterLayout;

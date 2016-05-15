@@ -26,11 +26,13 @@
                 android:id="@+id/comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 tools:text="发送"
                 android:textColor="@color/grey"
-                android:textSize="12sp"
-                android:background="@null" />
+                android:textSize="16sp"
+                android:background="@null"
+                android:gravity="center_vertical"/>
 
             <RelativeLayout
                 android:layout_width="54dp"
