@@ -63,8 +63,6 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
 
     private Boolean isSignIn;
 
-    private static Activity welcomeActivity;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,7 +215,6 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
         showProgress(false);
         MainActivity.actionStart(SignInUpActivity.this);
         SignInUpActivity.this.finish();
-        welcomeActivity.finish();
     }
 
     private boolean isUsernameValid(String username) {
@@ -239,25 +236,8 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
     private void showProgress(final boolean show) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
             loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-//            loginForm.animate().setDuration(shortAnimTime).alpha(
-//                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//                    loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-//                }
-//            });
-
             loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-//            loginProgress.animate().setDuration(shortAnimTime).alpha(
-//                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//                    loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-//                }
-//            });
         } else {
             loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
             loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
@@ -268,7 +248,6 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
         Intent intent = new Intent(welcomeContext, SignInUpActivity.class);
         intent.putExtra("isSignIn", isSignIn);
         welcomeContext.startActivity(intent);
-        welcomeActivity = welcomeContext;
     }
 }
 

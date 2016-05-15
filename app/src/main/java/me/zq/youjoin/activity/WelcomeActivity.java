@@ -12,12 +12,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.zq.youjoin.R;
+import me.zq.youjoin.event.SigninSuccessEvent;
 
 public class WelcomeActivity extends BaseActivity
         implements View.OnClickListener {
@@ -32,11 +37,17 @@ public class WelcomeActivity extends BaseActivity
     private List<View> list = new ArrayList<>();
     private ImageView[] img = null;
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SigninSuccessEvent event){
+        WelcomeActivity.this.finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.yj_activity_welcome);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         chooseSigninButton.setOnClickListener(this);
         chooseSignupButton.setOnClickListener(this);
@@ -78,6 +89,12 @@ public class WelcomeActivity extends BaseActivity
         viewPager.setOnPageChangeListener(new ViewPagerPageChangeListener());
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        ButterKnife.unbind(this);
+    }
     class ViewPagerPageChangeListener implements ViewPager.OnPageChangeListener {
 
         /*
