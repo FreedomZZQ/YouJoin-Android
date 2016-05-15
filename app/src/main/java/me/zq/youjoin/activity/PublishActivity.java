@@ -1,16 +1,21 @@
 package me.zq.youjoin.activity;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +39,7 @@ import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
 
 public class PublishActivity extends BaseActivity
-        implements EmojiFragment.EnterEmojiLayout, DataPresenter.SendTweet{
+        implements EmojiFragment.EnterEmojiLayout, DataPresenter.SendTweet {
 
     @Bind(R.id.lay_photo_container)
     LinearLayout layPhotoContainer;
@@ -42,11 +47,18 @@ public class PublishActivity extends BaseActivity
     ImageButton btnPopPhoto;
     @Bind(R.id.btn_send)
     ImageButton btnSend;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.inputLayout)
+    LinearLayout inputLayout;
+    @Bind(R.id.bottom_layout)
+    LinearLayout bottomLayout;
 
     ArrayList<String> mSelectPath;
     ArrayList<ImageInfo> mData = new ArrayList<>();
     EnterEmojiLayout enterLayout;
     EditText msgEdit;
+
 
     private boolean mFirstFocus = true;
 
@@ -67,10 +79,11 @@ public class PublishActivity extends BaseActivity
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(msgEdit.getText().toString().equals("")){
+                if (msgEdit.getText().toString().equals("")) {
                     Toast.makeText(PublishActivity.this, "请说点什么吧~", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                showProgress(true);
                 DataPresenter.sendTweet(YouJoinApplication.getCurrUser().getId(),
                         msgEdit.getText().toString(), mData, PublishActivity.this);
             }
@@ -78,8 +91,12 @@ public class PublishActivity extends BaseActivity
 
         initEnter();
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
+        ThreeBounce threeBounce = new ThreeBounce();
+        threeBounce.setColor(getResources().getColor(R.color.colorPrimary));
+        progressBar.setIndeterminateDrawable(threeBounce);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -97,8 +114,9 @@ public class PublishActivity extends BaseActivity
     }
 
     @Override
-    public void onSendTweet(ResultInfo info){
-        if(info.getResult() != null && info.getResult().equals(NetworkManager.SUCCESS)){
+    public void onSendTweet(ResultInfo info) {
+        showProgress(false);
+        if (info.getResult() != null && info.getResult().equals(NetworkManager.SUCCESS)) {
             msgEdit.setText("");
             mData.clear();
             layPhotoContainer.removeAllViews();
@@ -107,7 +125,7 @@ public class PublishActivity extends BaseActivity
                     , Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(new SendTweetEvent());
             PublishActivity.this.finish();
-        }else{
+        } else {
             Toast.makeText(PublishActivity.this, getString(R.string.error_network)
                     , Toast.LENGTH_SHORT).show();
         }
@@ -138,6 +156,12 @@ public class PublishActivity extends BaseActivity
     protected void onStop() {
         enterLayout.closeEnterPanel();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     @Override
@@ -179,6 +203,22 @@ public class PublishActivity extends BaseActivity
         }
     }
 
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            inputLayout.setVisibility(show ? View.GONE : View.VISIBLE);
+            bottomLayout.setVisibility(show ? View.GONE : View.VISIBLE);
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        } else {
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            inputLayout.setVisibility(show ? View.GONE : View.VISIBLE);
+            bottomLayout.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
 
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, PublishActivity.class);

@@ -1,7 +1,5 @@
 package me.zq.youjoin.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -108,12 +108,18 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+
+        ThreeBounce threeBounce = new ThreeBounce();
+        threeBounce.setColor(getResources().getColor(R.color.colorPrimary));
+        loginProgress.setIndeterminateDrawable(threeBounce);
+
     }
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        ButterKnife.unbind(this);
     }
 
     private void attemptSign() {
@@ -200,6 +206,7 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
             YouJoinApplication.setCurrUser(info);
         }else{
             //passwordEdit.setError(getString(R.string.error_incorrect_password));
+            showProgress(false);
             passwordEdit.setError(getString(R.string.error_network));
             passwordEdit.requestFocus();
         }
@@ -235,22 +242,22 @@ implements DataPresenter.SignIn, DataPresenter.SignUp{
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-            loginForm.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+//            loginForm.animate().setDuration(shortAnimTime).alpha(
+//                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    loginForm.setVisibility(show ? View.GONE : View.VISIBLE);
+//                }
+//            });
 
             loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-            loginProgress.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
+//            loginProgress.animate().setDuration(shortAnimTime).alpha(
+//                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
+//                }
+//            });
         } else {
             loginProgress.setVisibility(show ? View.VISIBLE : View.GONE);
             loginForm.setVisibility(show ? View.GONE : View.VISIBLE);

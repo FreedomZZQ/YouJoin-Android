@@ -1,19 +1,23 @@
 package me.zq.youjoin.activity;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
+import com.github.ybq.android.spinkit.style.ThreeBounce;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,6 +74,8 @@ public class EditUserInfoActivity extends BaseActivity
     FloatingActionButton commitFab;
     @Bind(R.id.avatar)
     CircleImageView avatar;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
 
     private UserInfo userInfo;
     private String picPath;
@@ -122,11 +128,31 @@ public class EditUserInfoActivity extends BaseActivity
             }
         });
 
+        ThreeBounce threeBounce = new ThreeBounce();
+        threeBounce.setColor(getResources().getColor(R.color.colorPrimary));
+        progressBar.setIndeterminateDrawable(threeBounce);
+
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            editContainer.setVisibility(show ? View.GONE : View.VISIBLE);
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        } else {
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            editContainer.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -218,12 +244,16 @@ public class EditUserInfoActivity extends BaseActivity
         userInfo.setBirth(birth.getText().toString());
         userInfo.setUsersign(editSign.getText().toString());
         userInfo.setNickname(editNickname.getText().toString());
+
+        showProgress(true);
+
         DataPresenter.updateUserInfo(userInfo, picPath, EditUserInfoActivity.this);
 
     }
 
     @Override
     public void onUpdateUserInfo(UpdateUserInfoResult result) {
+        showProgress(false);
         if (result.getResult().equals(NetworkManager.SUCCESS)) {
             Toast.makeText(EditUserInfoActivity.this, getString(R.string.update_success)
                     , Toast.LENGTH_SHORT).show();
