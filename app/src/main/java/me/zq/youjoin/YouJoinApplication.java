@@ -9,7 +9,6 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
-import com.squareup.leakcanary.LeakCanary;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,7 +32,7 @@ public class YouJoinApplication extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-        LeakCanary.install(this);
+        //LeakCanary.install(this);
         context = getApplicationContext();
 
         NetworkManager.initialize(context);

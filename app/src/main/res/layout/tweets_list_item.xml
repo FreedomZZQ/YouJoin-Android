@@ -75,8 +75,8 @@
         android:columnWidth="100dp"
         android:gravity="center"
         android:numColumns="3"
-        android:verticalSpacing="8dp"
-        android:horizontalSpacing="1dp"
+        android:verticalSpacing="6dp"
+        android:horizontalSpacing="6dp"
         android:stretchMode="columnWidth"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"/>
