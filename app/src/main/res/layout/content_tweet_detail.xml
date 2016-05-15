@@ -76,10 +76,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:columnWidth="100dp"
+            android:columnWidth="120dp"
             android:gravity="center"
             android:numColumns="3"
-            android:stretchMode="none"/>
+            android:verticalSpacing="2dp"
+            android:stretchMode="columnWidth"/>
 
         <LinearLayout
             android:layout_width="match_parent"

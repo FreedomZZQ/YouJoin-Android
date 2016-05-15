@@ -66,15 +66,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:columnWidth="100dp"
+        android:columnWidth="120dp"
         android:gravity="center"
-        android:layout_gravity="center_horizontal"
         android:numColumns="3"
-        android:stretchMode="none"/>
-    <!--<ImageView-->
-    <!--android:id="@+id/ivFeedBottom"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content" />-->
+        android:verticalSpacing="2dp"
+        android:stretchMode="columnWidth"/>
 
     <View
         android:layout_width="match_parent"
