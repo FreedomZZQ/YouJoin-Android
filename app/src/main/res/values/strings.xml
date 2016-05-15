@@ -33,7 +33,7 @@
 
     <!-- Strings related to personal center-->
     <string name="hint_work">职业</string>
-    <string name="hint_location">现居地</string>
+    <string name="hint_location">现居</string>
     <string name="hint_birth">生日</string>
     <string name="hint_sex">性别</string>
     <string name="hint_sign">个性签名</string>

@@ -46,22 +46,12 @@
         </LinearLayout>
 
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:id="@+id/email"
-            android:text="zzq@zzq.com"
-            android:textColor="@color/trans_white"
-            android:layout_gravity="center_horizontal"/>
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -117,8 +107,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/container_detail"
         android:layout_below="@id/userinfo_header"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="36dp"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -128,7 +119,7 @@
             <TextView
                 android:layout_width="@dimen/user_detail_text_width"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_work"
+                android:text="@string/hint_birth"
                 android:textSize="@dimen/user_detail_text_size"
                 android:layout_marginStart="@dimen/user_detail_item_margin"
                 android:layout_marginEnd="@dimen/user_detail_item_margin"/>
@@ -136,8 +127,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/work"
-                tools:text="student"
+                android:id="@+id/birth"
+                tools:text="birth"
                 android:textSize="@dimen/user_detail_text_size"/>
 
         </LinearLayout>
@@ -172,6 +163,52 @@
             <TextView
                 android:layout_width="@dimen/user_detail_text_width"
                 android:layout_height="wrap_content"
+                android:text="@string/hint_work"
+                android:textSize="@dimen/user_detail_text_size"
+                android:layout_marginStart="@dimen/user_detail_item_margin"
+                android:layout_marginEnd="@dimen/user_detail_item_margin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/work"
+                tools:text="student"
+                android:textSize="@dimen/user_detail_text_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/user_detail_margin">
+
+            <TextView
+                android:layout_width="@dimen/user_detail_text_width"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_email"
+                android:textSize="@dimen/user_detail_text_size"
+                android:layout_marginStart="@dimen/user_detail_item_margin"
+                android:layout_marginEnd="@dimen/user_detail_item_margin"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/email"
+                tools:text="zzq@zzq.com"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/user_detail_text_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/user_detail_margin">
+
+            <TextView
+                android:layout_width="@dimen/user_detail_text_width"
+                android:layout_height="wrap_content"
                 android:text="@string/hint_sign"
                 android:textSize="@dimen/user_detail_text_size"
                 android:layout_marginStart="@dimen/user_detail_item_margin"
@@ -185,29 +222,6 @@
                 android:textSize="@dimen/user_detail_text_size"/>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/user_detail_margin">
-
-            <TextView
-                android:layout_width="@dimen/user_detail_text_width"
-                android:layout_height="wrap_content"
-                android:text="@string/hint_birth"
-                android:textSize="@dimen/user_detail_text_size"
-                android:layout_marginStart="@dimen/user_detail_item_margin"
-                android:layout_marginEnd="@dimen/user_detail_item_margin"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/birth"
-                tools:text="birth"
-                android:textSize="@dimen/user_detail_text_size"/>
-
-        </LinearLayout>
-
 
     </LinearLayout>
 
