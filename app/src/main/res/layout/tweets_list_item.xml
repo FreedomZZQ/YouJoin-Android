@@ -1,189 +1,180 @@
-<?xml version="1.0" encoding="utf-8"?><!-- item_feed.xml -->
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:layout_gravity="center"
-    android:layout_marginTop="8dp"
-    card_view:cardCornerRadius="0dp"
-    card_view:cardElevation="0dp">
+    android:layout_marginTop="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="13dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@mipmap/ic_account_circle_white_48dp"
+            android:layout_gravity="center_vertical"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="13dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/avatar"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@mipmap/ic_account_circle_white_48dp"
-                android:layout_gravity="center_vertical"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/general_margin"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="youjoin"
-                    android:id="@+id/username"
-                    android:textColor="@color/name_font_black"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/time"
-                    android:textColor="@color/time_font_black"
-                    android:layout_marginTop="3dp"
-                    android:textSize="8sp"
-                    tools:text="12:12"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/content"
-            tools:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentc"
-            android:textSize="13sp"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"
-            android:textColor="@color/content_font_black"/>
-
-        <me.zq.youjoin.widget.enter.AutoHeightGridView
-            android:id="@+id/gridView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:columnWidth="100dp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:numColumns="3"
-            android:stretchMode="none"/>
-        <!--<ImageView-->
-        <!--android:id="@+id/ivFeedBottom"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/bg_grey"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal">
-
-
-            <CheckBox
-                android:id="@+id/btnLike"
-                android:layout_width="@dimen/tweets_list_item_button_size"
-                android:layout_height="@dimen/tweets_list_item_button_size"
-                android:button="@null"
-                android:background="@drawable/checkbox_upvote"
-                android:checked="true"/>
-            <!--android:background="@drawable/btn_feed_action"-->
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/general_margin"
+            android:layout_gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="喜欢"
-                android:textSize="10sp"
-                android:textColor="@color/grey"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"/>
+                tools:text="youjoin"
+                android:id="@+id/username"
+                android:textColor="@color/name_font_black"
+                android:textSize="10sp" />
 
-            <TextSwitcher
-                android:id="@+id/tsLikesCounter"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_gravity="center_vertical">
-                <!--android:inAnimation="@anim/slide_in_likes_counter"
-                                    android:outAnimation="@anim/slide_out_likes_counter"-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/like_count"
-                    tools:text="13"
-                    android:textSize="10sp"
-                    android:textColor="@color/grey"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/grey"
-                    android:textSize="10sp"/>
-            </TextSwitcher>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/bg_grey"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/time"
+                android:textColor="@color/time_font_black"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"
-                android:layout_marginStart="64dp"
-                android:layout_marginEnd="64dp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="8sp"
+                tools:text="12:12"/>
 
-
-            <ImageButton
-                android:id="@+id/btnComments"
-                android:layout_width="@dimen/tweets_list_item_button_size"
-                android:layout_height="@dimen/tweets_list_item_button_size"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/ic_comment_black"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="评论"
-                android:textSize="10sp"
-                android:textColor="@color/grey"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/comment_count"
-                tools:text="23"
-                android:textColor="@color/grey"
-                android:textSize="10sp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="5dp"/>
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center_vertical|right">-->
-            <!---->
-            <!--</LinearLayout>-->
         </LinearLayout>
 
     </LinearLayout>
-</android.support.v7.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content"
+        tools:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentc"
+        android:textSize="13sp"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:textColor="@color/content_font_black"/>
+
+    <me.zq.youjoin.widget.enter.AutoHeightGridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:numColumns="3"
+        android:stretchMode="none"/>
+    <!--<ImageView-->
+    <!--android:id="@+id/ivFeedBottom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_grey"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal">
+
+
+        <CheckBox
+            android:id="@+id/btnLike"
+            android:layout_width="@dimen/tweets_list_item_button_size"
+            android:layout_height="@dimen/tweets_list_item_button_size"
+            android:button="@null"
+            android:background="@drawable/checkbox_upvote"
+            android:checked="true"/>
+        <!--android:background="@drawable/btn_feed_action"-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="喜欢"
+            android:textSize="10sp"
+            android:textColor="@color/grey"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextSwitcher
+            android:id="@+id/tsLikesCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical">
+            <!--android:inAnimation="@anim/slide_in_likes_counter"
+                                android:outAnimation="@anim/slide_out_likes_counter"-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/like_count"
+                tools:text="13"
+                android:textSize="10sp"
+                android:textColor="@color/grey"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey"
+                android:textSize="10sp"/>
+        </TextSwitcher>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_grey"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:layout_gravity="center_vertical"/>
+
+
+        <ImageButton
+            android:id="@+id/btnComments"
+            android:layout_width="@dimen/tweets_list_item_button_size"
+            android:layout_height="@dimen/tweets_list_item_button_size"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_comment_black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论"
+            android:textSize="10sp"
+            android:textColor="@color/grey"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/comment_count"
+            tools:text="23"
+            android:textColor="@color/grey"
+            android:textSize="10sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@color/bg_grey"/>
+
+</LinearLayout>
