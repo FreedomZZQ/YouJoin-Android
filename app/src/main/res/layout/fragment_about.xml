@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/welcome_viewpager3"
+        android:src="@drawable/welcome_viewpager4"
         android:layout_gravity="center_horizontal"/>
 
     <View

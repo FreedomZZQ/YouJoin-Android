@@ -47,7 +47,7 @@
                     tools:text="youjoin"
                     android:id="@+id/username"
                     android:textColor="@color/name_font_black"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     />
 
                 <TextView

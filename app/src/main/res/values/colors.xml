@@ -25,7 +25,7 @@
     <color name="name_font_black">#a3a3a3</color>
 
     <!--chat bg-->
-    <color name="msg_item_in_bg">#dcdcdc</color>
+    <color name="msg_item_in_bg">#ffffff</color>
 
     <color name="emoji_line">#ffcbc9ca</color>
 
