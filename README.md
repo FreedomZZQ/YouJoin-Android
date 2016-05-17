@@ -1,4 +1,4 @@
-# YouJoin社交 Android 客户端
+# YouJoin-Android
 ## 简介
 这个repo是YouJoin社交平台的Android客户端，代码由本人独立编写，功能和特点包括：
  - 采用Material Design设计
@@ -31,14 +31,34 @@
  - 资料编辑  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-infoedit.png?imageView/2/w/400)  
  - 消息列表  
- ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-msglist.png?imageView/2/w/400) 
-  - 好友列表  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-friendlist.png?imageView/2/w/400) 
+ ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-msglist.png?imageView/2/w/400)  
+ - 好友列表  
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-friendlist.png?imageView/2/w/400)  
  - 附近的人  
- ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-around.png?imageView/2/w/400) 
+ ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-around.png?imageView/2/w/400)  
  - 私信聊天  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-chat.png?imageView/2/w/400)  
  
+ ## 开源库依赖
+  - [butterknife](https://github.com/JakeWharton/butterknife)
+  - [circleimageview](https://github.com/hdodenhof/CircleImageView)
+  - [eventbus](https://github.com/greenrobot/EventBus)
+  - [gson](https://github.com/google/gson)
+  - [leakcanary](https://github.com/square/leakcanary)
+  - [materialdaterangepicker](https://github.com/borax12/MaterialDateRangePicker)
+  - [material-drawer-library](https://github.com/mikepenz/MaterialDrawer)
+  - [multi-image-selector](http://git.oschina.net/ant/MultiImageSelector)
+  - [nineoldandroids](https://github.com/JakeWharton/NineOldAndroids)
+  - [pinyin4j](https://sourceforge.net/projects/pinyin4j)
+  - [picasso](https://github.com/square/picasso)
+  - [stickylistheaders](https://github.com/emilsjolander/StickyListHeaders)
+  - [spinkit](https://github.com/ybq/Android-SpinKit)
+  - [systembartint](https://github.com/jgilfelt/SystemBarTint)
+  - [volley](https://android.googlesource.com/platform/frameworks/volley)
+ 
+## 即时通讯
+ - LeanCloud（上述开源项目中未包含LeanCloud SDK中的jar）
+
 ## 联系方式
 freedomzzq#tekbroaden.com
 
