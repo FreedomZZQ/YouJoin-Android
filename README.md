@@ -1,27 +1,43 @@
 # YouJoin社交 Android 客户端
 ## 简介
-这个repo是YouJoin社交平台的Android客户端，代码由本人独立编写，采用Material Design设计，功能做到尽量精简，同时将扩展功能使用插件的方式呈现，给用户选择功能的自由。  
+这个repo是YouJoin社交平台的Android客户端，代码由本人独立编写，功能和特点包括：
+ - 采用Material Design设计
+ - 登录注册
+ - 即时聊天
+ - 个人中心（支持资料编辑、头像上传）
+ - 心情动态（支持最多九张图片；支持点赞、评论）
+ - 好友关注
+ - 附近的人（采用**特征点匿名匹配算法**，服务器不了解客户端真实地理位置，保护用户隐私）
+ - 支持emoji表情（原创emoji表情绘制中）
+ - 插件扩展（开发中） 
   
-项目为兴趣而生，非商业项目，请勿用作商业用途。目前还在开发中……  
-## 亲身体验
-可以使用手机QQ扫描二维码进行体验  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160107103114.png)  
+项目因兴趣而生，非商业项目。目前还在开发中……  
+ 
 ## 运行截图
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-16-48-34.png?imageView/2/w/400)  
-  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-16-48-45.png?imageView/2/w/400)  
-  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-16-49-07.png?imageView/2/w/400)  
-  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-16-49-40.png?imageView/2/w/400)  
-  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-16-50-51.png?imageView/2/w/400)  
-  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-16-50-44.png?imageView/2/w/400)  
-  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-16-50-55.png?imageView/2/w/400)  
-  
-![](http://7vzrj0.com1.z0.glb.clouddn.com/Screenshot_2016-01-06-19-08-39.png?imageView/2/w/400)  
+ - 欢迎页  
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-welcome.png?imageView/2/w/400)  
+ - 登录页  
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-login.png?imageView/2/w/400)  
+ - 动态列表  
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-tweetslist.png?imageView/2/w/400)  
+ - 动态详情
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-tweetdetail.png?imageView/2/w/400)  
+ - 抽屉菜单
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-menu.png?imageView/2/w/400)  
+ - 动态发表
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-publish.png?imageView/2/w/400)  
+ - 个人资料
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-info.png?imageView/2/w/400)  
+ - 资料编辑
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-infoedit.png?imageView/2/w/400)  
+ - 消息列表
+ ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-msglist.png?imageView/2/w/400) 
+  - 好友列表
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-friendlist.png?imageView/2/w/400) 
+ - 附近的人
+ ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-around.png?imageView/2/w/400) 
+ - 私信聊天
+![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-chat.png?imageView/2/w/400)  
  
 ## 联系方式
 freedomzzq#tekbroaden.com
