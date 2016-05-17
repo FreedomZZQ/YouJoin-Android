@@ -20,23 +20,23 @@
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-login.png?imageView/2/w/400)  
  - 动态列表  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-tweetslist.png?imageView/2/w/400)  
- - 动态详情
+ - 动态详情  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-tweetdetail.png?imageView/2/w/400)  
- - 抽屉菜单
+ - 抽屉菜单  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-menu.png?imageView/2/w/400)  
- - 动态发表
+ - 动态发表  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-publish.png?imageView/2/w/400)  
- - 个人资料
+ - 个人资料  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-info.png?imageView/2/w/400)  
- - 资料编辑
+ - 资料编辑  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-infoedit.png?imageView/2/w/400)  
- - 消息列表
+ - 消息列表  
  ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-msglist.png?imageView/2/w/400) 
-  - 好友列表
+  - 好友列表  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-friendlist.png?imageView/2/w/400) 
- - 附近的人
+ - 附近的人  
  ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-around.png?imageView/2/w/400) 
- - 私信聊天
+ - 私信聊天  
 ![](http://7vzrj0.com1.z0.glb.clouddn.com/youjoin-android-1-chat.png?imageView/2/w/400)  
  
 ## 联系方式
