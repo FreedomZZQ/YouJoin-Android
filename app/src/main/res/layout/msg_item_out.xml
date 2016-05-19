@@ -18,7 +18,7 @@
         android:id="@+id/text_out"
         android:background="@drawable/msg_item_out_bg"
         android:gravity="start"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textColor="@color/white"
         tools:text="hello!hello!hello!hello!hello!hello!hello!hello!hello!hello!hello!"
         android:maxWidth="200dp"
