@@ -67,7 +67,8 @@ public class StringUtils {
             Integer imgRes = MyImageGetter.getResourceId(key);
             if (imgRes != null) {
                 // 压缩表情图片
-                int size = (int) tv.getTextSize();
+//                int size = (int) tv.getTextSize();
+                int size = 64;
                 Bitmap bitmap = BitmapFactory.decodeResource(res, imgRes);
                 Bitmap scaleBitmap = Bitmap.createScaledBitmap(bitmap, size, size, true);
 
