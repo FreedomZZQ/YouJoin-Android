@@ -5,13 +5,20 @@
     android:layout_height="match_parent"
     tools:context="me.zq.youjoin.fragment.MessageFragment">
 
-    <ListView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fastScrollEnabled="false"
-        android:fastScrollAlwaysVisible="false"
-        android:scrollbars="none"
-        android:listSelector="@android:color/transparent"
-        android:id="@+id/sessionlist"/>
+        android:id="@+id/refresher">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fastScrollEnabled="false"
+            android:fastScrollAlwaysVisible="false"
+            android:scrollbars="none"
+            android:listSelector="@android:color/transparent"
+            android:id="@+id/sessionlist"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

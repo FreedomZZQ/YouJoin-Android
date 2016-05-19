@@ -67,10 +67,7 @@ implements DataPresenter.GetTweets{
             }
         });
 
-        refresher.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_red_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_green_light);
+        refresher.setColorSchemeResources(R.color.colorPrimary);
         refresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

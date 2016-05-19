@@ -3,6 +3,7 @@ package me.zq.youjoin.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ public class MessageFragment extends BaseFragment {
 
     @Bind(R.id.sessionlist)
     ListView sessionlist;
+    @Bind(R.id.refresher)
+    SwipeRefreshLayout refresher;
 
     private List<AVIMConversation> sessionData = new ArrayList<>();
     private SessionListAdapter adapter;
@@ -58,6 +61,14 @@ public class MessageFragment extends BaseFragment {
 
         EventBus.getDefault().register(this);
 
+        refresher.setColorSchemeResources(R.color.colorPrimary);
+        refresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+
         TextView emptyView = new TextView(getActivity());
         emptyView.setText(getString(R.string.hint_nodata));
         emptyView.setPadding(20, 20, 0, 0);
@@ -71,45 +82,47 @@ public class MessageFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String username = sessionData.get(position).getMembers().get(0);
-                if(username.equals(YouJoinApplication.getCurrUser().getUsername())){
+                if (username.equals(YouJoinApplication.getCurrUser().getUsername())) {
                     username = sessionData.get(position).getMembers().get(1);
                 }
                 MessageActivity.actionStart(getActivity(), username);
             }
         });
 
-        getConversation();
+        refreshData();
 
         return view;
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(ImTypeMessageEvent event){
+    public void onEvent(ImTypeMessageEvent event) {
         AVIMTypedMessage message = event.message;
         AVIMConversation conversation = event.conversation;
-        getConversation();
+        refreshData();
     }
 
-    private void getConversation(){
+    private void refreshData() {
+        refresher.setRefreshing(true);
         AVIMClient tom = AVIMClient.getInstance(YouJoinApplication.getCurrUser().getUsername());
-        tom.open(new AVIMClientCallback(){
+        tom.open(new AVIMClientCallback() {
 
             @Override
-            public void done(AVIMClient client,AVIMException e){
-                if(e==null){
+            public void done(AVIMClient client, AVIMException e) {
+                if (e == null) {
                     //登录成功
                     AVIMConversationQuery query = client.getQuery();
                     //query.limit(20);
-                    query.findInBackground(new AVIMConversationQueryCallback(){
+                    query.findInBackground(new AVIMConversationQueryCallback() {
                         @Override
-                        public void done(List<AVIMConversation> convs, AVIMException e){
-                            if(e==null){
+                        public void done(List<AVIMConversation> convs, AVIMException e) {
+                            refresher.setRefreshing(false);
+                            if (e == null) {
                                 //convs就是获取到的conversation列表
                                 //注意：按每个对话的最后更新日期（收到最后一条消息的时间）倒序排列
                                 sessionData.clear();
