@@ -62,7 +62,10 @@
 ## 联系方式
 freedomzzq#tekbroaden.com
 
-## LICENSE
+## DESIGN-LICENSE
+Design by lianghongxue 不得以任何方式使用应用中的原创图片、图标资源，包括但不限于emoji以及引导图等。上述资源版权归YouJoin Studio所有。
+
+## CODE-LICENSE
 The MIT License (MIT)
 
 Copyright (c) 2016 YouJoin Studio
