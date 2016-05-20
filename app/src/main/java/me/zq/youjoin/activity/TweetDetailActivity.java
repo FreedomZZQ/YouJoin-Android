@@ -189,7 +189,7 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
         likeCount.setText(Integer.toString(tweetsEntity.getUpvote_num()));
         commentCount.setText(Integer.toString(tweetsEntity.getComment_num()));
         content.setText(StringUtils.getEmotionContent(
-                YouJoinApplication.getAppContext(), content,
+                YouJoinApplication.getAppContext(),
                 tweetsEntity.getTweets_content()));
         time.setText(tweetsEntity.getTweets_time());
 //        if (tweetsEntity.getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO) {

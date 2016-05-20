@@ -87,7 +87,7 @@ public class CommentsAdapter extends BaseAdapter {
         holder.time.setText(dataList.get(position).getComment_time());
 
         holder.content.setText(StringUtils.getEmotionContent(
-                YouJoinApplication.getAppContext(), holder.content,
+                YouJoinApplication.getAppContext(),
                 dataList.get(position).getComment_content()));
         return convertView;
     }

@@ -106,7 +106,11 @@ public class SessionListAdapter extends BaseAdapter {
                 @Override
                 public void done(AVIMMessage avimMessage, AVIMException e) {
                     if(e == null && avimMessage != null && holder != null){
-                        holder.content.setText(((AVIMTextMessage) avimMessage).getText());
+//                        holder.content.setText(((AVIMTextMessage) avimMessage).getText());
+                        String lastText = ((AVIMTextMessage) avimMessage).getText();
+                        holder.content.setText(StringUtils.getEmotionContent(
+                                YouJoinApplication.getAppContext(),
+                                lastText));
                     }
                 }
             });
