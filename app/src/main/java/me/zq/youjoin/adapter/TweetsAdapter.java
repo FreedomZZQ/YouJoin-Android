@@ -90,7 +90,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         viewHolder.likeCount.setText(Integer.toString(dataList.get(location).getUpvote_num()));
         viewHolder.commentCount.setText(Integer.toString(dataList.get(location).getComment_num()));
         viewHolder.tweetContent.setText(StringUtils.getEmotionContent(
-                YouJoinApplication.getAppContext(), viewHolder.tweetContent,
+                YouJoinApplication.getAppContext(),
                 dataList.get(location).getTweets_content()));
         viewHolder.time.setText(dataList.get(location).getTweets_time());
         if(dataList.get(location).getUpvote_status() == NetworkManager.UPVOTE_STATUS_NO){

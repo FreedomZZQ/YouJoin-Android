@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.widget.TextView;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -43,11 +42,10 @@ public class StringUtils {
 
     /**将纯string转换为支持表情显示的SpannableString
      * @param context 程序上下文
-     * @param tv 用于获取textview的行高从而设置图片的大小
      * @param source 要转换的String
      * @return SpannableString
      */
-    public static SpannableString getEmotionContent(final Context context, final TextView tv, String source) {
+    public static SpannableString getEmotionContent(final Context context, String source) {
         SpannableString spannableString = new SpannableString(source);
         Resources res = context.getResources();
 
@@ -67,7 +65,6 @@ public class StringUtils {
             Integer imgRes = MyImageGetter.getResourceId(key);
             if (imgRes != null) {
                 // 压缩表情图片
-//                int size = (int) tv.getTextSize();
                 int size = 64;
                 Bitmap bitmap = BitmapFactory.decodeResource(res, imgRes);
                 Bitmap scaleBitmap = Bitmap.createScaledBitmap(bitmap, size, size, true);

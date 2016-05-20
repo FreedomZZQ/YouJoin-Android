@@ -106,7 +106,7 @@ public class MessageListAdapter extends BaseAdapter {
         }
 
         holder.text.setText(StringUtils.getEmotionContent(
-                YouJoinApplication.getAppContext(), holder.text,
+                YouJoinApplication.getAppContext(),
                 ((AVIMTextMessage)dataList.get(position)).getText()));
         return convertView;
     }
