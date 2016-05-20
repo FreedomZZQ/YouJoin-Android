@@ -48,6 +48,7 @@ public class MyImageGetter implements Html.ImageGetter {
             return Integer.parseInt(field.get(null).toString());
         } catch (Exception e) {
             LogUtils.e(e);
+            e.printStackTrace();
         }
 
         return R.mipmap.ic_launcher;
@@ -85,6 +86,7 @@ public class MyImageGetter implements Html.ImageGetter {
 
             return s.substring(begin, end);
         } catch (Exception e) {
+            e.printStackTrace();
             return "";
         }
     }

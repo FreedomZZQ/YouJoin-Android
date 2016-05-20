@@ -46,7 +46,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/edit_select_transparent"
                     android:visibility="gone">
 
                     <CheckBox
@@ -54,7 +53,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerInParent="true"
-                        android:background="@drawable/checkbox_pop_arrow"
+                        android:background="@color/bg_grey"
                         android:button="@null" />
 
                     <Button
@@ -70,7 +69,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/edit_select"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -111,7 +109,6 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/message_button_add"
 
                     android:padding="5dp" />
 
@@ -121,7 +118,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/edit_send_green"
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="发送"

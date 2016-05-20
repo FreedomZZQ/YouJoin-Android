@@ -252,10 +252,10 @@ public abstract class EnterLayout {
         }
 
         if (sendButtonEnable()) {
-            sendText.setBackgroundResource(R.drawable.edit_send_green);
+            sendText.setBackgroundResource(R.color.colorPrimary);
             sendText.setTextColor(0xffffffff);
         } else {
-            sendText.setBackgroundResource(R.drawable.edit_send);
+            sendText.setBackgroundResource(R.color.colorPrimaryDark);
             sendText.setTextColor(0xff999999);
         }
     }

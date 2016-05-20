@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@mipmap/login_bg"/>
+        android:background="@drawable/login_bg"/>
 
     <!-- Login progress -->
     <ProgressBar

@@ -128,7 +128,7 @@ implements DataPresenter.GetUserInfo{
         final IProfile profile = new ProfileDrawerItem()
                 .withName(userInfo.getNickname())
                 .withEmail(userInfo.getEmail())
-                .withIcon(R.mipmap.ic_account_circle_white_48dp)
+                .withIcon(R.drawable.ic_account_circle_white_48dp)
                 .withIdentifier(100);
 
         drawerHeader = new AccountHeaderBuilder()
@@ -252,7 +252,7 @@ implements DataPresenter.GetUserInfo{
             p = new ProfileDrawerItem()
                     .withName(userInfo.getNickname())
                     .withEmail(userInfo.getEmail())
-                    .withIcon(R.mipmap.ic_account_circle_white_48dp)
+                    .withIcon(R.drawable.ic_account_circle_white_48dp)
                     .withIdentifier(100);
             drawerHeader.updateProfile(p);
         }

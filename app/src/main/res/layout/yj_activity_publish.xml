@@ -44,7 +44,6 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/message_button_add"
                 android:padding="5dp" />
 
             <TextView
@@ -52,7 +51,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="@drawable/edit_send_green"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="发送"
@@ -117,7 +115,7 @@
                     android:id="@+id/popPhoto"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@mipmap/ic_insert_photo_white_48dp" />
+                    android:background="@drawable/ic_insert_photo_white_48dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -136,7 +134,7 @@
                     android:layout_height="32dp"
                     android:id="@+id/btn_send"
                     android:padding="4dp"
-                    android:background="@mipmap/send"
+                    android:background="@drawable/send"
                     android:layout_marginEnd="10dp" />
             </LinearLayout>
 

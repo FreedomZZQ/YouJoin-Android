@@ -52,7 +52,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:id="@+id/avatar"
-                android:src="@mipmap/ic_account_circle_white_48dp"
+                android:src="@drawable/ic_account_circle_white_48dp"
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
@@ -314,7 +314,7 @@
         android:id="@+id/commit_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_send_white_48dp"
+        android:src="@drawable/ic_send_white_48dp"
         app:backgroundTint="@color/yellow"
         android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentEnd="true"

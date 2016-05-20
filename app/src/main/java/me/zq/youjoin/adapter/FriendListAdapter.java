@@ -96,7 +96,7 @@ public class FriendListAdapter extends BaseAdapter implements SectionIndexer{
             }
         }
         holder.name.setText(item.getNickname());
-        holder.icon.setImageResource(R.mipmap.ic_account_circle_white_48dp);
+        holder.icon.setImageResource(R.drawable.ic_account_circle_white_48dp);
         Picasso.with(context)
                 .load(StringUtils.getPicUrlList(item.getImg_url()).get(0))
                 .resize(200, 200)

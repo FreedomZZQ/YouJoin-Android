@@ -21,7 +21,7 @@
             android:id="@+id/avatar"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@mipmap/ic_account_circle_white_48dp"
+            android:src="@drawable/ic_account_circle_white_48dp"
             android:layout_gravity="center_vertical"/>
 
         <LinearLayout

@@ -158,7 +158,7 @@ implements DataPresenter.GetUserInfo{
                         .centerCrop()
                         .into(holder.img);
             }else{
-                holder.img.setBackgroundResource(R.mipmap.ic_account_circle_white_48dp);
+                holder.img.setBackgroundResource(R.drawable.ic_account_circle_white_48dp);
             }
 
 
