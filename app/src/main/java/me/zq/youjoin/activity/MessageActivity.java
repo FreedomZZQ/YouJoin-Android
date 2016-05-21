@@ -29,10 +29,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.zq.youjoin.DataPresenter;
 import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.adapter.MessageListAdapter;
 import me.zq.youjoin.event.ImTypeMessageEvent;
+import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.widget.enter.EmojiFragment;
 import me.zq.youjoin.widget.enter.EnterEmojiLayout;
 import me.zq.youjoin.widget.enter.EnterLayout;
@@ -66,6 +68,7 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
         EventBus.getDefault().register(this);
 //        receiver = getIntent().getParcelableExtra(RECEIVER);
         receiver = getIntent().getStringExtra(RECEIVER);
+
         initEnter();
 
         adapter = new MessageListAdapter(MessageActivity.this, dataList);
@@ -75,6 +78,13 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+            UserInfo recv = DataPresenter.requestUserInfoFromCache(receiver);
+            if(!recv.getNickname().equals("")){
+                actionBar.setTitle(recv.getNickname());
+            }else{
+                actionBar.setTitle(receiver);
+            }
+
         }
 
         fetchConversation();
