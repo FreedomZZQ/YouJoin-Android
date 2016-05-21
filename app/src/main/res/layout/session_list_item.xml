@@ -36,7 +36,8 @@
             android:id="@+id/lastMsg"
             android:textSize="12sp"
             android:textColor="@color/font_black_9"
-            tools:text="What is that"/>
+            android:maxLines="1"
+            tools:text="What is thatWhat is thatWhat is thatWhat is thatWhat is thatWhat is thatWhat is that"/>
 
 
     </LinearLayout>
