@@ -71,8 +71,8 @@
             tools:text="contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentc"
             android:textSize="13sp"
             android:textColor="@color/content_font_black"
-            android:layout_marginStart="13dp"
-            android:layout_marginEnd="13dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="10dp"/>
 
         <me.zq.youjoin.widget.enter.AutoHeightGridView
