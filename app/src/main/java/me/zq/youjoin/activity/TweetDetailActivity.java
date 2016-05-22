@@ -272,6 +272,7 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
                 commentList.add(entity);
             }
             adapter.notifyDataSetChanged();
+            commentCount.setText(Integer.toString(commentList.size()));
         } else {
             //Toast.makeText(TweetDetailActivity.this, getString(R.string.error_network), Toast.LENGTH_SHORT).show();
         }
