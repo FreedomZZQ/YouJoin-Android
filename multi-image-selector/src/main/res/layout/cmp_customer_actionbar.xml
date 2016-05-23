@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_centerVertical="true"
-        android:paddingLeft="16dp"
+        android:layout_marginLeft="16dp"
         android:src="@drawable/btn_back" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/btn_back"
-        android:text="返回"
+        android:text="选择图片"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
