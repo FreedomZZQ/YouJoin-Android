@@ -2,6 +2,7 @@ package me.zq.youjoin.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
@@ -39,6 +40,9 @@ public class PluginActivity extends BaseActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                actionBar.setElevation(0);
+            }
         }
     }
 

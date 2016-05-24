@@ -2,6 +2,7 @@ package me.zq.youjoin.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,6 +79,9 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                actionBar.setElevation(0);
+            }
             UserInfo recv = DataPresenter.requestUserInfoFromCache(receiver);
             if(!recv.getNickname().equals("")){
                 actionBar.setTitle(recv.getNickname());

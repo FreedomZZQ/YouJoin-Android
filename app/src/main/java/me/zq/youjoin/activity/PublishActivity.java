@@ -98,6 +98,10 @@ public class PublishActivity extends BaseActivity
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                actionBar.setElevation(0);
+            }
+
         }
     }
 

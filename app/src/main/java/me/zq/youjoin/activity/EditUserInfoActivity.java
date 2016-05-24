@@ -135,6 +135,9 @@ public class EditUserInfoActivity extends BaseActivity
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                actionBar.setElevation(0);
+            }
         }
     }
 
