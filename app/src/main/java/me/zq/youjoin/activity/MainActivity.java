@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -45,6 +46,7 @@ import me.zq.youjoin.fragment.PluginFragment;
 import me.zq.youjoin.fragment.TweetsFragment;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.sp.SPHelper;
 import me.zq.youjoin.utils.StringUtils;
 
 public class MainActivity extends BaseActivity
@@ -93,7 +95,18 @@ implements DataPresenter.GetUserInfo{
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ImTypeMessageEvent event){
-        drawer.updateBadge(DRAWER_MSG, new StringHolder(1 + ""));
+        drawer.updateBadge(DRAWER_MSG, new StringHolder(""));
+        //当收到了新的消息时，不需要重新获取所有的会话列表
+        //只需要将新收到的消息进行处理即可：
+        //1.增加该会话的未读消息数
+        addUnreadMsgCount(event.conversation);
+        //2.将新收到的消息本地存储（？）
+        //3.新收到的消息显示在会话列表
+    }
+
+    private void addUnreadMsgCount(AVIMConversation conv){
+        int count = SPHelper.getUnReadMsgCount(conv.getConversationId());
+        SPHelper.setUnReadMsgCount(conv.getConversationId(), count + 1);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

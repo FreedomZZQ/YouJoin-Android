@@ -15,7 +15,6 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationQuery;
 import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
 
@@ -33,6 +32,7 @@ import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.activity.MessageActivity;
 import me.zq.youjoin.adapter.SessionListAdapter;
 import me.zq.youjoin.event.ImTypeMessageEvent;
+import me.zq.youjoin.sp.SPHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,11 +81,13 @@ public class MessageFragment extends BaseFragment {
         sessionlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String username = sessionData.get(position).getMembers().get(0);
+                AVIMConversation conv = sessionData.get(position);
+                String username = conv.getMembers().get(0);
                 if (username.equals(YouJoinApplication.getCurrUser().getUsername())) {
-                    username = sessionData.get(position).getMembers().get(1);
+                    username = conv.getMembers().get(1);
                 }
                 MessageActivity.actionStart(getActivity(), username);
+                SPHelper.setUnReadMsgCount(conv.getConversationId(), 0);
             }
         });
 
@@ -102,9 +104,13 @@ public class MessageFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ImTypeMessageEvent event) {
-        AVIMTypedMessage message = event.message;
-        AVIMConversation conversation = event.conversation;
         refreshData();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
     private void refreshData() {

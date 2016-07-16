@@ -22,6 +22,7 @@ import me.zq.youjoin.R;
 import me.zq.youjoin.YouJoinApplication;
 import me.zq.youjoin.model.UserInfo;
 import me.zq.youjoin.network.NetworkManager;
+import me.zq.youjoin.sp.SPHelper;
 import me.zq.youjoin.utils.LogUtils;
 import me.zq.youjoin.utils.StringUtils;
 
@@ -69,6 +70,7 @@ public class SessionListAdapter extends BaseAdapter {
             holder.avatar = (CircleImageView) convertView.findViewById(R.id.avatar);
             holder.content = (TextView) convertView.findViewById(R.id.lastMsg);
             holder.nickname = (TextView) convertView.findViewById(R.id.nickname);
+            holder.badge = (TextView) convertView.findViewById(R.id.badge);
 
             convertView.setTag(holder);
         }else{
@@ -100,7 +102,7 @@ public class SessionListAdapter extends BaseAdapter {
 //        holder.content.setText(StringUtils.getEmotionContent(
 //                YouJoinApplication.getAppContext(), holder.content,
 //                dataList.get(position).getComment_content()));
-        AVIMConversation conversation = dataList.get(position);
+        final AVIMConversation conversation = dataList.get(position);
         if(conversation != null){
             conversation.getLastMessage(new AVIMSingleMessageQueryCallback() {
                 @Override
@@ -111,9 +113,19 @@ public class SessionListAdapter extends BaseAdapter {
                         holder.content.setText(StringUtils.getEmotionContent(
                                 YouJoinApplication.getAppContext(),
                                 lastText));
+
+//                        holder.badge.setText(conversation.get);
                     }
                 }
             });
+        }
+
+        int unreadCount = SPHelper.getUnReadMsgCount(conversation.getConversationId());
+        if(unreadCount > 0){
+            holder.badge.setVisibility(View.VISIBLE);
+            holder.badge.setText("" + unreadCount);
+        }else{
+            holder.badge.setVisibility(View.GONE);
         }
 
         return convertView;
@@ -123,5 +135,6 @@ public class SessionListAdapter extends BaseAdapter {
         public CircleImageView avatar;
         public TextView content;
         public TextView nickname;
+        public TextView badge;
     }
 }
