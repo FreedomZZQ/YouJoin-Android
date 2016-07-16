@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="me.zq.youjoin.activity.TweetDetailActivity"
-    tools:showIn="@layout/activity_tweet_detail"
+    tools:showIn="@layout/yj_activity_tweet_detail"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:background="@color/white"

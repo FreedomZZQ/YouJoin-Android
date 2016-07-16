@@ -74,7 +74,7 @@ public class UserInfoActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_info);
+        setContentView(R.layout.yj_activity_user_info);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initView();

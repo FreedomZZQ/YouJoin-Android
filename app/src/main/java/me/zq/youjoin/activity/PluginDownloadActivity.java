@@ -52,7 +52,7 @@ public class PluginDownloadActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plugin_download);
+        setContentView(R.layout.yj_activity_plugin_download);
         ButterKnife.bind(this);
 
         DataPresenter.requestPluginList(YouJoinApplication.getCurrUser().getId(),

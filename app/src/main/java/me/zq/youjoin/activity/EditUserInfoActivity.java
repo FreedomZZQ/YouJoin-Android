@@ -87,7 +87,7 @@ public class EditUserInfoActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_user_info);
+        setContentView(R.layout.yj_activity_edit_user_info);
         ButterKnife.bind(this);
 
         userInfo = YouJoinApplication.getCurrUser();

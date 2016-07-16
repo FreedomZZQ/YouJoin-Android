@@ -64,7 +64,7 @@ public class MessageActivity extends BaseActivity implements EmojiFragment.Enter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message);
+        setContentView(R.layout.yj_activity_message);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
 //        receiver = getIntent().getParcelableExtra(RECEIVER);

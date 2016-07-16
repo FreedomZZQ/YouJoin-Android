@@ -86,7 +86,7 @@ public class TweetDetailActivity extends BaseActivity implements EmojiFragment.E
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tweet_detail);
+        setContentView(R.layout.yj_activity_tweet_detail);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         tweetsEntity = getIntent().getParcelableExtra(INFO);

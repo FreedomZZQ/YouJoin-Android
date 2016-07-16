@@ -24,7 +24,7 @@ public class ChooseLocationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_location);
+        setContentView(R.layout.yj_activity_choose_location);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
