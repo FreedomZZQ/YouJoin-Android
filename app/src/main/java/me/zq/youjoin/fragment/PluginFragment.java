@@ -37,7 +37,7 @@ public class PluginFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plugin, container, false);
+        View view = inflater.inflate(R.layout.yj_fragment_plugin, container, false);
         ButterKnife.bind(this, view);
 
 //        TextView emptyView = new TextView(getActivity());
