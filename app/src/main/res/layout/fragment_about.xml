@@ -8,8 +8,8 @@
     android:padding="16dp">
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:src="@drawable/welcome_viewpager4"
         android:layout_gravity="center_horizontal"/>
 
@@ -17,23 +17,12 @@
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="10sp"
         android:textColor="@color/grey"
-        android:layout_marginBottom="10dp"
-        android:text="YouJoin V1.0"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="10sp"
-        android:textColor="@color/grey"
-        android:text="Copyright 2016 YouJoin Studio. All rights reserved."/>
-
+        android:text="@string/copyright"/>
 
 </LinearLayout>
