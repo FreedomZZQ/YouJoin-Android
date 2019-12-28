@@ -55,8 +55,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/comment_content"
             android:textSize="10sp"
-
-            tools:text="hahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehehahahaehehhehe" />
+            tools:text="hehe" />
 
     </LinearLayout>
 
